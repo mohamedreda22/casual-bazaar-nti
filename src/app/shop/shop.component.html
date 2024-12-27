@@ -1,13 +1,43 @@
-<!-- write a shop component-->
-<div class="container">
-  <div class="row">
-    <div class="col-md-4" *ngFor="let product of products">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{product.name}}</h5>
-          <p class="card-text">{{product.description}}</p>
-          <a href="#" class="btn btn-primary">Add to Cart</a>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop Now - Casual Bazaar</title>
+    <link rel="stylesheet" href="./shop.component.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-heading">
+        <h1>{{ title }}</h1>
+        <p>
+          Discover the latest trends and best-selling products at Casual Bazaar.
+        </p>
+      </div>
+
+      <div class="carousel">
+        <div class="carousel-track" #carouselTrack>
+          <div class="carousel-item" *ngFor="let product of carouselProducts">
+            <img [src]="product.image" [alt]="product.title" />
+          </div>
+        </div>
+        <div class="carousel-buttons">
+          <button class="carousel-button" (click)="prev()">&#8249;</button>
+          <button class="carousel-button" (click)="next()">&#8250;</button>
+        </div>
+      </div>
+
+      <div class="products-grid">
+        <div class="product-card" *ngFor="let product of products">
+          <img [src]="product.image" [alt]="product.title" />
+          <div class="details">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.desc }}</p>
+            <p class="price">${{ product.price }}</p>
+            <a href="#" class="btn">Add to Cart</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </body>
+</html>

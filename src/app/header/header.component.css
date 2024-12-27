@@ -11,7 +11,7 @@
   left: 0; /* Align to left edge */
   right: 0; /* Align to right edge */
   width: 100%; /* Full width */
-
+  max-height: 15vh;
   position: fixed; /* Changed from relative to fixed */
   z-index: 1000; /* Added z-index to ensure navbar stays on top */
 }
