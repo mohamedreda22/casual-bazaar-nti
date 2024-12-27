@@ -1,0 +1,13 @@
+<!-- write a shop component-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let product of products">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{product.name}}</h5>
+          <p class="card-text">{{product.description}}</p>
+          <a href="#" class="btn btn-primary">Add to Cart</a>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,103 @@
+/* Footer */
+footer {
+  padding: 30px 20px;
+  background-color: #333;
+  color: #fff;
+  position: relative; /* Change to fixed position */
+  bottom: 0; /* Stick to bottom */
+  left: 0; /* Align to left edge */
+  right: 0; /* Align to right edge */
+  width: 100%; /* Full width */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.footer-content .newsletter {
+  max-width: 380px;
+}
+.footer-content .logo-section{
+  max-width: 300px;
+  margin-bottom: 5px;
+  font-size: small;
+}
+
+.footer-content form{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.footer-content form input {
+  flex: 1;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+}
+
+.footer-content form button {
+  padding: 5px 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.footer-links ul {
+  list-style: none;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  
+}
+.footer-bottom p {
+  margin-top: 25px;
+  position: absolute;
+  left: 5%;
+}
+.footer-bottom ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  position: absolute;
+  right: 5%;
+}
+
+.footer-bottom li {
+  margin: 0 10px;
+}
+
+.footer-bottom a {
+  text-decoration: none;
+  color: #fff;
+}

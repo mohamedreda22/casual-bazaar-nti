@@ -1,0 +1,31 @@
+.container{
+    margin-top: 7%;
+}
+
+.row{
+    margin-top: 5%;
+}
+
+.col-md-4{
+    margin-bottom: 5%;
+}
+
+.card{
+    border: 1px solid #333;
+}
+
+.card-body{
+    text-align: center;
+}
+
+.card-title{
+    font-size: 20px;
+}
+
+.card-text{
+    font-size: 18px;
+}
+
+.btn{
+    margin-top: 5%;
+}
