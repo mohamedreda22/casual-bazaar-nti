@@ -175,6 +175,7 @@ body {
 .category-navbar .navbar-nav {
   display: flex;
   list-style: none;
+  justify-content: center;
 }
 
 .category-navbar .nav-link:hover {
