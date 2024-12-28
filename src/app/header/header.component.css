@@ -19,10 +19,12 @@ body {
   margin: 0;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+.logo-section a{
+  text-decoration: none;
   color: #333;
+}
+.logo-section a:hover{
+  color: #555;
 }
 
 .nav-links {

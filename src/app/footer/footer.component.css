@@ -20,8 +20,12 @@ footer {
 }
 .footer-content .logo-section{
   max-width: 300px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   font-size: small;
+}
+
+.footer-content  p{
+  margin: 10px 0; 
 }
 
 .footer-content form{
@@ -57,6 +61,11 @@ footer {
   width: 60%;
 }
 
+.footer-links h4{
+  margin-bottom: 10px;
+}
+
+
 .footer-links ul {
   list-style: none;
 }
@@ -67,6 +76,10 @@ footer {
   font-size: 0.9rem;
   margin-bottom: 10px;
   display: block;
+}
+
+.footer-links a:hover {
+  color: #aea8a8;
 }
 
 .footer-bottom {
@@ -100,4 +113,12 @@ footer {
 .footer-bottom a {
   text-decoration: none;
   color: #fff;
+}
+
+.logo-section a{
+  text-decoration: none;
+  color: #fff;
+}
+.logo-section a:hover{
+  color: #aea8a8;
 }

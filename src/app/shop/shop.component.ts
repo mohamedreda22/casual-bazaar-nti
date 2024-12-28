@@ -51,6 +51,14 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
       category: 'Men',
       subCategory: 'Shoes',
     },
+    {
+      image: 'laptop.jpg',
+      title: 'MacBook Pro',
+      desc: '14-inch MacBook Pro with M2 chip and Retina display',
+      price: 1299,
+      category: 'Kids',
+      subCategory: 'Toys',
+    },
   ];
 
   carouselProducts = [

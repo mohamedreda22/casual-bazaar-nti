@@ -1,0 +1,105 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url('/banner.webp') no-repeat center center/cover;
+  padding: 1rem;
+}
+
+.form-box {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 450px;
+  width: 100%;
+  margin-top: 13vh;
+}
+
+.form-box h2 {
+  font-family: 'Georgia', serif;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.form-box p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #f9f9f9;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #999;
+  background: #fff;
+}
+
+.btn-primary {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.btn-primary:hover {
+  background-color: #333;
+}
+
+.links {
+  margin-top: 1rem;
+}
+
+.links a {
+  font-size: 0.9rem;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.links a:hover {
+  color: black;
+}
+
+@media (max-width: 768px) {
+  .form-box {
+    padding: 2rem;
+  }
+
+  .form-box h2 {
+    font-size: 1.8rem;
+  }
+
+  .form-box p {
+    font-size: 0.95rem;
+  }
+
+  .btn-primary {
+    font-size: 0.95rem;
+  }
+}
