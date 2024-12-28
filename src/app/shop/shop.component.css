@@ -226,3 +226,9 @@ body {
   background-color: #007bff;
   color: #fff;
 }
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}

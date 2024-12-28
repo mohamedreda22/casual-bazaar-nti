@@ -9,6 +9,7 @@ import {
   HostListener,
 } from '@angular/core';
 import productsData from '../../assets/products.json';
+import categories from '../../assets/categories.json';
 
 @Component({
   selector: 'app-shop',
@@ -20,11 +21,16 @@ import productsData from '../../assets/products.json';
 export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'Shop Now!';
   timer: any;
+  categories = categories;
   products = productsData;
   filteredProducts = this.products; // Initialize with all products
 
-  carouselProducts = this.products.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  carouselProducts = this.products.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
   currentIndex = 0;
+
+  selectedSubCategory: string | null = null; // Added this property to track the selected subcategory
 
   @ViewChild('carouselTrack', { static: false })
   carouselTrack!: ElementRef<HTMLDivElement>;
@@ -76,26 +82,11 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  categories = [
-    {
-      name: 'Men',
-      subCategories: ['Shirts', 'Shoes', 'Suits', 'Accessories'],
-      show: false,
-    },
-    {
-      name: 'Women',
-      subCategories: ['Dresses', 'Heels', 'Handbags', 'Accessories'],
-      show: false,
-    },
-    {
-      name: 'Kids',
-      subCategories: ['T-shirts', 'Sneakers', 'Toys', 'Backpacks'],
-      show: false,
-    },
-  ];
+
 
   filterByCategory(categoryName: string, subCategory: string): void {
     console.log(`Filtering products for ${categoryName} > ${subCategory}`);
+    this.selectedSubCategory = subCategory; // Set the selected subcategory
     this.filteredProducts = this.products.filter(
       (product) =>
         product.category === categoryName && product.subCategory === subCategory
@@ -103,10 +94,13 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showDropdown(categoryName: string): void {
-    // Hide all other dropdowns
-    this.categories.forEach((category) => {
-      category.show = category.name === categoryName;
-    });
+    this.categories.forEach((category) => (category.show = false));
+    const selectedCategory = this.categories.find(
+      (category) => category.name === categoryName
+    );
+    if (selectedCategory) {
+      selectedCategory.show = true;
+    }
   }
 
   hideDropdown(categoryName: string): void {

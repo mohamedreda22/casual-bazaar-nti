@@ -1,0 +1,31 @@
+[
+    {
+        "name": "men",
+        "subCategories": ["T-shirts", "Footwear", "Wearables", "Clothing"],
+        "show": false
+    },
+    {
+        "name": "women",
+        "subCategories": ["Clothing", "Heels", "Accessories"],
+        "show": false
+    },
+    {
+        "name": "kids",
+        "subCategories": ["T-shirts", "Sneakers", "Toys", "Accessories"],
+        "show": false
+    },
+    {
+        "name": "electronics",
+        "subCategories": [
+            "Smartphones",
+            "Laptops",
+            "Audio",
+            "Wearables",
+            "TVs",
+            "Cameras",
+            "Tablets",
+            "Gaming"
+        ],
+        "show": false
+    }
+]

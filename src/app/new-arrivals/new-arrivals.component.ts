@@ -6,44 +6,25 @@ import productsData from '../../assets/products.json';
   selector: 'app-new-arrivals',
   imports: [CommonModule],
   templateUrl: './new-arrivals.component.html',
-  styleUrl: './new-arrivals.component.css',
+  styleUrls: ['./new-arrivals.component.css'],
 })
 export class NewArrivalsComponent {
-  
   products: any = [];
 
   constructor() {
     this.products = productsData;
   }
 
-  // Add a product to the cart
+  filter = 'newest';
+
+  filterProducts(products: any) {
+    return products.sort(
+      (a: any, b: any) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }
+
   addToCart(product: any) {
-    console.log(product);
+    console.log('Added to Cart:', product);
   }
-
-  // Remove a product from the cart
-  removeFromCart(product: any) {
-    console.log(product);
-  }
-
-  // Filter products by category
-  filterProducts(category: string) {
-    console.log(category);
-  }
-
-  // Sort products by price
-  sortProducts(sortBy: string) {
-    console.log(sortBy);
-  }
-
-  // Search products by name
-  searchProducts(searchTerm: string) {
-    console.log(searchTerm);
-  }
-
-  // Get product details
-  getProductDetails(productId: string) {
-    console.log(productId);
-  }
-  
 }
