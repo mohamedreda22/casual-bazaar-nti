@@ -4,17 +4,19 @@
     "title": "Digital Camera",
     "desc": "High-resolution digital camera with 4K video recording",
     "price": 599,
-    "category": "Electronics",
+    "category": "men",
     "subCategory": "Cameras",
+    "bestSellers": true,
     "createdAt": "2022-10-01T00:00:00.000Z"
   },
   {
-    "image": "earbuds.webp",
+    "image": "earbods.webp",
     "title": "Wireless Earbuds",
     "desc": "True wireless earbuds with noise cancellation",
     "price": 199,
-    "category": "Electronics",
+    "category": "women",
     "subCategory": "Audio",
+    "bestSellers": true,
     "createdAt": "2022-09-01T00:00:00.000Z"
   },
   {
@@ -22,8 +24,9 @@
     "title": "iPad Pro",
     "desc": "Latest iPad Pro with M1 chip and Liquid Retina display",
     "price": 799,
-    "category": "Electronics",
+    "category": "men",
     "subCategory": "Tablets",
+    "bestSellers": true,
     "createdAt": "2022-08-01T00:00:00.000Z"
   },
   {
@@ -31,8 +34,9 @@
     "title": "iPhone 14 Pro",
     "desc": "Latest iPhone with pro camera system and A16 chip",
     "price": 999,
-    "category": "Electronics",
+    "category": "women",
     "subCategory": "Smartphones",
+    "bestSellers": true,
     "createdAt": "2022-07-01T00:00:00.000Z"
   },
   {
@@ -40,53 +44,99 @@
     "title": "MacBook Pro",
     "desc": "14-inch MacBook Pro with M2 chip and Retina display",
     "price": 1299,
-    "category": "Electronics",
+    "category": "men",
     "subCategory": "Laptops",
+    "bestSellers": true,
     "createdAt": "2022-06-01T00:00:00.000Z"
   },
   {
-    "image": "smartwatch.webp",
+    "image": "watch.webp",
     "title": "Smartwatch",
     "desc": "Advanced smartwatch with health tracking features",
     "price": 299,
-    "category": "Electronics",
+    "category": "men",
     "subCategory": "Wearables",
+    "bestSellers": false,
     "createdAt": "2022-05-01T00:00:00.000Z"
   },
   {
-    "image": "gaming_console.webp",
+    "image": "gaming-console.webp",
     "title": "Gaming Console",
     "desc": "Next-gen gaming console with 4K gaming and HDR support",
     "price": 499,
-    "category": "Electronics",
+    "category": "men",
     "subCategory": "Gaming",
+    "bestSellers": false,
     "createdAt": "2022-04-01T00:00:00.000Z"
   },
   {
-    "image": "headphones.jpg",
+    "image": "headphones.jpeg",
     "title": "Over-Ear Headphones",
     "desc": "Noise-canceling over-ear headphones with premium sound quality",
     "price": 349,
-    "category": "Electronics",
+    "category": "women",
     "subCategory": "Audio",
+    "bestSellers": true,
     "createdAt": "2022-03-01T00:00:00.000Z"
   },
   {
-    "image": "tv.jpg",
-    "title": "4K Smart TV",
-    "desc": "65-inch 4K UHD Smart TV with built-in streaming apps",
-    "price": 1199,
-    "category": "Electronics",
-    "subCategory": "TVs",
-    "createdAt": "2022-02-01T00:00:00.000Z"
+    "image": "Winter-Jacket.jpeg",
+    "title": "Winter Jacket",
+    "desc": "Waterproof winter jacket with fleece lining",
+    "price": 199,
+    "category": "men",
+    "subCategory": "Clothing",
+    "bestSellers": true,
+    "createdAt": "2023-12-01T00:00:00.000Z"
   },
   {
-    "image": "drone.jpg",
-    "title": "Drone",
-    "desc": "Compact drone with 4K camera and GPS stabilization",
+    "image": "dress.jpg",
+    "title": "Evening Dress",
+    "desc": "Elegant evening dress for special occasions",
+    "price": 399,
+    "category": "women",
+    "subCategory": "Clothing",
+    "bestSellers": true,
+    "createdAt": "2023-11-01T00:00:00.000Z"
+  },
+  {
+    "image": "toy_train.avif",
+    "title": "Toy Train Set",
+    "desc": "Interactive toy train set for kids",
+    "price": 49,
+    "category": "kids",
+    "subCategory": "Toys",
+    "bestSellers": true,
+    "createdAt": "2023-10-01T00:00:00.000Z"
+  },
+  {
+    "image": "sneakers.jpg",
+    "title": "Running Sneakers",
+    "desc": "Lightweight running sneakers for men",
+    "price": 99,
+    "category": "men",
+    "subCategory": "Footwear",
+    "bestSellers": true,
+    "createdAt": "2023-09-01T00:00:00.000Z"
+  },
+  {
+    "image": "handbag.webp",
+    "title": "Designer Handbag",
+    "desc": "Stylish designer handbag for women",
     "price": 899,
-    "category": "Electronics",
-    "subCategory": "Cameras",
-    "createdAt": "2022-01-01T00:00:00.000Z"
+    "category": "women",
+    "subCategory": "Accessories",
+    "bestSellers": true,
+    "createdAt": "2023-08-01T00:00:00.000Z"
+  },
+  {
+    "image": "backpack.jpg",
+    "title": "School Backpack",
+    "desc": "Durable backpack for school kids",
+    "price": 39,
+    "category": "kids",
+    "subCategory": "Accessories",
+    "bestSellers": true,
+    "createdAt": "2023-07-01T00:00:00.000Z"
   }
 ]

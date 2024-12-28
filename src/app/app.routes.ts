@@ -11,6 +11,7 @@ import { ShippingInfoComponent } from './shipping-info/shipping-info.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { CookiesSettingsComponent } from './cookies-settings/cookies-settings.component';
 import { NewArrivalsComponent } from './new-arrivals/new-arrivals.component';
+import { BestSellersComponent } from './best-sellers/best-sellers.component';
 
 export const routes: Routes = [
   {
@@ -69,4 +70,8 @@ export const routes: Routes = [
     path: 'new-arrivals',
     component: NewArrivalsComponent,
   },
+  {
+    path: 'best-sellers',
+    component: BestSellersComponent,
+  }
 ];

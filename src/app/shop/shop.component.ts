@@ -6,7 +6,9 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
-  HostListener } from '@angular/core';
+  HostListener,
+} from '@angular/core';
+import productsData from '../../assets/products.json';
 
 @Component({
   selector: 'app-shop',
@@ -18,99 +20,10 @@ import {
 export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'Shop Now!';
   timer: any;
-  products = [
-    {
-      image: 'camera.webp',
-      title: 'Digital Camera',
-      desc: 'High resolution digital camera with 4K video recording',
-      price: 599,
-      category: 'Men',
-      subCategory: 'Shirts',
-    },
-    {
-      image: 'earbods.webp',
-      title: 'Wireless Earbuds',
-      desc: 'True wireless earbuds with noise cancellation',
-      price: 199,
-      category: 'Women',
-      subCategory: 'Shoes',
-    },
-    {
-      image: 'ipad.webp',
-      title: 'iPad Pro',
-      desc: 'Latest iPad Pro with M1 chip and Liquid Retina display',
-      price: 799,
-      category: 'Kids',
-      subCategory: 'Hoodies',
-    },
-    {
-      image: 'iphone.jpg',
-      title: 'iPhone 14 Pro',
-      desc: 'Latest iPhone with pro camera system and A16 chip',
-      price: 999,
-      category: 'Men',
-      subCategory: 'Shoes',
-    },
-    {
-      image: 'laptop.jpg',
-      title: 'MacBook Pro',
-      desc: '14-inch MacBook Pro with M2 chip and Retina display',
-      price: 1299,
-      category: 'Kids',
-      subCategory: 'Toys',
-    },
-  ];
+  products = productsData;
+  filteredProducts = this.products; // Initialize with all products
 
-  carouselProducts = [
-    {
-      image: 'camera.webp',
-      title: 'Digital Camera',
-      desc: 'High resolution digital camera with 4K video recording',
-      price: 599,
-    },
-    {
-      image: 'earbods.webp',
-      title: 'Wireless Earbuds',
-      desc: 'True wireless earbuds with noise cancellation',
-      price: 199,
-    },
-    {
-      image: 'ipad.webp',
-      title: 'iPad Pro',
-      desc: 'Latest iPad Pro with M1 chip and Liquid Retina display',
-      price: 799,
-    },
-    {
-      image: 'iphone.jpg',
-      title: 'iPhone 14 Pro',
-      desc: 'Latest iPhone with pro camera system and A16 chip',
-      price: 999,
-    },
-    {
-      image: 'laptop.jpg',
-      title: 'MacBook Pro',
-      desc: '14-inch MacBook Pro with M2 chip and Retina display',
-      price: 1299,
-    },
-    {
-      image: 'speaker.webp',
-      title: 'Smart Speaker',
-      desc: 'Wireless smart speaker with voice assistant',
-      price: 299,
-    },
-    {
-      image: 'watch.webp',
-      title: 'Smart Watch',
-      desc: 'Fitness tracker with heart rate monitoring',
-      price: 249,
-    },
-    {
-      image: 'tv.webp',
-      title: '4K Smart TV',
-      desc: '55-inch 4K UHD Smart TV with HDR',
-      price: 899,
-    },
-  ];
+  carouselProducts = this.products.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   currentIndex = 0;
 
   @ViewChild('carouselTrack', { static: false })
@@ -162,6 +75,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
       this.timer = null;
     }
   }
+
   categories = [
     {
       name: 'Men',
@@ -182,18 +96,11 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
 
   filterByCategory(categoryName: string, subCategory: string): void {
     console.log(`Filtering products for ${categoryName} > ${subCategory}`);
-    this.products = this.products.filter(
+    this.filteredProducts = this.products.filter(
       (product) =>
         product.category === categoryName && product.subCategory === subCategory
     );
   }
-
-  /*   showDropdown(categoryName: string): void {
-  const category = this.categories.find((c) => c.name === categoryName);
-  if (category) {
-    category.show = true;
-  }
-} */
 
   showDropdown(categoryName: string): void {
     // Hide all other dropdowns
