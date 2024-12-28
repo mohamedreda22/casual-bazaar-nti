@@ -10,10 +10,15 @@ import { FaqsComponent } from './faqs/faqs.component';
 import { ShippingInfoComponent } from './shipping-info/shipping-info.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { CookiesSettingsComponent } from './cookies-settings/cookies-settings.component';
+import { NewArrivalsComponent } from './new-arrivals/new-arrivals.component';
 
 export const routes: Routes = [
   {
     path: '',
+    component: HomeContentComponent,
+  },
+  {
+    path: '*',
     component: HomeContentComponent,
   },
   {
@@ -59,5 +64,9 @@ export const routes: Routes = [
   {
     path: 'cookies-settings',
     component: CookiesSettingsComponent,
-  }
+  },
+  {
+    path: 'new-arrivals',
+    component: NewArrivalsComponent,
+  },
 ];

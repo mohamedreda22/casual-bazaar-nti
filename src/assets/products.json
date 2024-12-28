@@ -1,0 +1,92 @@
+[
+  {
+    "image": "camera.webp",
+    "title": "Digital Camera",
+    "desc": "High-resolution digital camera with 4K video recording",
+    "price": 599,
+    "category": "Electronics",
+    "subCategory": "Cameras",
+    "createdAt": "2022-10-01T00:00:00.000Z"
+  },
+  {
+    "image": "earbuds.webp",
+    "title": "Wireless Earbuds",
+    "desc": "True wireless earbuds with noise cancellation",
+    "price": 199,
+    "category": "Electronics",
+    "subCategory": "Audio",
+    "createdAt": "2022-09-01T00:00:00.000Z"
+  },
+  {
+    "image": "ipad.webp",
+    "title": "iPad Pro",
+    "desc": "Latest iPad Pro with M1 chip and Liquid Retina display",
+    "price": 799,
+    "category": "Electronics",
+    "subCategory": "Tablets",
+    "createdAt": "2022-08-01T00:00:00.000Z"
+  },
+  {
+    "image": "iphone.jpg",
+    "title": "iPhone 14 Pro",
+    "desc": "Latest iPhone with pro camera system and A16 chip",
+    "price": 999,
+    "category": "Electronics",
+    "subCategory": "Smartphones",
+    "createdAt": "2022-07-01T00:00:00.000Z"
+  },
+  {
+    "image": "laptop.jpg",
+    "title": "MacBook Pro",
+    "desc": "14-inch MacBook Pro with M2 chip and Retina display",
+    "price": 1299,
+    "category": "Electronics",
+    "subCategory": "Laptops",
+    "createdAt": "2022-06-01T00:00:00.000Z"
+  },
+  {
+    "image": "smartwatch.webp",
+    "title": "Smartwatch",
+    "desc": "Advanced smartwatch with health tracking features",
+    "price": 299,
+    "category": "Electronics",
+    "subCategory": "Wearables",
+    "createdAt": "2022-05-01T00:00:00.000Z"
+  },
+  {
+    "image": "gaming_console.webp",
+    "title": "Gaming Console",
+    "desc": "Next-gen gaming console with 4K gaming and HDR support",
+    "price": 499,
+    "category": "Electronics",
+    "subCategory": "Gaming",
+    "createdAt": "2022-04-01T00:00:00.000Z"
+  },
+  {
+    "image": "headphones.jpg",
+    "title": "Over-Ear Headphones",
+    "desc": "Noise-canceling over-ear headphones with premium sound quality",
+    "price": 349,
+    "category": "Electronics",
+    "subCategory": "Audio",
+    "createdAt": "2022-03-01T00:00:00.000Z"
+  },
+  {
+    "image": "tv.jpg",
+    "title": "4K Smart TV",
+    "desc": "65-inch 4K UHD Smart TV with built-in streaming apps",
+    "price": 1199,
+    "category": "Electronics",
+    "subCategory": "TVs",
+    "createdAt": "2022-02-01T00:00:00.000Z"
+  },
+  {
+    "image": "drone.jpg",
+    "title": "Drone",
+    "desc": "Compact drone with 4K camera and GPS stabilization",
+    "price": 899,
+    "category": "Electronics",
+    "subCategory": "Cameras",
+    "createdAt": "2022-01-01T00:00:00.000Z"
+  }
+]

@@ -1,0 +1,93 @@
+.new-arrivals {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.new-arrivals h2 {
+  color: #007bff;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.new-arrivals .card {
+  margin-bottom: 20px;
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.new-arrivals .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.new-arrivals .card img {
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.new-arrivals .card .card-body {
+  background-color: #fff;
+  border-radius: 0 0 5px 5px;
+  text-align: center;
+  padding: 10px;
+}
+
+.new-arrivals .card .card-body h5 {
+  color: #007bff;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.new-arrivals .card .card-body p {
+  color: #6c757d;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.new-arrivals .card .btn-primary {
+  padding: 10px 20px;
+  margin-left: 10px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #333;
+  border-radius: 5px;
+}
+
+.new-arrivals .card .btn-primary:hover {
+  background-color: #555;
+}
+
+.new-arrivals .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.new-arrivals .col-md-4 {
+  flex: 0 0 calc(33.333% - 15px);
+  max-width: calc(33.333% - 15px);
+}
+
+@media (max-width: 768px) {
+  .new-arrivals .col-md-4 {
+    flex: 0 0 calc(50% - 15px);
+    max-width: calc(50% - 15px);
+  }
+}
+
+@media (max-width: 576px) {
+  .new-arrivals .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
