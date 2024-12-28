@@ -26,6 +26,39 @@
           <button class="carousel-button" (click)="next()">&#8250;</button>
         </div>
       </div>
+<nav class="navbar category-navbar">
+  <div class="container">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown" *ngFor="let category of categories">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          [id]="category.name + 'Dropdown'"
+          role="button"
+          (mouseenter)="showDropdown(category.name)"
+        >
+          {{ category.name }}
+        </a>
+        <ul
+          class="dropdown-menu"
+          [class.show]="category.show"
+          [attr.aria-labelledby]="category.name + 'Dropdown'"
+        >
+          <li *ngFor="let subCategory of category.subCategories">
+            <a
+              class="dropdown-item"
+              href="#"
+              (click)="filterByCategory(category.name, subCategory)"
+            >
+              {{ subCategory }}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
 
       <div class="products-grid">
         <div class="product-card" *ngFor="let product of products">

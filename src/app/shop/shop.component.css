@@ -156,3 +156,72 @@ body {
 .product-card .btn:hover {
   background-color: #0056b3;
 }
+
+.category-navbar {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category-navbar .nav-link {
+  color: #333;
+  font-weight: 600;
+  padding: 10px 15px;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.category-navbar .navbar-nav {
+  display: flex;
+  list-style: none;
+}
+
+.category-navbar .nav-link:hover {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.category-navbar .dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 10px 0;
+  min-width: 200px;
+    list-style: none;
+
+}
+
+.category-navbar .dropdown-menu.show {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  z-index: 1000;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 10px 0;
+  min-width: 200px;
+    list-style: none;
+    margin-top: 10px;
+
+}
+
+.category-navbar .dropdown-item {
+  padding: 8px 15px;
+  color: #555;
+  font-size: 14px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+.category-navbar .dropdown-item:hover {
+  background-color: #007bff;
+  color: #fff;
+}
