@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+/* import { Component, OnInit } from '@angular/core';
 import productsData from '../../assets/products.json';
 import { CommonModule } from '@angular/common';
 
@@ -73,3 +73,4 @@ export class BestSellersComponent implements OnInit {
     return result;
   }
 }
+ */

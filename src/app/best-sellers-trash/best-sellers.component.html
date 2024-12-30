@@ -1,6 +1,5 @@
-<!-- <body>
 <div class="container best-sellers">
-  <div class="category-group" *ngFor="let category of bestSellersByCategory">
+  <div class="category-group" *ngFor="let category of categories">
     <h2 class="category-title">{{ category.name }}</h2>
     <div class="carousel">
       <div class="carousel-track" #carouselTrack [style.transform]="'translateX(' + (-category.activeIndex * 100) + '%)'">
@@ -11,11 +10,11 @@
                 <div class="card-body">
                   <img
                     class="card-img-top"
-                    [src]="product.image"
+                    [src]="imageURL + product.imgURL"
                     [alt]="product.title"
                     loading="lazy"
                   />
-                    <span>#{{ product.rank }} in {{ product.category }}</span>
+                  <span>#{{ product.rank }} in {{ product.category }}</span>
                   <h5 class="card-title">{{ product.title }}</h5>
                   <p class="card-text">{{ product.desc }}</p>
                   <p class="card-text">
@@ -37,5 +36,3 @@
     </div>
   </div>
 </div>
-
-</body> -->
