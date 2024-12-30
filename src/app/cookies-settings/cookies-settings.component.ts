@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-cookies-settings',
-  imports: [],
+  standalone: false,
   templateUrl: './cookies-settings.component.html',
-  styleUrl: './cookies-settings.component.css'
+  styleUrl: './cookies-settings.component.css',
 })
-export class CookiesSettingsComponent {
-
-}
+export class CookiesSettingsComponent {}

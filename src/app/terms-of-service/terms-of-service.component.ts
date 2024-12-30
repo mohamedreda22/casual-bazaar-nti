@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-terms-of-service',
-  imports: [],
+  standalone: false,
   templateUrl: './terms-of-service.component.html',
-  styleUrl: './terms-of-service.component.css'
+  styleUrl: './terms-of-service.component.css',
 })
-export class TermsOfServiceComponent {
-
-}
+export class TermsOfServiceComponent {}

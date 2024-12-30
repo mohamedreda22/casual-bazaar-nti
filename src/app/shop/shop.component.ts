@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -8,34 +7,45 @@ import {
   OnDestroy,
   HostListener,
 } from '@angular/core';
-import productsData from '../../assets/products.json';
-import categories from '../../assets/categories.json';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-shop',
-  standalone: true,
-  imports: [CommonModule],
+  standalone: false,
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.css'],
 })
 export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'Shop Now!';
   timer: any;
-  categories = categories;
-  products = productsData;
-  filteredProducts = this.products; // Initialize with all products
-
-  carouselProducts = this.products.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
+  categories: any[] = [];
+  products: any[] = [];
+  filteredProducts: any[] = [];
+  carouselProducts: any[] = [];
   currentIndex = 0;
-
-  selectedSubCategory: string | null = null; // Added this property to track the selected subcategory
+  selectedSubCategory: string | null = null;
 
   @ViewChild('carouselTrack', { static: false })
   carouselTrack!: ElementRef<HTMLDivElement>;
 
-  ngOnInit(): void {}
+  constructor(private _productS: ProductService) {}
+
+  imageURL = '';
+
+  ngOnInit(): void {
+    this.imageURL = this._productS.uploadURL;
+    this._productS.getCategories().subscribe((response) => {
+      this.categories = response;
+    });
+    this._productS.getProducts().subscribe((response) => {
+      this.products = response;
+      this.filteredProducts = this.products;
+      this.carouselProducts = [...this.products].sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+    });
+  }
 
   ngAfterViewInit(): void {
     this.updateCarousel();
@@ -82,11 +92,9 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-
-
   filterByCategory(categoryName: string, subCategory: string): void {
     console.log(`Filtering products for ${categoryName} > ${subCategory}`);
-    this.selectedSubCategory = subCategory; // Set the selected subcategory
+    this.selectedSubCategory = subCategory;
     this.filteredProducts = this.products.filter(
       (product) =>
         product.category === categoryName && product.subCategory === subCategory

@@ -1,27 +1,45 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import productsData from '../../assets/products.json';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-new-arrivals',
-  imports: [CommonModule],
+  standalone: false,
   templateUrl: './new-arrivals.component.html',
   styleUrls: ['./new-arrivals.component.css'],
 })
-export class NewArrivalsComponent {
-  products: any = [];
+export class NewArrivalsComponent implements OnInit {
+  products: any[] = [];
+  imageURL: string = '';
+  filter: string = 'newest'; // Default filter
 
-  constructor() {
-    this.products = productsData;
+  constructor(private _productS: ProductService) {}
+
+  ngOnInit(): void {
+    this.imageURL = this._productS.uploadURL;
+    this._productS.getProducts().subscribe((response) => {
+      this.products = this.filterProducts(response);
+    });
   }
 
-  filter = 'newest';
+  changeFilter(filter: string) {
+    this.filter = filter;
+    this.products = this.filterProducts(this.products); 
+  }
 
   filterProducts(products: any) {
-    return products.sort(
-      (a: any, b: any) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
+    switch (this.filter) {
+      case 'newest':
+        return products.sort(
+          (a: any, b: any) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      case 'price':
+        return products.sort((a: any, b: any) => a.price - b.price);
+      case 'rank':
+        return products.sort((a: any, b: any) => a.rank - b.rank);
+      default:
+        return products; 
+    }
   }
 
   addToCart(product: any) {

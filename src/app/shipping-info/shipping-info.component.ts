@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-shipping-info',
-  imports: [],
+  standalone: false,
   templateUrl: './shipping-info.component.html',
-  styleUrl: './shipping-info.component.css'
+  styleUrl: './shipping-info.component.css',
 })
-export class ShippingInfoComponent {
-
-}
+export class ShippingInfoComponent {}

@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ShopComponent } from './shop/shop.component';
 import { HomeContentComponent } from './home-content/home-content.component';
 import { LoginComponent } from './login/login.component';
@@ -12,8 +12,9 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { CookiesSettingsComponent } from './cookies-settings/cookies-settings.component';
 import { NewArrivalsComponent } from './new-arrivals/new-arrivals.component';
 import { BestSellersComponent } from './best-sellers/best-sellers.component';
+import { NgModule } from '@angular/core';
 
-export const routes: Routes = [
+const routes: Routes = [
   {
     path: '',
     component: HomeContentComponent,
@@ -73,5 +74,11 @@ export const routes: Routes = [
   {
     path: 'best-sellers',
     component: BestSellersComponent,
-  }
+  },
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
