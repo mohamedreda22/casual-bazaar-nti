@@ -1,25 +1,33 @@
-/* import { Component, OnInit } from '@angular/core';
-import productsData from '../../assets/products.json';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-best-sellers',
   templateUrl: './best-sellers.component.html',
   styleUrl: './best-sellers.component.css',
-  standalone: true,
-  imports: [CommonModule],
+  standalone: false,
 })
 export class BestSellersComponent implements OnInit {
   bestSellersByCategory: any[] = [];
-  products = productsData;
+  products: any[] = [];
   timer: any;
+  imageURL: string = '';
+  categories: any[] = []; 
 
-  constructor() {
-    this.bestSellersByCategory = this.groupBestSellersByCategory();
-  }
+  constructor(private _productS: ProductService) {}
+
 
   ngOnInit(): void {
+    this.imageURL = this._productS.uploadURL;
+    this._productS.getProducts().subscribe((response) => {
+    this.products = response;
+    this.bestSellersByCategory = this.groupBestSellersByCategory();
     this.startTimer(); 
+    });
+
+    this._productS.getCategories().subscribe((response) => {
+      this.categories = response;
+    });
   }
 
   groupBestSellersByCategory() {
@@ -73,4 +81,3 @@ export class BestSellersComponent implements OnInit {
     return result;
   }
 }
- */
