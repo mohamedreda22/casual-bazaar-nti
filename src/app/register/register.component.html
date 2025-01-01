@@ -4,35 +4,73 @@
     <p>Join us and start shopping today!</p>
     <form (ngSubmit)="register(registerForm)" #registerForm="ngForm">
       <div class="form-group">
-        <input type="text" placeholder="Full Name"  name="username" #username="ngModel" ngModel required/>
+        <input
+          type="text"
+          placeholder="Full Name"
+          name="username"
+          #username="ngModel"
+          ngModel
+          required
+        />
         <div class="error-msg" *ngIf="username.invalid && username.touched">
           <span *ngIf="username.errors?.['required']">*This field is required</span>
-          </div>
+        </div>
       </div>
+
       <div class="form-group">
-        <input type="email" placeholder="Email Address"  name="email" #email="ngModel" ngModel required email/>
+        <input
+          type="email"
+          placeholder="Email Address"
+          name="email"
+          #email="ngModel"
+          ngModel
+          required
+          email
+        />
         <div class="error-msg" *ngIf="email.invalid && email.touched">
           <span *ngIf="email.errors?.['required']">*This field is required</span>
           <span *ngIf="email.errors?.['email']">*Invalid email address</span>
-          </div>
+        </div>
       </div>
+
       <div class="form-group">
-        <input type="password" placeholder="Password"  name="password" #password="ngModel" ngModel required/>
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          #password="ngModel"
+          ngModel
+          required
+          minlength="8"
+        />
         <div class="error-msg" *ngIf="password.invalid && password.touched">
           <span *ngIf="password.errors?.['required']">*This field is required</span>
-          </div>
+          <span *ngIf="password.errors?.['minlength']">*Password must be at least 8 characters long</span>
+        </div>
       </div>
+
       <div class="form-group">
-        <input type="password" placeholder="Confirm Password"  name="retypepassword" #retypepassword="ngModel" ngModel [pattern]="password.value" required/>
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          name="retypepassword"
+          #retypepassword="ngModel"
+          ngModel
+          required
+          [ngModelOptions]="{ updateOn: 'change' }"
+          [pattern]="password.value"
+        />
         <div class="error-msg" *ngIf="retypepassword.invalid && retypepassword.touched">
           <span *ngIf="retypepassword.errors?.['required']">*This field is required</span>
           <span *ngIf="retypepassword.errors?.['pattern']">*Passwords do not match</span>
         </div>
-      </div> 
-      <button type="submit" class="btn-primary">Register</button>
-      <div class="links">
-        <a href="/login">Already have an account? Login</a>
       </div>
+
+      <button type="submit" class="btn-primary" [disabled]="registerForm.invalid">Register</button>
     </form>
+
+    <div class="links">
+      <a href="/login">Already have an account? Login</a>
+    </div>
   </div>
 </div>
