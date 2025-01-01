@@ -52,7 +52,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     });
 
-    this.loadCart(); // Load cart items
+    // this.loadCart(); // Load cart items
   }
 
   ngAfterViewInit(): void {
@@ -139,21 +139,22 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     this._cartS.addCartItem(product).subscribe((cartItems) => {
       this.cartItems = cartItems;
     });
+    console.log('Added to cart:', product);
   }
 
   // Load the current cart items
-  loadCart(): void {
+ /*  loadCart(): void {
     this._cartS.getCartItems().subscribe((cartItems) => {
       this.cartItems = cartItems;
     });
-  }
+  } */
 
   // Remove item from the cart
-  removeFromCart(productId: string): void {
+/*   removeFromCart(productId: string): void {
     this._cartS.removeCartItem(productId).subscribe((cartItems) => {
       this.cartItems = cartItems;
     });
-  }
+  } */
 
   // Handle checkout process (optional)
   checkout(): void {

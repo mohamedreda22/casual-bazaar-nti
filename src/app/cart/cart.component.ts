@@ -9,8 +9,9 @@ import { CartService } from '../services/cart.service';
 })
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
-  shippingCost: number = 5; // Assuming a fixed shipping cost for simplicity
+  shippingCost: number = 5;
   cartId: string = '1'; // Ideally, this should come from a session or local storage
+  imgURL = 'http://localhost:3000/images/';
 
   constructor(private cartService: CartService) {}
 
@@ -18,38 +19,33 @@ export class CartComponent implements OnInit {
     this.loadCartItems();
   }
 
-  // Fetch cart items from the service
   loadCartItems(): void {
-    this.cartService.getCartItems().subscribe(
+    this.cartService.getCartItems(this.cartId).subscribe(
       (items) => {
         this.cartItems = items;
       },
       (error) => {
         console.error('Error fetching cart items:', error);
       }
-
     );
   }
 
-  // Update item quantity when the user increases or decreases the quantity
-  updateQuantity(item: any, delta: number): void {
-    // Prevent negative quantities
+/*   updateQuantity(item: any, delta: number): void {
     if (item.quantity + delta >= 1) {
       const updatedItem = { ...item, quantity: item.quantity + delta };
       this.cartService.updateCartItem(this.cartId, updatedItem).subscribe(
         () => {
-          item.quantity += delta; // Update the quantity in the local cart state
+          item.quantity += delta;
         },
         (error) => {
           console.error('Error updating item quantity:', error);
         }
       );
     }
-  }
+  } */
 
-  // Remove product from the cart
-  removeProductFromCart(cartId: string, productId: string): void {
-    this.cartService.removeCartItem(productId).subscribe(
+/*   removeProductFromCart(cartId: string, productId: string): void {
+    this.cartService.removeCartItem(cartId, productId).subscribe(
       () => {
         this.cartItems = this.cartItems.filter((item) => item.id !== productId);
       },
@@ -57,20 +53,17 @@ export class CartComponent implements OnInit {
         console.error('Error removing product:', error);
       }
     );
-  }
+  } */
 
-  // Calculate the total price of all items in the cart
   calculateTotal(): number {
     const totalItemCost = this.cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
-    return totalItemCost + this.shippingCost; // Adding shipping cost to the total
+    return totalItemCost + this.shippingCost;
   }
 
-  // Handle the checkout process
   checkout(): void {
     console.log('Proceeding to checkout...');
-    // Implement checkout logic here (e.g., redirect to a checkout page)
   }
 }

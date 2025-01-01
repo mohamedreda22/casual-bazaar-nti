@@ -67,7 +67,7 @@
           <h3>{{ product.name }}</h3>
           <p>{{ product.description }}</p>
           <p class="price">${{ product.price }}</p>
-          <a href="#" class="btn">Add to Cart</a>
+            <button class="btn" (click)="addToCart(product)" >Add to Cart</button>
         </div>
       </div>
     </div>

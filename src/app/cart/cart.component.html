@@ -5,18 +5,21 @@
 
     <!-- Cart Items List -->
     <div *ngFor="let item of cartItems; let i = index" class="cart-item">
-      <img [src]="item.image" [alt]="item.name" />
+      <img [src]="imgURL + item.imgURL" [alt]="item.name" />
       <div class="item-details">
         <p>{{ item.name }}</p>
         <span class="item-desc">{{ item.description }}</span>
       </div>
       <div class="item-quantity">
-        <button (click)="updateQuantity(item, -1)" [disabled]="item.quantity <= 1">-</button>
+        <!-- <button (click)="updateQuantity(item, -1)" [disabled]="item.quantity <= 1">-</button> -->
+        <button  [disabled]="item.quantity <= 1">-</button>
         <span>{{ item.quantity }}</span>
-        <button (click)="updateQuantity(item, 1)">+</button>
+        <!-- <button (click)="updateQuantity(item, 1)">+</button> -->
+        <button >+</button>
       </div>
       <span class="item-price">€ {{ item.price * item.quantity | number: '1.2-2' }}</span>
-      <button class="remove-item" (click)="removeProductFromCart(cartId, item.id)">×</button>
+      <!-- <button class="remove-item" (click)="removeProductFromCart(cartId, item.id)">×</button> -->
+      <button class="remove-item" >×</button>
     </div>
 
     <a href="#" class="back-to-shop">← Back to shop</a>
