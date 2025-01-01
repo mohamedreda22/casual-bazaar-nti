@@ -18,6 +18,7 @@ import { FaqsComponent } from './faqs/faqs.component';
 import { ShippingInfoComponent } from './shipping-info/shipping-info.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { FooterComponent } from './footer/footer.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   imports: [BrowserModule, AppRoutingModule, FormsModule],
@@ -37,6 +38,7 @@ import { FooterComponent } from './footer/footer.component';
     FaqsComponent,
     ShippingInfoComponent,
     TermsOfServiceComponent,
+    CartComponent
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

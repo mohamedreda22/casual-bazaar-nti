@@ -13,15 +13,14 @@ import { CookiesSettingsComponent } from './cookies-settings/cookies-settings.co
 import { NewArrivalsComponent } from './new-arrivals/new-arrivals.component';
 import { BestSellersComponent } from './best-sellers/best-sellers.component';
 import { NgModule } from '@angular/core';
+import { CartComponent } from './cart/cart.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeContentComponent,
-  },
-  {
-    path: '*',
-    component: HomeContentComponent,
+    redirectTo: '/home',
+    pathMatch: 'full',
   },
   {
     path: 'home',
@@ -74,6 +73,14 @@ const routes: Routes = [
   {
     path: 'best-sellers',
     component: BestSellersComponent,
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+  },
+  {
+    path: '**',
+    component: NotfoundComponent,
   },
 ];
 
