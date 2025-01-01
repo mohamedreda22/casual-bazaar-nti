@@ -1,62 +1,38 @@
 <div class="shopping-cart-container">
   <div class="cart">
     <h2>Shopping Cart</h2>
-    <span class="cart-items">3 items</span>
-    <div class="cart-item">
-      <img src="dress.jpg" alt="Shirt" />
+    <span class="cart-items">{{ cartItems.length }} items</span>
+
+    <!-- Cart Items List -->
+    <div *ngFor="let item of cartItems; let i = index" class="cart-item">
+      <img [src]="item.image" [alt]="item.name" />
       <div class="item-details">
-        <p>Shirt</p>
-        <span class="item-desc">Cotton T-shirt</span>
+        <p>{{ item.name }}</p>
+        <span class="item-desc">{{ item.description }}</span>
       </div>
       <div class="item-quantity">
-        <button>-</button>
-        <span>1</span>
-        <button>+</button>
+        <button (click)="updateQuantity(item, -1)" [disabled]="item.quantity <= 1">-</button>
+        <span>{{ item.quantity }}</span>
+        <button (click)="updateQuantity(item, 1)">+</button>
       </div>
-      <span class="item-price">€ 44.00</span>
-      <button class="remove-item">×</button>
+      <span class="item-price">€ {{ item.price * item.quantity | number: '1.2-2' }}</span>
+      <button class="remove-item" (click)="removeProductFromCart(cartId, item.id)">×</button>
     </div>
-    <div class="cart-item">
-      <img src="laptop.jpg" alt="Shirt" />
-      <div class="item-details">
-        <p>Shirt</p>
-        <span class="item-desc">Cotton T-shirt</span>
-      </div>
-      <div class="item-quantity">
-        <button>-</button>
-        <span>1</span>
-        <button>+</button>
-      </div>
-      <span class="item-price">€ 44.00</span>
-      <button class="remove-item">×</button>
-    </div>
-    <div class="cart-item">
-      <img src="iphone.jpg" alt="Shirt" />
-      <div class="item-details">
-        <p>Shirt</p>
-        <span class="item-desc">Cotton T-shirt</span>
-      </div>
-      <div class="item-quantity">
-        <button>-</button>
-        <span>1</span>
-        <button>+</button>
-      </div>
-      <span class="item-price">€ 44.00</span>
-      <button class="remove-item">×</button>
-    </div>
+
     <a href="#" class="back-to-shop">← Back to shop</a>
   </div>
+
   <div class="summary">
     <h2>Summary</h2>
     <div class="summary-item">
-      <span>ITEMS 3</span>
-      <span>€ 132.00</span>
+      <span>ITEMS {{ cartItems.length }}</span>
+      <span>€ {{ calculateTotal() | number: '1.2-2' }}</span>
     </div>
     <div class="summary-item">
       <span>SHIPPING</span>
-      <select>
-        <option>Standard-Delivery - €5.00</option>
-        <option>Express-Delivery - €10.00</option>
+      <select [(ngModel)]="shippingCost">
+        <option [value]="5">Standard-Delivery - €5.00</option>
+        <option [value]="10">Express-Delivery - €10.00</option>
       </select>
     </div>
     <div class="summary-item">
@@ -65,8 +41,8 @@
     </div>
     <div class="summary-item total">
       <span>TOTAL PRICE</span>
-      <span>€ 137.00</span>
+      <span>€ {{ calculateTotal() + shippingCost | number: '1.2-2' }}</span>
     </div>
-    <button class="register-btn">REGISTER</button>
+    <button class="register-btn" (click)="checkout()">REGISTER</button>
   </div>
 </div>

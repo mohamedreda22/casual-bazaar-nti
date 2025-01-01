@@ -8,6 +8,7 @@ import {
   HostListener,
 } from '@angular/core';
 import { ProductService } from '../services/product.service';
+import { CartService } from '../services/cart.service'; // Import CartService
 
 @Component({
   selector: 'app-shop',
@@ -25,10 +26,15 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   currentIndex = 0;
   selectedSubCategory: string | null = null;
 
+  cartItems: any[] = []; // Track cart items
+
   @ViewChild('carouselTrack', { static: false })
   carouselTrack!: ElementRef<HTMLDivElement>;
 
-  constructor(private _productS: ProductService) {}
+  constructor(
+    private _productS: ProductService,
+    private _cartS: CartService // Inject CartService
+  ) {}
 
   imageURL = '';
 
@@ -45,6 +51,8 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
     });
+
+    this.loadCart(); // Load cart items
   }
 
   ngAfterViewInit(): void {
@@ -124,5 +132,31 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!(event.target as HTMLElement).closest('.category-navbar')) {
       this.categories.forEach((category) => (category.show = false));
     }
+  }
+
+  // Add an item to the cart
+  addToCart(product: any): void {
+    this._cartS.addCartItem(product).subscribe((cartItems) => {
+      this.cartItems = cartItems;
+    });
+  }
+
+  // Load the current cart items
+  loadCart(): void {
+    this._cartS.getCartItems().subscribe((cartItems) => {
+      this.cartItems = cartItems;
+    });
+  }
+
+  // Remove item from the cart
+  removeFromCart(productId: string): void {
+    this._cartS.removeCartItem(productId).subscribe((cartItems) => {
+      this.cartItems = cartItems;
+    });
+  }
+
+  // Handle checkout process (optional)
+  checkout(): void {
+    alert('Proceeding to checkout...');
   }
 }
