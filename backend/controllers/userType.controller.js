@@ -13,6 +13,16 @@ const auth = require("../utilis/auth");
 
 exports.createUserType = async (req, res) => {
   try {
+    const userType = await userTypeModel.create(req.body);
+    res.status(201).json(userType);
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/* exports.createUserType = async (req, res) => {
+  try {
     if (!req.userData) {
       return res
         .status(401)
@@ -29,7 +39,7 @@ exports.createUserType = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+}; */
 exports.getUserTypes = async (req, res) => {
   try {
     const userTypes = await userTypeModel.find();
