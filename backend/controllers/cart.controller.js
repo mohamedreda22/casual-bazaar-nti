@@ -131,3 +131,12 @@ exports.removeFromCart = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getAllCarts = async (req, res) => {
+  try {
+    const carts = await CartModel.find();
+    res.status(200).send(carts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
