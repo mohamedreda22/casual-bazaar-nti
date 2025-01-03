@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { NewArrivalsComponent } from './new-arrivals/new-arrivals.component';
 import { BestSellersComponent } from './best-sellers/best-sellers.component';
 import { ShopComponent } from './shop/shop.component';
@@ -19,9 +18,12 @@ import { ShippingInfoComponent } from './shipping-info/shipping-info.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { FooterComponent } from './footer/footer.component';
 import { CartComponent } from './cart/cart.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RfComponent } from './rf/rf.component';
+
 
 @NgModule({
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   declarations: [
     AppComponent,
     ShopComponent,
@@ -38,7 +40,8 @@ import { CartComponent } from './cart/cart.component';
     FaqsComponent,
     ShippingInfoComponent,
     TermsOfServiceComponent,
-    CartComponent
+    CartComponent,
+    RfComponent,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
