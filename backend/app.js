@@ -17,7 +17,7 @@ app.use(cors(// allow requests from all domains and localhost:4200 (Angular app)
 ));
 app.use(express.json()); // for parsing application/json
 app.use('/users', userRouter); 
-app.use('/userTypes', userTypeRouter);
+app.use('/userTypes', userTypeRouter); // use user router for all routes starting with /users
 app.use('/products', productRouter);
 app.use("/categories", categoryRouter);
 app.use("/cart", cartRouter);
