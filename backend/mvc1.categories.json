@@ -1,0 +1,55 @@
+[{
+  "_id": {
+    "$oid": "677311bb0e5ab696cfe3163c"
+  },
+  "name": "men",
+  "subCategories": [
+    "T-shirts",
+    "Footwear",
+    "Wearables",
+    "Clothing"
+  ],
+  "show": false
+},
+{
+  "_id": {
+    "$oid": "677311bb0e5ab696cfe3163d"
+  },
+  "name": "women",
+  "subCategories": [
+    "Clothing",
+    "Heels",
+    "Accessories"
+  ],
+  "show": false
+},
+{
+  "_id": {
+    "$oid": "677311bb0e5ab696cfe3163e"
+  },
+  "name": "kids",
+  "subCategories": [
+    "T-shirts",
+    "Sneakers",
+    "Toys",
+    "Accessories"
+  ],
+  "show": false
+},
+{
+  "_id": {
+    "$oid": "677311bb0e5ab696cfe3163f"
+  },
+  "name": "electronics",
+  "subCategories": [
+    "Smartphones",
+    "Laptops",
+    "Audio",
+    "Wearables",
+    "TVs",
+    "Cameras",
+    "Tablets",
+    "Gaming"
+  ],
+  "show": false
+}]
