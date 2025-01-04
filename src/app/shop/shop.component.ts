@@ -166,12 +166,10 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Send updated cart to backend
     this._cartS
-      .addCartItem(userId, { userId, products: this.cartItems })
-      .subscribe((cartItems) => {
-        this.cartItems = cartItems.products; // Assuming server returns updated cart structure
+      .addToCart(userId, product._id)
+      .subscribe(() => {
+        console.log('Added to cart:', product, userId);
       });
-
-    console.log('Added to cart:', product, userId);
   }
 
   fetchToken(): void {

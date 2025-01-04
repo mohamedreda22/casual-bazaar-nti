@@ -10,16 +10,21 @@ import { CartService } from '../services/cart.service';
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
   shippingCost: number = 5;
-  userId = '605c72ef1532072e8c7f1dbb';
+  userId: string = '';
   imgURL = 'http://localhost:3000/images/';
 
   constructor(private cartService: CartService) {}
 
   ngOnInit() {
+    this.userId = this.cartService.getUserId();
     this.loadCartItems();
     if (this.cartItems) {
       this.calculateTotal();
     }
+  }
+
+  getUserId(): void {
+    this.userId = this.cartService.getUserId();
   }
 
   loadCartItems(): void {
@@ -49,13 +54,6 @@ export class CartComponent implements OnInit {
     );
   }
 
-  /*   calculateTotal(): number {
-    const totalItemCost = this.cartItems.reduce(
-      (total, item) => total + item.productDetails.price * item.quantity,
-      0
-    );
-    return totalItemCost + this.shippingCost;
-  } */
   calculateTotal() {
     return this.cartItems.reduce((total, item) => {
       if (item && item.price) {
@@ -78,11 +76,11 @@ export class CartComponent implements OnInit {
       item.quantity = 1; // Prevent negative or zero quantities
     }
 
-    this.cartService.addCartItem(this.userId, this.cartItems).subscribe(
+    this.cartService.updateCartItem(this.userId, this.cartItems).subscribe(
       () => {
         this.loadCartItems(); // Reload cart items to reflect updated quantity
       },
-      (error) => {
+      (error: any) => {
         console.error('Error updating quantity:', error);
       }
     );
