@@ -168,7 +168,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     this._cartS
       .addToCart(userId, product._id)
       .subscribe(() => {
-        console.log('Added to cart:', product, userId);
+        // console.log('Added to cart:', product, userId);
       });
   }
 
@@ -176,7 +176,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     const token = this._cartS.fetchTokenFromLocalStorage();
     const decodedToken = this.decodeToken(token);
     const userId = decodedToken.userId; // Extract userId from decoded token
-    console.log('User ID:', userId);
+    // console.log('User ID:', userId);
   }
 
   decodeToken(token: string): any {

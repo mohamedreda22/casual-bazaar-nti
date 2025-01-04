@@ -3,27 +3,21 @@
     <div class="logo-section">
       <a routerLink="/home">
         <h1>Casual Bazaar</h1>
-        <h5>Trust & Globally Appealing</h5></a
-      >
+        <h5>Trust & Globally Appealing</h5>
+      </a>
     </div>
     <ul class="nav-links">
       <li><a routerLink="/shop" routerLinkActive="active">🛍️Shop Now</a></li>
       <li>
-        <a
-          routerLink="/new-arrivals"
-          routerLinkActive="active"
-          style="color: red"
-          >🔥New Arrivals🔥</a
-        >
+        <a routerLink="/new-arrivals" routerLinkActive="active" style="color: red">🔥New Arrivals🔥</a>
       </li>
       <li>
-        <a routerLink="/best-sellers" routerLinkActive="active"
-          >🏅Best Sellers</a
-        >
+        <a routerLink="/best-sellers" routerLinkActive="active">🏅Best Sellers</a>
       </li>
     </ul>
     <div class="nav-buttons">
-      <a routerLink="/login" class="btn">Login</a>
+      <a *ngIf="!isAuthenticated" routerLink="/login" class="btn">Login</a>
+      <a *ngIf="isAuthenticated" (click)="logout()" routerLink="home" class="btn">Logout</a>
       <a routerLink="/cart" class="btn" id="cart">
         <i class="fa fa-shopping-cart" aria-hidden="true"> Cart</i>
       </a>

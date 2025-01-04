@@ -11,12 +11,17 @@ export class CartComponent implements OnInit {
   cartItems: any[] = [];
   shippingCost: number = 5;
   userId: string = '';
-  imgURL = 'http://localhost:3000/images/';
+  totalPrice: number = 0;
 
   constructor(private cartService: CartService) {}
+  imageURL = '';
 
   ngOnInit() {
-    this.userId = this.cartService.getUserId();
+  if (this.cartService.imgURL) {
+    this.imageURL = this.cartService.imgURL;
+  } else {
+    console.error('Image URL is not defined in CartService');
+  }    this.userId = this.cartService.getUserId();
     this.loadCartItems();
     if (this.cartItems) {
       this.calculateTotal();
@@ -32,12 +37,14 @@ export class CartComponent implements OnInit {
       (response) => {
         if (Array.isArray(response.products)) {
           this.cartItems = response.products;
-          console.log('Cart Items:', this.cartItems);
+          // console.log('Cart Items:', this.cartItems);
           this.cartItems.forEach((item) => {
-            console.log('Item:', item);
+            // console.log('Item:', item);
             this.cartService.getProductById(item.product).subscribe(
               (productDetails) => {
                 item.productDetails = productDetails;
+                // console.log('Product details:', productDetails);
+                this.calculateTotal();
               },
               (error) => {
                 console.error('Error fetching product details:', error);
@@ -54,7 +61,18 @@ export class CartComponent implements OnInit {
     );
   }
 
-  calculateTotal() {
+/*   calculateTotal(): void {
+    this.totalPrice = this.cartItems.reduce((total, item) => {
+      if (item && item.productDetails && item.productDetails.price) {
+        return total + item.productDetails.price * item.quantity;
+      } else {
+        console.warn('Item or price is missing', item);
+        return total;
+      }
+    }, 0);
+  } */
+
+  /*   calculateTotal() {
     return this.cartItems.reduce((total, item) => {
       if (item && item.price) {
         return total + item.price;
@@ -63,7 +81,7 @@ export class CartComponent implements OnInit {
         return total;
       }
     }, 0);
-  }
+  } */
 
   checkout(): void {
     console.log('Proceeding to checkout...');
@@ -78,9 +96,9 @@ export class CartComponent implements OnInit {
 
     this.cartService.updateCartItem(this.userId, this.cartItems).subscribe(
       () => {
-        this.loadCartItems(); // Reload cart items to reflect updated quantity
+        this.calculateTotal(); // Recalculate total after quantity update
       },
-      (error: any) => {
+      (error) => {
         console.error('Error updating quantity:', error);
       }
     );
@@ -100,11 +118,22 @@ export class CartComponent implements OnInit {
   productDetails(item: any): void {
     this.cartService.getProductById(item.product).subscribe(
       (productDetails) => {
-        console.log('Product details:', productDetails);
+        // console.log('Product details:', productDetails);
       },
       (error) => {
         console.error('Error fetching product details:', error);
       }
     );
+  }
+
+  calculateTotal(): void {
+    this.totalPrice = this.cartItems.reduce((total, item) => {
+      if (item && item.productDetails && item.productDetails.price) {
+        return total + item.productDetails.price * item.quantity;
+      } else {
+        console.warn('Item or price is missing', item);
+        return total;
+      }
+    }, 0);
   }
 }

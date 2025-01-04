@@ -43,6 +43,6 @@ export class NewArrivalsComponent implements OnInit {
   }
 
   addToCart(product: any) {
-    console.log('Added to Cart:', product);
+    // console.log('Added to Cart:', product);
   }
 }

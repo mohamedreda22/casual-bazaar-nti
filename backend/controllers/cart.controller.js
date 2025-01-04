@@ -14,7 +14,7 @@ exports.getCart = async (req, res) => {
 
 // Get Cart by User ID
 exports.getCartByUser = async (req, res) => {
-  console.log("Request received:", req.params); // Log request details
+  // console.log("Request received:", req.params); // Log request details
   try {
     if(!mongoose.Types.ObjectId.isValid(req.params.userId)) {
       return res.status(400).json({ message: "Invalid User ID" });
@@ -55,7 +55,7 @@ exports.createCart = async (req, res) => {
 };
 
 exports.addToCart = async (req, res) => {
-  console.log("Request received:", req.params, req.body); // Log request details
+  // console.log("Request received:", req.params, req.body); // Log request details
     const { userId } = req.params;
     const { productId } = req.body;
     console.log("userId:", userId, "productId:", productId); // Debug userId and productId
@@ -100,7 +100,7 @@ exports.addToCart = async (req, res) => {
 };
 
 // Clear Cart
-exports.clearCart = async (req, res) => {
+/* exports.clearCart = async (req, res) => {
   try {
     const cart = await CartModel.findOne({ user: req.params.userId });
     if (!cart) return res.status(404).json({ message: "Cart not found" });
@@ -111,13 +111,13 @@ exports.clearCart = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+}; */
 
 exports.updateCart = async (req, res) => {
-  console.log("Request received:", req.params, req.body); // Log request details
   const { userId } = req.params;
-  const { productId, quantity } = req.body;
+  const { productId } = req.body;
   console.log("userId:", userId, "productId:", productId); // Debug userId and productId
+  const { quantity } = req.body;
   try {
     if (!productId) {
       return res.status(400).json({ message: "Product ID is required" });
@@ -141,9 +141,7 @@ exports.updateCart = async (req, res) => {
     }
 
     await cart.save();
-    res
-      .status(200)
-      .json({ message: "Cart updated successfully", cart });
+    res.status(200).json({ message: "Cart updated successfully", cart });
   } catch (error) {
     console.error("Error in updateCart:", error); // Log detailed error
     res

@@ -5,21 +5,18 @@
 
     <!-- Cart Items List -->
     <div *ngFor="let item of cartItems; let i = index" class="cart-item">
-      <img [src]="imgURL + item.productDetails.imgURL" [alt]="item.productDetails.name" />
+      <img [src]="imageURL + item.productDetails.imgURL" [alt]="item.productDetails.name" />
       <div class="item-details">
         <p>{{ item.productDetails.name }}</p>
         <span class="item-desc">{{ item.productDetails.description }}</span>
       </div>
       <div class="item-quantity">
-        <!-- Decrease quantity button -->
-        <button (click)="updateQuantity(item, -1)" [disabled]="item.productDetails.quantity <= 1">-</button>
+        <button (click)="updateQuantity(item, -1)" [disabled]="item.quantity <= 1">-</button>
         <span>{{ item.quantity }}</span>
-        <!-- Increase quantity button -->
         <button (click)="updateQuantity(item, 1)">+</button>
       </div>
       <span class="item-price">€ {{ item.productDetails.price * item.quantity | number: '1.2-2' }}</span>
-      <!-- Remove item button -->
-      <button class="remove-item" (click)="removeItem(item._id)">×</button>
+      <button class="remove-item" (click)="removeItem(item.product)">×</button>
     </div>
 
     <a href="#" class="back-to-shop">← Back to shop</a>
@@ -29,7 +26,7 @@
     <h2>Summary</h2>
     <div class="summary-item">
       <span>ITEMS {{ cartItems.length }}</span>
-      <span>€ {{ calculateTotal() | number: '1.2-2' }}</span>
+      <span>€ {{ totalPrice | number: '1.2-2' }}</span>
     </div>
     <div class="summary-item">
       <span>SHIPPING</span>
@@ -44,7 +41,7 @@
     </div>
     <div class="summary-item total">
       <span>TOTAL PRICE</span>
-      <span>€ {{ (calculateTotal() + shippingCost) | number: '1.2-2' }}</span>
+      <span>€ {{ (totalPrice + shippingCost) | number: '1.2-2' }}</span>
     </div>
     <button class="register-btn" (click)="checkout()">REGISTER</button>
   </div>
