@@ -5,9 +5,9 @@
 
     <!-- Cart Items List -->
     <div *ngFor="let item of cartItems; let i = index" class="cart-item">
-      <img [src]="imgURL + item.imgURL" [alt]="item.name" />
+      <img [src]="imgURL + item.productDetails.imgURL" [alt]="item.productDetails.name" />
       <div class="item-details">
-        <p>{{ item.name }}</p>
+        <p>{{ item.productDetails.name }}</p>
         <span class="item-desc">{{ item.description }}</span>
       </div>
       <div class="item-quantity">
@@ -17,7 +17,7 @@
         <!-- Increase quantity button -->
         <button (click)="updateQuantity(item, 1)">+</button>
       </div>
-      <span class="item-price">€ {{ item.price * item.quantity | number: '1.2-2' }}</span>
+      <span class="item-price">€ {{ item.productDetails.price * item.quantity | number: '1.2-2' }}</span>
       <!-- Remove item button -->
       <button class="remove-item" (click)="removeItem(item._id)">×</button>
     </div>

@@ -16,7 +16,7 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService) {}
 
   ngOnInit() {
-    this.loadCartItems(); 
+    this.loadCartItems();
     if (this.cartItems) {
       this.calculateTotal();
     }
@@ -95,6 +95,17 @@ export class CartComponent implements OnInit {
       },
       (error) => {
         console.error('Error removing item:', error);
+      }
+    );
+  }
+
+  productDetails(item: any): void {
+    this.cartService.getProductById(item.product).subscribe(
+      (productDetails) => {
+        console.log('Product details:', productDetails);
+      },
+      (error) => {
+        console.error('Error fetching product details:', error);
       }
     );
   }
