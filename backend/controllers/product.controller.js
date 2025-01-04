@@ -19,9 +19,17 @@ exports.getProducts = async (req, res) => {
     }
 }
 
+const mongoose = require('mongoose');
+
 exports.getProduct = async (req, res) => {
     try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid product ID' });
+        }
         const product = await productModel.findById(req.params.id);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found'});
+        }
         res.status(200).send(product);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -46,3 +54,13 @@ exports.deleteProduct = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+exports.getProductDetails = async (productId) => {
+  try {
+    const product = await Product.findById(productId);
+    return product;
+  } catch (error) {
+    console.error("Error fetching product details:", error);
+    throw new Error("Product not found");
+  }
+};

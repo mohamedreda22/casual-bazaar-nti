@@ -134,30 +134,54 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  // Add an item to the cart
-  addToCart(product: any): void {
-    this._cartS.addCartItem(product).subscribe((cartItems) => {
-      this.cartItems = cartItems;
-    });
-    console.log('Added to cart:', product);
-  }
-
-  // Load the current cart items
- /*  loadCart(): void {
-    this._cartS.getCartItems().subscribe((cartItems) => {
-      this.cartItems = cartItems;
-    });
-  } */
-
-  // Remove item from the cart
-/*   removeFromCart(productId: string): void {
-    this._cartS.removeCartItem(productId).subscribe((cartItems) => {
-      this.cartItems = cartItems;
-    });
-  } */
-
   // Handle checkout process (optional)
   checkout(): void {
     alert('Proceeding to checkout...');
+  }
+
+  // Add an item to the cart
+  addToCart(product: any): void {
+    this.fetchToken(); // Ensure the token is fetched and userId is set
+
+    const userId = this.decodeToken(
+      localStorage.getItem('accessToken') || ''
+    ).userId;
+
+    // Check if the product is already in the cart
+    const existingProduct = this.cartItems.find(
+      (item) => item.product === product._id
+    );
+
+    if (existingProduct) {
+      // If the product exists, increase the quantity
+      existingProduct.quantity += 1;
+    } else {
+      // Otherwise, add a new product to the cart
+      this.cartItems.push({
+        userId: userId,
+        product: product._id,
+        quantity: 1,
+      });
+    }
+
+    // Send updated cart to backend
+    this._cartS
+      .addCartItem(userId, { userId, products: this.cartItems })
+      .subscribe((cartItems) => {
+        this.cartItems = cartItems.products; // Assuming server returns updated cart structure
+      });
+
+    console.log('Added to cart:', product, userId);
+  }
+
+  fetchToken(): void {
+    const token = this._cartS.fetchTokenFromLocalStorage();
+    const decodedToken = this.decodeToken(token);
+    const userId = decodedToken.userId; // Extract userId from decoded token
+    console.log('User ID:', userId);
+  }
+
+  decodeToken(token: string): any {
+    return JSON.parse(atob(token.split('.')[1]));
   }
 }

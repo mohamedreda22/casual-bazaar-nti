@@ -10,19 +10,38 @@ import { CartService } from '../services/cart.service';
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
   shippingCost: number = 5;
-  cartId: string = '1'; // Ideally, this should come from a session or local storage
+  userId = '605c72ef1532072e8c7f1dbb';
   imgURL = 'http://localhost:3000/images/';
 
   constructor(private cartService: CartService) {}
 
-  ngOnInit(): void {
-    this.loadCartItems();
+  ngOnInit() {
+    this.loadCartItems(); 
+    if (this.cartItems) {
+      this.calculateTotal();
+    }
   }
 
   loadCartItems(): void {
-    this.cartService.getCartItems(this.cartId).subscribe(
-      (items) => {
-        this.cartItems = items;
+    this.cartService.getCartItems(this.userId).subscribe(
+      (response) => {
+        if (Array.isArray(response.products)) {
+          this.cartItems = response.products;
+          console.log('Cart Items:', this.cartItems);
+          this.cartItems.forEach((item) => {
+            console.log('Item:', item);
+            this.cartService.getProductById(item.product).subscribe(
+              (productDetails) => {
+                item.productDetails = productDetails;
+              },
+              (error) => {
+                console.error('Error fetching product details:', error);
+              }
+            );
+          });
+        } else {
+          console.error('Unexpected response format:', response);
+        }
       },
       (error) => {
         console.error('Error fetching cart items:', error);
@@ -30,40 +49,53 @@ export class CartComponent implements OnInit {
     );
   }
 
-/*   updateQuantity(item: any, delta: number): void {
-    if (item.quantity + delta >= 1) {
-      const updatedItem = { ...item, quantity: item.quantity + delta };
-      this.cartService.updateCartItem(this.cartId, updatedItem).subscribe(
-        () => {
-          item.quantity += delta;
-        },
-        (error) => {
-          console.error('Error updating item quantity:', error);
-        }
-      );
-    }
-  } */
-
-/*   removeProductFromCart(cartId: string, productId: string): void {
-    this.cartService.removeCartItem(cartId, productId).subscribe(
-      () => {
-        this.cartItems = this.cartItems.filter((item) => item.id !== productId);
-      },
-      (error) => {
-        console.error('Error removing product:', error);
-      }
-    );
-  } */
-
-  calculateTotal(): number {
+  /*   calculateTotal(): number {
     const totalItemCost = this.cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
+      (total, item) => total + item.productDetails.price * item.quantity,
       0
     );
     return totalItemCost + this.shippingCost;
+  } */
+  calculateTotal() {
+    return this.cartItems.reduce((total, item) => {
+      if (item && item.price) {
+        return total + item.price;
+      } else {
+        console.warn('Item or price is missing', item);
+        return total;
+      }
+    }, 0);
   }
 
   checkout(): void {
     console.log('Proceeding to checkout...');
+  }
+
+  updateQuantity(item: any, change: number): void {
+    item.quantity += change;
+
+    if (item.quantity < 1) {
+      item.quantity = 1; // Prevent negative or zero quantities
+    }
+
+    this.cartService.addCartItem(this.userId, this.cartItems).subscribe(
+      () => {
+        this.loadCartItems(); // Reload cart items to reflect updated quantity
+      },
+      (error) => {
+        console.error('Error updating quantity:', error);
+      }
+    );
+  }
+
+  removeItem(productId: string): void {
+    this.cartService.removeCartItem(this.userId, productId).subscribe(
+      () => {
+        this.loadCartItems(); // Reload cart items after removal
+      },
+      (error) => {
+        console.error('Error removing item:', error);
+      }
+    );
   }
 }

@@ -1,35 +1,77 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
   private apiUrl = 'http://localhost:3000/cart'; // Base URL for the cart API
+  private productUrl = 'http://localhost:3000/products';
 
   constructor(private http: HttpClient) {}
 
-  // Get cart items by cart ID
-  getCartItems(cartId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/${cartId}`);
+  // Get cart items by userId
+  getCartItems(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/user/${userId}`).pipe(
+      catchError((error) => {
+        console.error('Error getting cart items:', error);
+        return throwError(() => new Error('Failed to fetch cart items'));
+      })
+    );
   }
 
-  // Add an item to the cart
-/*   addCartItem(cartId: string, product: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${cartId}/products`, product);
-  } */
-  addCartItem(product: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/`, product);
+  // Get product details by productId
+  getProductById(productId: string): Observable<any> {
+    return this.http.get<any>(`${this.productUrl}/${productId}`).pipe(
+      catchError((error) => {
+        console.error('Error getting product details:', error);
+        return throwError(() => new Error('Failed to fetch product details'));
+      })
+    );
   }
 
-  // Update an item in the cart
-  /*   updateCartItem(cartId: string, updatedItem: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${cartId}`, updatedItem);
-  } */
+  // Add items to the cart (replace cart if already exists)
+  addCartItem(userId: string, cart: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/user/${userId}`, cart).pipe(
+      catchError((error) => {
+        console.error('Error adding item to cart:', error);
+        return throwError(() => new Error('Failed to add item to cart'));
+      })
+    );
+  }
 
-  // Remove an item from the cart
-  /*   removeCartItem(cartId: string, productId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${cartId}/products/${productId}`);
-  } */
+  // Add a product to the cart (updates existing cart or creates a new one)
+  addToCart(userId: string, product: any): void {
+    this.getCartItems(userId).subscribe((cart) => {
+      const existingProduct = cart.products.find(
+        (item: any) => item.product === product._id
+      );
+
+      if (existingProduct) {
+        existingProduct.quantity += 1;
+      } else {
+        cart.products.push({ product: product._id, quantity: 1 });
+      }
+
+      this.addCartItem(userId, cart).subscribe();
+    });
+  }
+
+  // Remove an item from the cart by userId and productId
+  removeCartItem(userId: string, productId: string): Observable<any> {
+    return this.http
+      .delete(`${this.apiUrl}/${userId}/products/${productId}`)
+      .pipe(
+        catchError((error) => {
+          console.error('Error removing cart item:', error);
+          return throwError(() => new Error('Failed to remove cart item'));
+        })
+      );
+  }
+
+  // Fetch token from localStorage for userId
+  fetchTokenFromLocalStorage(): string {
+    return localStorage.getItem('accessToken') || '';
+  }
 }
