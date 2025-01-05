@@ -2,18 +2,18 @@
   <div class="form-box">
     <h2>Create an Account</h2>
     <p>Join us and start shopping today!</p>
-    <form (ngSubmit)="register(registerForm)" #registerForm="ngForm">
+    <form (ngSubmit)="register(registerForm)" [formGroup]="registerForm">
       <div class="form-group">
         <input
           type="text"
           placeholder="Full Name"
           name="username"
-          #username="ngModel"
-          ngModel
+          formControlName="username"
           required
         />
-        <div class="error-msg" *ngIf="username.invalid && username.touched">
-          <span *ngIf="username.errors?.['required']">*This field is required</span>
+        <div class="error-msg" *ngIf="registerForm.get('username')!.invalid && registerForm.get('username')!.touched">
+          <span *ngIf="registerForm.get('username')!.errors?.['required']">*Username is required</span>
+          <span *ngIf="registerForm.get('username')!.errors?.['minlength']">*Username must be at least 5 characters long</span>
         </div>
       </div>
 
@@ -22,15 +22,15 @@
           type="email"
           placeholder="Email Address"
           name="email"
-          #email="ngModel"
-          ngModel
+          formControlName="email"
           required
           email
         />
-        <div class="error-msg" *ngIf="email.invalid && email.touched">
-          <span *ngIf="email.errors?.['required']">*This field is required</span>
-          <span *ngIf="email.errors?.['email']">*Invalid email address</span>
-        </div>
+        <div class="error-msg" *ngIf="registerForm.get('email')!.invalid && registerForm.get('email')!.touched">
+          <span *ngIf="registerForm.get('email')!.errors?.['required']">*Email is required</span>
+          <span *ngIf="registerForm.get('email')!.errors?.['email']">*Invalid email address</span>
+          </div>
+
       </div>
 
       <div class="form-group">
@@ -38,15 +38,19 @@
           type="password"
           placeholder="Password"
           name="password"
-          #password="ngModel"
-          ngModel
+          formControlName="password"
           required
           minlength="8"
         />
-        <div class="error-msg" *ngIf="password.invalid && password.touched">
-          <span *ngIf="password.errors?.['required']">*This field is required</span>
-          <span *ngIf="password.errors?.['minlength']">*Password must be at least 8 characters long</span>
-        </div>
+        <div class="error-msg" *ngIf="registerForm.get('password')!.invalid && registerForm.get('password')!.touched">
+          <span *ngIf="registerForm.get('password')!.errors?.['required']">*Password is required</span>
+          <span *ngIf="registerForm.get('password')!.errors?.['passwordStrength']">*Password must be at least 8 characters long</span><br>
+          <span *ngIf="registerForm.get('password')!.errors?.['passwordStrength'] && !registerForm.get('password')!.errors?.['minlength']">
+            *Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character
+            </span>
+            <br>
+          </div>
+
       </div>
 
       <div class="form-group">
@@ -54,16 +58,13 @@
           type="password"
           placeholder="Confirm Password"
           name="retypepassword"
-          #retypepassword="ngModel"
-          ngModel
+          formControlName="retypepassword"
           required
-          [ngModelOptions]="{ updateOn: 'change' }"
-          [pattern]="password.value"
         />
-        <div class="error-msg" *ngIf="retypepassword.invalid && retypepassword.touched">
-          <span *ngIf="retypepassword.errors?.['required']">*This field is required</span>
-          <span *ngIf="retypepassword.errors?.['pattern']">*Passwords do not match</span>
-        </div>
+        <div class="error-msg" *ngIf="registerForm.get('retypepassword')!.invalid && registerForm.get('retypepassword')!.touched">
+          <span *ngIf="registerForm.get('retypepassword')!.errors?.['required']">*Please confirm your password</span>
+          <span *ngIf="registerForm.get('retypepassword')!.errors?.['passwordMismatch']">*Passwords do not match</span>
+          </div>
       </div>
 
       <button type="submit" class="btn-primary" [disabled]="registerForm.invalid">Register</button>

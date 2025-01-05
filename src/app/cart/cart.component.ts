@@ -61,27 +61,6 @@ export class CartComponent implements OnInit {
     );
   }
 
-/*   calculateTotal(): void {
-    this.totalPrice = this.cartItems.reduce((total, item) => {
-      if (item && item.productDetails && item.productDetails.price) {
-        return total + item.productDetails.price * item.quantity;
-      } else {
-        console.warn('Item or price is missing', item);
-        return total;
-      }
-    }, 0);
-  } */
-
-  /*   calculateTotal() {
-    return this.cartItems.reduce((total, item) => {
-      if (item && item.price) {
-        return total + item.price;
-      } else {
-        console.warn('Item or price is missing', item);
-        return total;
-      }
-    }, 0);
-  } */
 
   checkout(): void {
     console.log('Proceeding to checkout...');
@@ -130,10 +109,10 @@ export class CartComponent implements OnInit {
     this.totalPrice = this.cartItems.reduce((total, item) => {
       if (item && item.productDetails && item.productDetails.price) {
         return total + item.productDetails.price * item.quantity;
-      } else {
+      } /* else {
         console.warn('Item or price is missing', item);
         return total;
-      }
+      } */
     }, 0);
   }
 }

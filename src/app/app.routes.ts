@@ -17,7 +17,6 @@ import { CartComponent } from './cart/cart.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { authGuard } from './guards/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { RfComponent } from './rf/rf.component';
 
 const routes: Routes = [
   {
@@ -87,9 +86,6 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [authGuard],
-  },{
-    path: 'rf',
-    component: RfComponent
   },
   {
     path: '**',

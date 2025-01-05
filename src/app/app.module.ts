@@ -19,7 +19,6 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { FooterComponent } from './footer/footer.component';
 import { CartComponent } from './cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RfComponent } from './rf/rf.component';
 
 
 @NgModule({
@@ -40,8 +39,7 @@ import { RfComponent } from './rf/rf.component';
     FaqsComponent,
     ShippingInfoComponent,
     TermsOfServiceComponent,
-    CartComponent,
-    RfComponent,
+    CartComponent
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
