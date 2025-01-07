@@ -19,10 +19,11 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { FooterComponent } from './footer/footer.component';
 import { CartComponent } from './cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
-  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, CommonModule],
   declarations: [
     AppComponent,
     ShopComponent,

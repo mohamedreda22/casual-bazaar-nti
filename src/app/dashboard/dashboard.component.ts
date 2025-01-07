@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AdminDashboardService } from '../services/admin-dashboard.service';
 import { Product } from '../interfaces/productInterface';
 import { User } from '../interfaces/userInterface';
-// import { Order } from '../interfaces/orderInterface';
 import { Category } from '../interfaces/categoryInterface';
 
 @Component({
@@ -15,16 +14,20 @@ export class DashboardComponent implements OnInit {
 
   products: Product[] = [];
   users: User[] = [];
-  // orders: Order[] = [];
   categories: Category[] = [];
+  currentSection: string = 'products'; // Default section
 
   constructor(private adminDashboardService: AdminDashboardService) { }
 
   ngOnInit(): void {
     this.loadProducts();
     this.loadUsers();
-    // this.loadOrders();
     this.loadCategories();
+  }
+
+  // Switch between sections
+  showSection(section: string): void {
+    this.currentSection = section;
   }
 
   loadProducts(): void {
@@ -46,16 +49,6 @@ export class DashboardComponent implements OnInit {
       error => console.error('Error loading users:', error)
     );
   }
-
-  // loadOrders(): void { 
-  //   this.adminDashboardService.getAllOrders().subscribe(
-  //     orders => {
-  //       this.orders = orders;
-  //       console.log('Loaded Orders:', this.orders);
-  //     },
-  //     error => console.error('Error loading orders:', error)
-  //   );
-  // }
 
   loadCategories(): void { 
     this.adminDashboardService.getAllCategories().subscribe(
@@ -106,26 +99,6 @@ export class DashboardComponent implements OnInit {
       error => console.error('Error deleting user:', error)
     );
   }
-
-  // updateOrder(order: Order): void {
-  //   this.adminDashboardService.updateOrder(order).subscribe(
-  //     updatedOrder => {
-  //       console.log('Order updated:', updatedOrder);
-  //       this.loadOrders(); // Reload orders after update
-  //     },
-  //     error => console.error('Error updating order:', error)
-  //   );
-  // }
-
-  // deleteOrder(id: number): void {
-  //   this.adminDashboardService.deleteOrder(id).subscribe(
-  //     () => {
-  //       console.log('Order deleted');
-  //       this.loadOrders(); // Reload orders after deletion
-  //     },
-  //     error => console.error('Error deleting order:', error)
-  //   );
-  // }
 
   updateCategory(category: Category): void {
     this.adminDashboardService.updateCategory(category).subscribe(
