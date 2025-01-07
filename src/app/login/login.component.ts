@@ -15,7 +15,7 @@ export class LoginComponent {
   login(loginForm: NgForm) {
     this._authS.login(loginForm.value).subscribe({
       next: (res) => {
-        this._router.navigate(['/dashboard']); 
+        this._router.navigate(['/admin-dashboard']); 
         console.log(this._authS.decodeAccessToken());
       },
       error: (err) => {

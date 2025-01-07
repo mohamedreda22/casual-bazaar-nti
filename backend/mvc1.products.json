@@ -1,202 +1,257 @@
-[{
-  "_id": {
-    "$oid": "677996781075392bce8afaf7"
+[
+  {
+    "_id": {
+      "$oid": "677996781075392bce8afaf7"
+    },
+    "name": "wwWireless Bluetooth Headphones",
+    "price": 60,
+    "description": "High-quality wireless headphones with noise cancellation and up to 20 hours of battery life",
+    "imgURL": "1736021624807_1100x600.jpg",
+    "category": "Electronics",
+    "subCategory": "Audio",
+    "bestSellers": true,
+    "rank": 1,
+    "status": {
+      "availability": "available",
+      "stockStatus": "inStock"
+    }
   },
-  "name": "wwWireless Bluetooth Headphones",
-  "price": 60,
-  "description": "High-quality wireless headphones with noise cancellation and up to 20 hours of battery life",
-  "imgURL": "1736021624807_1100x600.jpg",
-  "category": "Electronics",
-  "subCategory": "Audio",
-  "bestSellers": true,
-  "rank": 1,
-  "createdAt": {
-    "$date": "2025-01-04T20:13:44.812Z"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eef0"
+    },
+    "imgURL": "camera.webp",
+    "name": "Digital Camera",
+    "description": "High-resolution digital camera with 4K video recording",
+    "price": 599,
+    "category": "electronics",
+    "subCategory": "Cameras",
+    "bestSellers": true,
+    "rank": 1,
+    "status": {
+      "availability": "available",
+      "stockStatus": "outStock"
+    }
   },
-  "updatedAt": {
-    "$date": "2025-01-04T20:13:44.812Z"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eef1"
+    },
+    "imgURL": "earbods.webp",
+    "name": "Wireless Earbuds",
+    "description": "True wireless earbuds with noise cancellation",
+    "price": 199,
+    "category": "electronics",
+    "subCategory": "Audio",
+    "bestSellers": true,
+    "rank": 2,
+    "status": {
+      "availability": "notAvailable",
+      "stockStatus": "outStock"
+    }
   },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eef0"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eef2"
+    },
+    "imgURL": "ipad.webp",
+    "name": "iPad Pro",
+    "description": "Latest iPad Pro with M1 chip and Liquid Retina display",
+    "price": 799,
+    "category": "electronics",
+    "subCategory": "Tablets",
+    "bestSellers": true,
+    "rank": 3,
+    "status": {
+      "availability": "available",
+      "stockStatus": "inStock"
+    }
   },
-  "imgURL": "camera.webp",
-  "name": "Digital Camera",
-  "description": "High-resolution digital camera with 4K video recording",
-  "price": 599,
-  "category": "electronics",
-  "subCategory": "Cameras",
-  "bestSellers": true,
-  "rank": 1
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eef1"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eef3"
+    },
+    "imgURL": "iphone.jpg",
+    "name": "iPhone 14 Pro",
+    "description": "Latest iPhone with pro camera system and A16 chip",
+    "price": 999,
+    "category": "electronics",
+    "subCategory": "Smartphones",
+    "bestSellers": true,
+    "rank": 4,
+    "status": {
+      "availability": "available",
+      "stockStatus": "inStock"
+    }
   },
-  "imgURL": "earbods.webp",
-  "name": "Wireless Earbuds",
-  "description": "True wireless earbuds with noise cancellation",
-  "price": 199,
-  "category": "electronics",
-  "subCategory": "Audio",
-  "bestSellers": true,
-  "rank": 2
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eef2"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eef4"
+    },
+    "imgURL": "laptop.jpg",
+    "name": "MacBook Pro",
+    "description": "14-inch MacBook Pro with M2 chip and Retina display",
+    "price": 1299,
+    "category": "electronics",
+    "subCategory": "Laptops",
+    "bestSellers": true,
+    "rank": 5,
+    "status": {
+      "availability": "available",
+      "stockStatus": "inStock"
+    }
   },
-  "imgURL": "ipad.webp",
-  "name": "iPad Pro",
-  "description": "Latest iPad Pro with M1 chip and Liquid Retina display",
-  "price": 799,
-  "category": "electronics",
-  "subCategory": "Tablets",
-  "bestSellers": true,
-  "rank": 3
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eef3"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eef5"
+    },
+    "imgURL": "watch.webp",
+    "name": "Smartwatch",
+    "description": "Advanced smartwatch with health tracking features",
+    "price": 299,
+    "category": "electronics",
+    "subCategory": "Wearables",
+    "bestSellers": false,
+    "rank": 6,
+    "status": {
+      "availability": "available",
+      "stockStatus": "inStock"
+    }
   },
-  "imgURL": "iphone.jpg",
-  "name": "iPhone 14 Pro",
-  "description": "Latest iPhone with pro camera system and A16 chip",
-  "price": 999,
-  "category": "electronics",
-  "subCategory": "Smartphones",
-  "bestSellers": true,
-  "rank": 4
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eef4"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eef6"
+    },
+    "imgURL": "gaming-console.webp",
+    "name": "Gaming Console",
+    "description": "Next-gen gaming console with 4K gaming and HDR support",
+    "price": 499,
+    "category": "electronics",
+    "subCategory": "Gaming",
+    "bestSellers": false,
+    "rank": 7,
+    "status": {
+      "availability": "available",
+      "stockStatus": "outStock"
+    }
   },
-  "imgURL": "laptop.jpg",
-  "name": "MacBook Pro",
-  "description": "14-inch MacBook Pro with M2 chip and Retina display",
-  "price": 1299,
-  "category": "electronics",
-  "subCategory": "Laptops",
-  "bestSellers": true,
-  "rank": 5
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eef5"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eef7"
+    },
+    "imgURL": "headphones.jpeg",
+    "name": "Over-Ear Headphones",
+    "description": "Noise-canceling over-ear headphones with premium sound quality",
+    "price": 349,
+    "category": "electronics",
+    "subCategory": "Audio",
+    "bestSellers": true,
+    "rank": 8,
+    "status": {
+      "availability": "available",
+      "stockStatus": "inStock"
+    }
   },
-  "imgURL": "watch.webp",
-  "name": "Smartwatch",
-  "description": "Advanced smartwatch with health tracking features",
-  "price": 299,
-  "category": "electronics",
-  "subCategory": "Wearables",
-  "bestSellers": false,
-  "rank": 6
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eef6"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eef8"
+    },
+    "imgURL": "Winter-Jacket.jpeg",
+    "name": "Winter Jacket",
+    "description": "Waterproof winter jacket with fleece lining",
+    "price": 199,
+    "category": "men",
+    "subCategory": "Clothing",
+    "bestSellers": true,
+    "rank": 1,
+    "status": {
+      "availability": "available",
+      "stockStatus": "inStock"
+    }
   },
-  "imgURL": "gaming-console.webp",
-  "name": "Gaming Console",
-  "description": "Next-gen gaming console with 4K gaming and HDR support",
-  "price": 499,
-  "category": "electronics",
-  "subCategory": "Gaming",
-  "bestSellers": false,
-  "rank": 7
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eef7"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eef9"
+    },
+    "imgURL": "dress.jpg",
+    "name": "Evening Dress",
+    "description": "Elegant evening dress for special occasions",
+    "price": 399,
+    "category": "women",
+    "subCategory": "Clothing",
+    "bestSellers": true,
+    "rank": 1,
+    "status": {
+      "availability": "available",
+      "stockStatus": "inStock"
+    }
   },
-  "imgURL": "headphones.jpeg",
-  "name": "Over-Ear Headphones",
-  "description": "Noise-canceling over-ear headphones with premium sound quality",
-  "price": 349,
-  "category": "electronics",
-  "subCategory": "Audio",
-  "bestSellers": true,
-  "rank": 8
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eef8"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eefa"
+    },
+    "imgURL": "toy_train.avif",
+    "name": "Toy Train Set",
+    "description": "Interactive toy train set for kids",
+    "price": 49,
+    "category": "kids",
+    "subCategory": "Toys",
+    "bestSellers": true,
+    "rank": 1,
+    "status": {
+      "availability": "notAvailable",
+      "stockStatus": "outStock"
+    }
   },
-  "imgURL": "Winter-Jacket.jpeg",
-  "name": "Winter Jacket",
-  "description": "Waterproof winter jacket with fleece lining",
-  "price": 199,
-  "category": "men",
-  "subCategory": "Clothing",
-  "bestSellers": true,
-  "rank": 1
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eef9"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eefb"
+    },
+    "imgURL": "sneakers.jpg",
+    "name": "Running Sneakers",
+    "description": "Lightweight running sneakers for men",
+    "price": 99,
+    "category": "men",
+    "subCategory": "Footwear",
+    "bestSellers": true,
+    "rank": 2,
+    "status": {
+      "availability": "available",
+      "stockStatus": "inStock"
+    }
   },
-  "imgURL": "dress.jpg",
-  "name": "Evening Dress",
-  "description": "Elegant evening dress for special occasions",
-  "price": 399,
-  "category": "women",
-  "subCategory": "Clothing",
-  "bestSellers": true,
-  "rank": 1
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eefa"
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eefc"
+    },
+    "imgURL": "handbag.webp",
+    "name": "Designer Handbag",
+    "description": "Stylish designer handbag for women",
+    "price": 899,
+    "category": "women",
+    "subCategory": "Accessories",
+    "bestSellers": true,
+    "rank": 2,
+    "status": {
+      "availability": "available",
+      "stockStatus": "inStock"
+    }
   },
-  "imgURL": "toy_train.avif",
-  "name": "Toy Train Set",
-  "description": "Interactive toy train set for kids",
-  "price": 49,
-  "category": "kids",
-  "subCategory": "Toys",
-  "bestSellers": true,
-  "rank": 1
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eefb"
-  },
-  "imgURL": "sneakers.jpg",
-  "name": "Running Sneakers",
-  "description": "Lightweight running sneakers for men",
-  "price": 99,
-  "category": "men",
-  "subCategory": "Footwear",
-  "bestSellers": true,
-  "rank": 2
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eefc"
-  },
-  "imgURL": "handbag.webp",
-  "name": "Designer Handbag",
-  "description": "Stylish designer handbag for women",
-  "price": 899,
-  "category": "women",
-  "subCategory": "Accessories",
-  "bestSellers": true,
-  "rank": 2
-},
-{
-  "_id": {
-    "$oid": "6779c1dc14134a372881eefd"
-  },
-  "imgURL": "backpack.jpg",
-  "name": "School Backpack",
-  "description": "Durable backpack for school kids",
-  "price": 39,
-  "category": "kids",
-  "subCategory": "Accessories",
-  "bestSellers": true,
-  "rank": 2
-}]
+  {
+    "_id": {
+      "$oid": "6779c1dc14134a372881eefd"
+    },
+    "imgURL": "backpack.jpg",
+    "name": "School Backpack",
+    "description": "Durable backpack for school kids",
+    "price": 39,
+    "category": "kids",
+    "subCategory": "Accessories",
+    "bestSellers": true,
+    "rank": 2,
+    "status": {
+      "availability": "available",
+      "stockStatus": "inStock"
+    }
+  }
+]

@@ -64,3 +64,12 @@ exports.getProductDetails = async (productId) => {
     throw new Error("Product not found");
   }
 };
+
+exports.deleteAllProducts = async (req, res) => {
+    try {
+        await productModel.deleteMany();
+        res.status(200).json({ message: 'All products deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

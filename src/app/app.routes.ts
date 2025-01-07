@@ -83,7 +83,7 @@ const routes: Routes = [
   {
     // we use the canActivate property to protect the dashboard route from unauthorized access by using the authGuard
     // we use authGuard to check if the user is authenticated or not and if the user is authenticated then we allow the user to access the dashboard route
-    path: 'dashboard',
+    path: 'admin-dashboard',
     component: DashboardComponent,
     canActivate: [authGuard],
   },
