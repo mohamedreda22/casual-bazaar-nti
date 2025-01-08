@@ -20,6 +20,7 @@ import { FooterComponent } from './footer/footer.component';
 import { CartComponent } from './cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { CommonModule } from '@angular/common';
     FaqsComponent,
     ShippingInfoComponent,
     TermsOfServiceComponent,
-    CartComponent
+    CartComponent,
+    DashboardComponent,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

@@ -12,7 +12,7 @@ const categorySchema = new mongoose.Schema({
     },
     show: {
         type: Boolean,
-        default: false
+        default: true
     }
 }, {
     timestamps: true

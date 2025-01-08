@@ -13,33 +13,29 @@
     <h1>Admin Dashboard</h1>
 
     <!-- Products Section -->
-    <div class="section">
-      @if (currentSection === 'products') {
-        <h2>Products</h2>
-        <button (click)="loadProducts()">Load Products</button>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- <tr *ngFor="let product of products"> -->
-              @for (product of products; track $index) {
-                <tr>
-                  <td>{{ product.name }}</td>
-                  <td>${{ product.price }}</td>
-                  <td>
-                    <button (click)="updateProduct(product)">Edit</button>
-                    <!-- <button (click)="deleteProduct(prod)">Delete</button> -->
-                  </td>
-                </tr>
-              }
-          </tbody>
-        </table>
-      }
+    <div *ngIf="currentSection === 'products'" class="section">
+      <h2>Products</h2>
+      <button (click)="loadProducts()">Load Products</button>
+      <button (click)="showAddProductForm()">Add Product</button>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>{{ product.name }}</td>
+            <td>${{ product.price }}</td>
+            <td>
+              <button (click)="updateProduct(product)">Edit</button>
+              <button (click)="deleteProduct(product._id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- Users Section -->
@@ -50,15 +46,17 @@
         <thead>
           <tr>
             <th>Username</th>
+            <th>Email</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let user of users">
             <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
             <td>
               <button (click)="updateUser(user)">Edit</button>
-              <button (click)="deleteUser(user.id)">Delete</button>
+              <button (click)="deleteUser(user._id)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -69,23 +67,27 @@
     <div *ngIf="currentSection === 'categories'" class="section">
       <h2>Categories</h2>
       <button (click)="loadCategories()">Load Categories</button>
+      <button (click)="showAddCategoryForm()">Add Category</button>
       <table>
         <thead>
           <tr>
             <th>Name</th>
+            <th>ID</th>
+            <th>Show</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let category of categories">
             <td>{{ category.name }}</td>
+            <td>{{ category._id }}</td>
+            <td>{{ category.show }}</td>
             <td>
               <button (click)="updateCategory(category)">Edit</button>
-              <button (click)="deleteCategory(category.id)">Delete</button>
+              <button (click)="deleteCategory(category._id)">Delete</button>
             </td>
           </tr>
         </tbody>
       </table>
-    </div>
   </div>
 </div>

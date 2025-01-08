@@ -1,5 +1,5 @@
 export interface UserType {
-    id: string;                // Unique identifier for the userType
+    _id: string;                // Unique identifier for the userType
     name: string;              // Name of the userType (e.g., Admin, Regular)
     description?: string;      // Description of the userType (optional)
     createdAt: string;         // Created at (Timestamp from MongoDB)
