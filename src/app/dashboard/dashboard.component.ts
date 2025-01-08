@@ -154,8 +154,7 @@ export class DashboardComponent implements OnInit {
       );
   }
 
-  showAddCategoryForm():void{
-    this.adminDashboardService
-    .addCategory
+  showAddCategoryForm(): void {
+    this.adminDashboardService.addCategory;
   }
 }
