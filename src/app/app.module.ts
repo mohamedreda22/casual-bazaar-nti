@@ -24,7 +24,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
-  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     AppComponent,
     ShopComponent,

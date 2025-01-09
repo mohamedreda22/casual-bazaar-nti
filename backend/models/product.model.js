@@ -18,14 +18,12 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     category: {
-      main: {
-        type: String,
-        // required: true,
-      },
-      subCategory: {
-        type: String,
-        // required: true,
-      },
+      type: String,
+      required: true,
+    },
+    subCategory: {
+      type: String,
+      required: true,
     },
     bestSellers: {
       type: Boolean,

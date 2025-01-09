@@ -84,7 +84,7 @@ h2 {
 }
 
 /* Add Product Form */
-.add-product-form {
+.section-form {
   background: #ecf0f1;
   padding: 20px;
   margin-top: 20px;
@@ -92,21 +92,21 @@ h2 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.add-product-form h2 {
+.section-form h2 {
   margin-top: 0;
   color: #2c3e50;
 }
 
-.add-product-form .form label {
+.section-form .form label {
   display: block;
   margin: 10px 0 5px;
   font-weight: bold;
   color: #34495e;
 }
 
-.add-product-form .form input,
-.add-product-form .form textarea,
-.add-product-form .form select {
+.section-form .form input,
+.section-form .form textarea,
+.section-form .form select {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
@@ -116,9 +116,9 @@ h2 {
   background-color: #ffffff;
 }
 
-.add-product-form .form input:focus,
-.add-product-form .form textarea:focus,
-.add-product-form .form select:focus {
+.section-form .form input:focus,
+.section-form .form textarea:focus,
+.section-form .form select:focus {
   border-color: #3498db;
   outline: none;
 }
@@ -176,6 +176,44 @@ tbody tr:hover {
 tbody td {
   padding: 10px;
 }
+
+tbody td img {
+  width: 60px;
+  height: 60px;
+}
+
+.text-danger {
+  color: #e74c3c;
+}
+
+.btn-primary {
+  background-color: #3498db;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+.btn-warning {
+  background-color: #f39c12;
+}
+
+.btn-warning:hover {
+  background-color: #d35400;
+}
+
+.btn-success {
+  background-color: #27ae60;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

@@ -10,7 +10,7 @@ import { User } from '../interfaces/userInterface';
   providedIn: 'root',
 })
 export class AdminDashboardService {
-  private apiUrl = 'http://localhost:3000'; // Your API base URL
+  apiUrl = 'http://localhost:3000'; // Your API base URL
 
   constructor(private _http: HttpClient) {}
 
@@ -35,10 +35,13 @@ export class AdminDashboardService {
   }
 
   // Update a product in the database
-  updateProduct(product: Product): Observable<Product> {
+  updateProduct(
+    productId: string,
+    updatedProduct: Product
+  ): Observable<Product> {
     return this._http.put<Product>(
-      `${this.apiUrl}/products/${product._id}`,
-      product
+      `${this.apiUrl}/products/${productId}`,
+      updatedProduct
     );
   }
 
@@ -68,10 +71,10 @@ export class AdminDashboardService {
   }
 
   // Update a category in the database
-  updateCategory(category: Category): Observable<Category> {
+  updateCategory(categoryId:string,updateCategory:Category): Observable<Category> {
     return this._http.put<Category>(
-      `${this.apiUrl}/categories/${category._id}`,
-      category
+      `${this.apiUrl}/categories/${categoryId}`,
+      updateCategory
     );
   }
 
@@ -86,7 +89,10 @@ export class AdminDashboardService {
   }
 
   // Add a new category
-  addCategory(category: Category): Observable<Category> {
-    return this._http.post<Category>(`${this.apiUrl}/categories`, category);
+  addCategory(addCategoryForm: FormData): Observable<Category> {
+    return this._http.post<Category>(
+      `${this.apiUrl}/categories`,
+      addCategoryForm
+    );
   }
 }

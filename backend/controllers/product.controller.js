@@ -6,10 +6,12 @@ exports.createProduct = async (req, res) => {
     const productData = {
       ...req.body,
       productImage: req.file?.filename || "", // Add file name to imgURL if the file exists
-      category: {
+/*       category: {
         main: req.body.category?.main || "",
         subCategory: req.body.category?.subCategory || "",
-      },
+      }, */
+      category: req.body.category || "",
+      subCategory: req.body.subCategory || "",
       status: {
         availability: req.body.status?.availability || "available",
         stockStatus: req.body.status?.stockStatus || "inStock",

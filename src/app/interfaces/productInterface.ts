@@ -4,10 +4,8 @@ export interface Product {
   price: number;
   description?: string;
   productImage: string;
-  category: {
-    main: string;
-    subCategory: string;
-  };
+  category: string;
+  subCategory: string;
   bestSellers: boolean;
   rank: number;
   status: {
