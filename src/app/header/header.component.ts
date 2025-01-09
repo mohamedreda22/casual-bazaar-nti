@@ -14,12 +14,13 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthServiceService,
     private cartService: CartService,
-    private router: Router,
+    private router: Router
   ) {}
 
-  isAuthenticated = false;
+  isAuthanticated = false;
   ngOnInit(): void {
     const userId = this.authService.getUserId();
+    this.isAuthanticated = this.authService.isAuthanticated();
     this.cartService.getCartCount(userId).subscribe({
       next: (count) => {
         console.log('Cart count:', count);
@@ -36,5 +37,4 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/home']);
   }
-
 }

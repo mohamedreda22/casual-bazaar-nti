@@ -23,9 +23,9 @@
       </li>
     </ul>
     <div class="nav-buttons">
-      <a *ngIf="!isAuthenticated" routerLink="/login" class="btn">Login</a>
+      <a *ngIf="!isAuthanticated" routerLink="/login" class="btn">Login</a>
       <a
-        *ngIf="isAuthenticated"
+        *ngIf="isAuthanticated"
         (click)="logout()"
         routerLink="home"
         class="btn"
