@@ -21,25 +21,6 @@ exports.createUserType = async (req, res) => {
   }
 };
 
-/* exports.createUserType = async (req, res) => {
-  try {
-    if (!req.userData) {
-      return res
-        .status(401)
-        .json({ message: "Authentication token is missing" });
-    }
-    const userTypeId = req.userData.userType;
-    const myUserType = await userTypeModel.findOne({ userTypeId });
-    if (myUserType.name === "Admin") {
-      const userType = await userTypeModel.create(req.body);
-      res.status(201).json(userType);
-    } else {
-      return res.status(401).json({ message: "Admin already exists" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}; */
 exports.getUserTypes = async (req, res) => {
   try {
     const userTypes = await userTypeModel.find();

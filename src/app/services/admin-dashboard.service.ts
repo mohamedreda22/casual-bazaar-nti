@@ -95,4 +95,13 @@ export class AdminDashboardService {
   addCategory(category: Partial<Category>): Observable<Category> {
     return this._http.post<Category>(`${this.apiUrl}/categories`, category);
   }
+
+  // get usertype
+  getUserTypes(): Observable<any> {
+    return this._http.get<any>(`${this.apiUrl}/userTypes`);
+  }
+
+  addUserType(userType: any): Observable<any> {
+    return this._http.post<any>(`${this.apiUrl}/userTypes`, userType);
+  }
 }

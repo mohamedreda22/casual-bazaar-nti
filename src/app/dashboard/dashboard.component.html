@@ -47,7 +47,6 @@
                   <label for="category">Category:</label>
                   <select id="category" class="form-control" formControlName="category" required>
                     <option value="" disabled selected>Select Category</option>
-                    <!-- <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}</option>      -->
                      <ng-container *ngFor="let category of categories">
                       <option *ngFor="let category of categories" [value]="category.name">
                         {{ category.name }}
@@ -202,7 +201,7 @@
           <tr *ngFor="let user of users">
             <td>{{ user.username }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ user.userType }}</td>
+            <td>{{ getUserTypeName(user.userType) }}</td>
             <td>
               <button class="btn btn-warning" (click)="editUser(user)">Edit</button>
               <button class="btn btn-danger" (click)="deleteUser(user._id)">Delete</button>

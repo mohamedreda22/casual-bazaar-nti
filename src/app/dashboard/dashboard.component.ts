@@ -274,37 +274,37 @@ export class DashboardComponent implements OnInit {
           this.isAddingCategory = false;
           this.newCategory = this.initializeNewCategory();
         },
-        (error) => {console.error('Error adding category:', error);
-        this.errorMessage = 'Please fill in all required fields.';}
-
+        (error) => {
+          console.error('Error adding category:', error);
+          this.errorMessage = 'Please fill in all required fields.';
+        }
       );
     } else {
       console.error('Form invalid:', this.addCategoryForm.errors);
     }
   }
 
-  /*   handleAddCategory(): void {
-    if (this.addCategoryForm.valid) {
-      console.log('Form data:', this.addCategoryForm.value); // Debug here
-      const formData = new FormData();
-      formData.append('name', this.addCategoryForm.get('name')?.value);
-      formData.append(
-        'subCategories',
-        JSON.stringify(this.addCategoryForm.get('subCategories')?.value)
-      );
-      formData.append('show', this.addCategoryForm.get('show')?.value);
+  loadUserTypes(): void {
+    this.adminDashboardService.getUserTypes().subscribe(
+      (userTypes) => {
+        console.log('User types:', userTypes);
+      },
+      (error) => console.error('Error loading user types:', error)
+    );
+  }
 
-      this.adminDashboardService.addCategory(formData).subscribe(
-        (newCategory) => {
-          console.log('Category added:', newCategory);
-          this.loadCategories();
-          this.isAddingCategory = false;
-          this.newCategory = this.initializeNewCategory();
-        },
-        (error) => console.error('Error adding category:', error)
-      );
-    }
-  } */
+  addUserType(): void {
+    this.adminDashboardService.addUserType({}).subscribe(
+      (response) => {
+        console.log('User type added:', response);
+      },
+      (error) => console.error('Error adding user type:', error)
+    );
+  }
+
+  getUserTypeName(userType: any): string {
+    return userType.name;
+  }
 
   handleImageUpload(event: any): void {
     const file = event.target.files[0];

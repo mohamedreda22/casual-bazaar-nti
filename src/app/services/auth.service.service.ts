@@ -43,6 +43,15 @@ export class AuthServiceService {
       return this.tokenSubject.value !== null; 
     }
 
+    isAdmin():boolean{
+      const user = this.decodeAccessToken();
+      if(user){
+        return user.userType === 'Admin';
+      }
+      return false;
+    }
+
+
     decodeAccessToken():any{
       const token = this.tokenSubject.value;
       if(token){
