@@ -51,10 +51,19 @@ export class UserComponent implements OnInit {
   loadUsers(): void {
     this.adminDashboardService.getAllUsers().subscribe(
       (users) => {
-        this.users = users.map((user: any) => ({
-          ...user,
-          userType: user.userType.name, // Assuming the populated userType has a 'name' field
-        }));
+        this.users = users.map((user: any) => {
+          // Check if userType is populated and has a name property
+          if (user.userType && user.userType.name) {
+            return {
+              ...user,
+              userType: user.userType.name, // Directly use the name from the populated userType
+            };
+          }
+          return {
+            ...user,
+            userType: 'Unknown', // If no userType is populated, set as 'Unknown'
+          };
+        });
       },
       (error) => {
         console.error('Error loading users:', error);
@@ -84,12 +93,7 @@ export class UserComponent implements OnInit {
   }
 
   getUserTypeName(userTypeId: string): string {
-    const userType = this.userTypes.find((type) => type.id === userTypeId);
-    console.log('userType:', userType);
-    console.log('userTypes:', this.userTypes);
-    console.log('userTypeId:', userTypeId);
-    return userType?.name || 'Unknown'; // Return the name of the user type or 'Unknown' if undefined
-    // return userType ? userType.name : 'Unknown'; // Return the name of the user type
+    return userTypeId || 'Unknown'; // Directly return userTypeId (which is a name now) or 'Unknown'
   }
 
   handleUpdateUser(): void {
