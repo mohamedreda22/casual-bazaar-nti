@@ -4,6 +4,7 @@ import { Product } from '../interfaces/productInterface';
 import { User } from '../interfaces/userInterface';
 import { Category } from '../interfaces/categoryInterface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -93,7 +94,9 @@ export class DashboardComponent implements OnInit {
           console.log('Product updated', response);
           this.isEditingProduct = false;
           this.loadProducts(); // Reload products list
+          Swal.fire('Success', 'Product updated successfully', 'success');
         });
+        Swal.fire('Error', 'Failed to update product', 'error');
     }
   }
 
@@ -111,7 +114,9 @@ export class DashboardComponent implements OnInit {
           console.log('Category updated', response);
           this.isEditingCategory = false;
           this.loadCategories(); // Reload categories list
+          Swal.fire('Success', 'Category updated successfully', 'success');
         });
+        Swal.fire('Error', 'Failed to update category', 'error');
     }
   }
 
@@ -252,8 +257,11 @@ export class DashboardComponent implements OnInit {
           this.loadProducts();
           this.isAddingProduct = false;
           this.newProduct = this.initializeNewProduct();
+          Swal.fire('Success', 'Product added successfully', 'success');
         },
-        (error) => console.error('Error adding product:', error)
+        (error) => {console.error('Error adding product:', error)
+        Swal.fire('Error', 'Failed to add product', 'error');
+        }
       );
     }
   }
@@ -273,11 +281,11 @@ export class DashboardComponent implements OnInit {
           this.loadCategories();
           this.isAddingCategory = false;
           this.newCategory = this.initializeNewCategory();
+          Swal.fire('Success', 'Category added successfully', 'success');
         },
         (error) => {
           console.error('Error adding category:', error);
-          this.errorMessage = 'Please fill in all required fields.';
-        }
+          Swal.fire('Error', 'Failed to add category', 'error');}
       );
     } else {
       console.error('Form invalid:', this.addCategoryForm.errors);
@@ -312,6 +320,10 @@ export class DashboardComponent implements OnInit {
       this.addProductForm.patchValue({
         productImage: file,
       });
+      Swal.fire('Success', 'Image uploaded successfully', 'success');
+    }
+    else {
+      Swal.fire('Error', 'Failed to upload image', 'error');
     }
   }
 
@@ -320,8 +332,11 @@ export class DashboardComponent implements OnInit {
       (updatedProduct) => {
         console.log('Product updated:', updatedProduct);
         this.loadProducts();
+        Swal.fire('Success', 'Product updated successfully', 'success');
       },
-      (error) => console.error('Error updating product:', error)
+      (error) => {console.error('Error updating product:', error)
+      Swal.fire('Error', 'Failed to update product', 'error');
+      }
     );
   }
 
@@ -330,8 +345,11 @@ export class DashboardComponent implements OnInit {
       () => {
         console.log('Product deleted');
         this.loadProducts();
+        Swal.fire('Success', 'Product deleted successfully', 'success');
       },
-      (error) => console.error('Error deleting product:', error)
+      (error) => {console.error('Error deleting product:', error)
+      Swal.fire('Error', 'Failed to delete product', 'error');
+      }
     );
   }
 
@@ -340,8 +358,11 @@ export class DashboardComponent implements OnInit {
       (updatedUser) => {
         console.log('User updated:', updatedUser);
         this.loadUsers();
+        Swal.fire('Success', 'User updated successfully', 'success');
       },
-      (error) => console.error('Error updating user:', error)
+      (error) => {console.error('Error updating user:', error)
+      Swal.fire('Error', 'Failed to update user', 'error');
+      }
     );
   }
 
@@ -350,8 +371,11 @@ export class DashboardComponent implements OnInit {
       () => {
         console.log('User deleted');
         this.loadUsers();
+        Swal.fire('Success', 'User deleted successfully', 'success');
       },
-      (error) => console.error('Error deleting user:', error)
+      (error) => {console.error('Error deleting user:', error)
+      Swal.fire('Error', 'Failed to delete user', 'error');
+      }
     );
   }
 
@@ -360,8 +384,11 @@ export class DashboardComponent implements OnInit {
       (updatedCategory) => {
         console.log('Category updated:', updatedCategory);
         this.loadCategories();
+        Swal.fire('Success', 'Category updated successfully', 'success');
       },
-      (error) => console.error('Error updating category:', error)
+      (error) => {console.error('Error updating category:', error)
+      Swal.fire('Error', 'Failed to update category', 'error');
+      }
     );
   }
 
@@ -370,8 +397,11 @@ export class DashboardComponent implements OnInit {
       () => {
         console.log('Category deleted');
         this.loadCategories();
+        Swal.fire('Success', 'Category deleted successfully', 'success');
       },
-      (error) => console.error('Error deleting category:', error)
+      (error) => {console.error('Error deleting category:', error)
+      Swal.fire('Error', 'Failed to delete category', 'error');
+      }
     );
   }
 
@@ -391,7 +421,9 @@ export class DashboardComponent implements OnInit {
         console.log('User updated:', updatedUser);
         this.loadUsers();
       },
-      (error) => console.error('Error updating user:', error)
+      (error) => {console.error('Error updating user:', error)
+        Swal.fire('Error', 'Failed to update user', 'error');
+      }
     );
   }
 }

@@ -182,4 +182,11 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   decodeToken(token: string): any {
     return JSON.parse(atob(token.split('.')[1]));
   }
+
+  // show only the categories that have show = true in it's attributes
+  get visibleCategories(): any[] {
+    return this.categories.filter((category) => category.show);
+  }
+
+  
 }
