@@ -22,7 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditCategoryComponent } from './dashboard/edit-category/edit-category.component';
-import { UsersComponent } from "./dashboard/users/users.component";
+import { UserComponent } from './dashboard/users/users.component';
 
 
 @NgModule({
@@ -33,7 +33,6 @@ import { UsersComponent } from "./dashboard/users/users.component";
     ReactiveFormsModule,
     CommonModule,
     ReactiveFormsModule,
-    // UsersComponent
 ],
   declarations: [
     AppComponent,
@@ -53,7 +52,8 @@ import { UsersComponent } from "./dashboard/users/users.component";
     TermsOfServiceComponent,
     CartComponent,
     DashboardComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    UserComponent
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

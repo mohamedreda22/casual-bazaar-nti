@@ -502,7 +502,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  editUser(user: User): void {
+/*   editUser(user: User): void {
     this.adminDashboardService.updateUser(user).subscribe(
       (updatedUser) => {
         console.log('User updated:', updatedUser);
@@ -513,5 +513,5 @@ export class DashboardComponent implements OnInit {
         Swal.fire('Error', 'Failed to update user', 'error');
       }
     );
-  }
+  } */
 }

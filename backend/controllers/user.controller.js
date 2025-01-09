@@ -37,12 +37,15 @@ exports.getUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  try {
-    await userModel.findByIdAndUpdate(req.params.id, req.body, { new: true }); // { new: true } => return updated object
-    res.status(200).json({ message: "User updated successfully" });
-  } catch (error) {
+  // i want to update the user to give controld to the admin and not need to include the password
+  try{
+    const user = await userModel.findByIdAndUpdate(req.params.id, req.body  , { new: true });
+    res.status(200).json(user);
+
+  }catch(error){
     res.status(500).json({ message: error.message });
   }
+
 };
 
 exports.deleteUser = async (req, res) => {

@@ -1,24 +1,82 @@
-<!-- 
-      <h2>Users</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>User Name</th>
-            <th>Email</th>
-            <th>User Type</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of users">
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ getUserTypeName(user.userType) }}</td>
-            <td>
-              <button class="btn btn-warning" (click)="editUser(user)">Edit</button>
-              <button class="btn btn-danger" (click)="deleteUser(user._id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-     -->
+<div *ngIf="!isEditingUser">
+  <h3>User Management</h3>
+  <table *ngIf="users.length > 0">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>User Type</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ getUserTypeName(user.userType) }}</td>
+        <!-- Use _id of userType -->
+        <td>
+          <button (click)="startEditUser(user)" class="btn btn-warning">
+            Edit
+          </button>
+          <button (click)="deleteUser(user._id)" class="btn btn-danger">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="users.length === 0">
+    <p>No users available.</p>
+  </div>
+</div>
+
+<div *ngIf="isEditingUser" class="section-form">
+  <h2>Edit User</h2>
+  <form (ngSubmit)="handleUpdateUser()" [formGroup]="editUserForm" class="form">
+    <div class="form-group">
+      <label for="editUserName">User Name:</label>
+      <input
+        type="text"
+        id="editUserName"
+        class="form-control"
+        placeholder="User Name"
+        formControlName="username"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="editUserEmail">Email:</label>
+      <input
+        type="email"
+        id="editUserEmail"
+        class="form-control"
+        placeholder="Email"
+        formControlName="email"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="editUserRoles">User Type</label>
+      <select
+        id="editUserRoles"
+        class="form-control"
+        formControlName="userType"
+        required      >
+        <option value="">Select User Type</option>
+        <option *ngFor="let role of userTypes" [value]="role.id">
+          {{ role.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit" class="btn btn-primary">Update User</button>
+      <button type="button" class="btn btn-danger" (click)="cancelEditUser()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
