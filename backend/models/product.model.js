@@ -13,35 +13,36 @@ const productSchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    imgURL: {
+    productImage: {
       type: String,
       required: true,
     },
     category: {
       main: {
         type: String,
-        required: true,
+        // required: true,
       },
       subCategory: {
         type: String,
-        required: true,
+        // required: true,
       },
     },
     bestSellers: {
       type: Boolean,
-      required: true,
+      // required: true,
     },
     rank: {
       type: Number,
-      required: true,
     },
     status: {
       availability: {
         type: String,
+        default: "available",
         required: true,
       },
       stockStatus: {
         type: String,
+        default: "inStock",
         required: true,
       },
     },

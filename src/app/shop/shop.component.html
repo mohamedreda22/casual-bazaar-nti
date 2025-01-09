@@ -12,7 +12,7 @@
       <div class="carousel-track" #carouselTrack>
         <div class="carousel-item" *ngFor="let product of carouselProducts">
           <img         
-          [src]="imageURL + product.imgURL"
+          [src]="imageURL + product.productImage"
           [alt]="product.title" />
         </div>
       </div>
@@ -61,7 +61,7 @@
     <div class="products-grid">
       <div class="product-card" *ngFor="let product of filteredProducts">
         <img         
-        [src]="imageURL + product.imgURL"
+        [src]="imageURL + product.productImage"
         [alt]="product.name" />
         <div class="details">
           <h3>{{ product.name }}</h3>

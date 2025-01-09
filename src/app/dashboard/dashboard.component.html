@@ -1,4 +1,4 @@
-<div class="dashboard-container">
+<div id="dashboard-container">
   <!-- Sidebar -->
   <div class="sidebar">
     <ul>
@@ -15,8 +15,118 @@
     <!-- Products Section -->
     <div *ngIf="currentSection === 'products'" class="section">
       <h2>Products</h2>
-      <button (click)="loadProducts()">Load Products</button>
-      <button (click)="showAddProductForm()">Add Product</button>
+      <button class="btn" (click)="loadProducts()">Load Products</button>
+      <button class="btn btn-add" (click)="toggleAddProductForm()">
+        Add Product
+      </button>
+
+      <div *ngIf="isAddingProduct" class="add-product-form">
+        <h2>Add New Product</h2>
+        <form (ngSubmit)="handleAddProduct()" class="form" [formGroup]="addProductForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Product Name"
+                formControlName ="name"
+                required
+              />
+                <div class="error-msg" *ngIf="addProductForm.get('name')!.touched && addProductForm.get('name')!.invalid">
+                    <span *ngIf="addProductForm.get('name')!.errors?.['required']">*Product Name is required</span>
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="price">Price:</label>
+              <input
+                type="number"
+                id="price"
+                placeholder="Product Price"
+                formControlName="price"
+                required
+              />
+              <div class="error-msg" *ngIf="addProductForm.get('price')!.touched && addProductForm.get('price')!.invalid">
+                    <span *ngIf="addProductForm.get('price')!.errors?.['required']">*Product Price is required</span>
+                </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="category">Category:</label>
+              <select
+                id="category"
+                formControlName="category"
+                required
+              >
+                <option value="" disabled selected>Select Category</option>
+                <option *ngFor="let category of categories" [value]="category._id">
+                  {{ category.name }}
+                </option>
+              </select>
+              <div class="error-msg" *ngIf="addProductForm.get('category')!.touched && addProductForm.get('category')!.invalid">
+                    <span *ngIf="addProductForm.get('category')!.errors?.['required']">*Category is required</span>
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="subCategoty">SubCategory</label>
+              <select
+                id="subCategory"
+                formControlName="subCategory"
+                required
+              >
+                <option value="" disabled selected>Select SubCategory</option>
+                <ng-container *ngFor="let category of categories">
+                  <option *ngFor="let subCategory of category.subCategories" [value]="subCategory">
+                    {{ subCategory }}
+                  </option>
+                </ng-container>
+              </select>
+              <div class="error-msg" *ngIf="addProductForm.get('subCategory')!.touched && addProductForm.get('subCategory')!.invalid">
+                    <span *ngIf="addProductForm.get('subCategory')!.errors?.['required']">*SubCategory is required</span>
+                </div>
+            </div>
+            </div>
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <textarea
+                id="description"
+                placeholder="Product Description"
+                formControlName="description"
+                required
+              ></textarea>
+              <div class="error-msg" *ngIf="addProductForm.get('description')!.touched && addProductForm.get('description')!.invalid">
+                    <span *ngIf="addProductForm.get('description')!.errors?.['required']">*Product Description is required</span>
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="productImage">Product Image</label>
+              <input
+                type="file"
+                id="productImage"
+                ngModel
+                name="productImage"
+                #productImage="ngModel"
+                required
+                (change)="handleImageUpload($event)"
+              />
+              <div class="error-msg" *ngIf="productImage.invalid && productImage.touched">
+                    <span *ngIf="productImage.errors?.['required']">*Product Image is required</span>
+                </div>
+          </div>
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-submit">Add Product</button>
+            <button
+              type="button"
+              class="btn btn-cancel"
+              (click)="cancelAddProduct()"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+
       <table>
         <thead>
           <tr>
@@ -32,59 +142,6 @@
             <td>
               <button (click)="updateProduct(product)">Edit</button>
               <button (click)="deleteProduct(product._id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Users Section -->
-    <div *ngIf="currentSection === 'users'" class="section">
-      <h2>Users</h2>
-      <button (click)="loadUsers()">Load Users</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of users">
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-            <td>
-              <button (click)="updateUser(user)">Edit</button>
-              <button (click)="deleteUser(user._id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Categories Section -->
-    <div *ngIf="currentSection === 'categories'" class="section">
-      <h2>Categories</h2>
-      <button (click)="loadCategories()">Load Categories</button>
-      <button (click)="showAddCategoryForm()">Add Category</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>ID</th>
-            <th>Show</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let category of categories">
-            <td>{{ category.name }}</td>
-            <td>{{ category._id }}</td>
-            <td>{{ category.show }}</td>
-            <td>
-              <button (click)="updateCategory(category)">Edit</button>
-              <button (click)="deleteCategory(category._id)">Delete</button>
             </td>
           </tr>
         </tbody>

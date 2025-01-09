@@ -5,7 +5,7 @@
 
     <!-- Cart Items List -->
     <div *ngFor="let item of cartItems; let i = index" class="cart-item">
-      <img [src]="imageURL + item.productDetails.imgURL" [alt]="item.productDetails.name" />
+      <img [src]="imageURL + item.productDetails.productImage" [alt]="item.productDetails.name" />
       <div class="item-details">
         <p>{{ item.productDetails.name }}</p>
         <span class="item-desc">{{ item.productDetails.description }}</span>

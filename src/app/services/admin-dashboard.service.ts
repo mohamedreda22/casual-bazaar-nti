@@ -81,12 +81,12 @@ export class AdminDashboardService {
   }
 
   // Add a new product to the database
-  addProduct(product: Product): Observable<Product> {
-    return this._http.post<Product>(`${this.apiUrl}/products`, product);
+  addProduct(addProductForm: FormData): Observable<Product> {
+    return this._http.post<Product>(`${this.apiUrl}/products`, addProductForm);
   }
 
   // Add a new category
-  addCategory(category: Category): Observable<Category>{
-    return this._http.post<Category>(`${this.apiUrl}/categories`,category);
+  addCategory(category: Category): Observable<Category> {
+    return this._http.post<Category>(`${this.apiUrl}/categories`, category);
   }
 }
