@@ -56,13 +56,13 @@ export class DashboardComponent implements OnInit {
 
     this.addCategoryForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      subCategories: new FormControl('', [Validators.required]),
+      subCategories: new FormControl([], [Validators.required]),
       show: new FormControl('', [Validators.required]),
     });
 
     this.editCategoryForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      subCategories: new FormControl('', [Validators.required]),
+      subCategories: new FormControl([], [Validators.required]),
       show: new FormControl('', [Validators.required]),
     });
   }
@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
     this.editProductForm.patchValue({
       name: product.name,
       price: product.price,
-/*       category: {
+      /*       category: {
         main: product.category,
         subCategory: product.subCategory,
       }, */
@@ -260,6 +260,31 @@ export class DashboardComponent implements OnInit {
 
   handleAddCategory(): void {
     if (this.addCategoryForm.valid) {
+      console.log('Form data:', this.addCategoryForm.value); // Debugging
+      const formData = {
+        name: this.addCategoryForm.get('name')?.value,
+        subCategories: this.addCategoryForm.get('subCategories')?.value,
+        show: this.addCategoryForm.get('show')?.value,
+      };
+
+      this.adminDashboardService.addCategory(formData).subscribe(
+        (newCategory) => {
+          console.log('Category added:', newCategory);
+          this.loadCategories();
+          this.isAddingCategory = false;
+          this.newCategory = this.initializeNewCategory();
+        },
+        (error) => {console.error('Error adding category:', error);
+        this.errorMessage = 'Please fill in all required fields.';}
+
+      );
+    } else {
+      console.error('Form invalid:', this.addCategoryForm.errors);
+    }
+  }
+
+  /*   handleAddCategory(): void {
+    if (this.addCategoryForm.valid) {
       console.log('Form data:', this.addCategoryForm.value); // Debug here
       const formData = new FormData();
       formData.append('name', this.addCategoryForm.get('name')?.value);
@@ -279,7 +304,7 @@ export class DashboardComponent implements OnInit {
         (error) => console.error('Error adding category:', error)
       );
     }
-  }
+  } */
 
   handleImageUpload(event: any): void {
     const file = event.target.files[0];
@@ -309,7 +334,7 @@ export class DashboardComponent implements OnInit {
       (error) => console.error('Error deleting product:', error)
     );
   }
-  
+
   updateUser(user: User): void {
     this.adminDashboardService.updateUser(user).subscribe(
       (updatedUser) => {

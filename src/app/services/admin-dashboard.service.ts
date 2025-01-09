@@ -71,7 +71,10 @@ export class AdminDashboardService {
   }
 
   // Update a category in the database
-  updateCategory(categoryId:string,updateCategory:Category): Observable<Category> {
+  updateCategory(
+    categoryId: string,
+    updateCategory: Category
+  ): Observable<Category> {
     return this._http.put<Category>(
       `${this.apiUrl}/categories/${categoryId}`,
       updateCategory
@@ -89,10 +92,7 @@ export class AdminDashboardService {
   }
 
   // Add a new category
-  addCategory(addCategoryForm: FormData): Observable<Category> {
-    return this._http.post<Category>(
-      `${this.apiUrl}/categories`,
-      addCategoryForm
-    );
+  addCategory(category: Partial<Category>): Observable<Category> {
+    return this._http.post<Category>(`${this.apiUrl}/categories`, category);
   }
 }
