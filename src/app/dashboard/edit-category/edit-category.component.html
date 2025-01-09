@@ -1,0 +1,84 @@
+<div *ngIf="isEditingCategory" class="section-form">
+  <h2>Edit Category</h2>
+  <form
+    (ngSubmit)="handleUpdateCategory()"
+    [formGroup]="editCategoryForm"
+    class="form"
+  >
+    <div class="form-group">
+      <label for="editCategoryName">Category Name:</label>
+      <input
+        type="text"
+        id="editCategoryName"
+        class="form-control"
+        placeholder="Category Name"
+        formControlName="name"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="editSubCategories">SubCategories:</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">SubCategory</span>
+        </div>
+        <input
+          type="text"
+          #newSubCategory
+          class="form-control"
+          placeholder="Enter subcategory"
+        />
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="
+            addSubCategory(newSubCategory.value); newSubCategory.value = ''
+          "
+        >
+          Add
+        </button>
+      </div>
+      <div class="subcategory-list mt-2">
+        <span
+          *ngFor="
+            let sub of editCategoryForm.get('subCategories')?.value;
+            let i = index
+          "
+          class="badge bg-primary me-2"
+        >
+          {{ sub }}
+          <button
+            type="button"
+            class="btn-close ms-1"
+            (click)="removeSubCategory(i)"
+          >
+            Remove
+          </button>
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="editShow">Show:</label>
+      <select
+        id="editShow"
+        class="form-control"
+        formControlName="show"
+        required
+      >
+        <option value="" disabled>Select Show</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+      </select>
+    </div>
+    <div class="form-buttons">
+      <button type="submit" class="btn btn-primary">Update Category</button>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="cancelEditCategory()"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

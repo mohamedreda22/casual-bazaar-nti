@@ -3,7 +3,13 @@ import { AdminDashboardService } from '../services/admin-dashboard.service';
 import { Product } from '../interfaces/productInterface';
 import { User } from '../interfaces/userInterface';
 import { Category } from '../interfaces/categoryInterface';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -34,8 +40,12 @@ export class DashboardComponent implements OnInit {
   editCategoryForm: FormGroup;
 
   currentProduct: Product | null = null;
+  currentCategory: Category | null = null;
   imageURL: string = '';
-  constructor(private adminDashboardService: AdminDashboardService) {
+  constructor(
+    private adminDashboardService: AdminDashboardService,
+    private fb: FormBuilder
+  ) {
     this.imageURL = adminDashboardService.apiUrl + '/images/';
     this.addProductForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -61,11 +71,28 @@ export class DashboardComponent implements OnInit {
       show: new FormControl('', [Validators.required]),
     });
 
-    this.editCategoryForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      subCategories: new FormControl([], [Validators.required]),
-      show: new FormControl('', [Validators.required]),
+    this.editCategoryForm = this.fb.group({
+      name: ['', [Validators.required]], // Category name field
+      subCategories: this.fb.array([]), // Subcategories array
+      show: ['', [Validators.required]], // Show dropdown field
     });
+  }
+
+  get subCategories(): FormArray {
+    return this.editCategoryForm.get('subCategories') as FormArray;
+  }
+
+  // Add a new subcategory to the FormArray
+  addSubCategory(value: string): void {
+    if (value.trim()) {
+      this.subCategories.push(
+        this.fb.control(value.trim(), Validators.required)
+      );
+    }
+  }
+
+  removeSubCategory(index: number): void {
+    this.subCategories.removeAt(index);
   }
 
   // Start editing product
@@ -96,7 +123,7 @@ export class DashboardComponent implements OnInit {
           this.loadProducts(); // Reload products list
           Swal.fire('Success', 'Product updated successfully', 'success');
         });
-        Swal.fire('Error', 'Failed to update product', 'error');
+      Swal.fire('Error', 'Failed to update product', 'error');
     }
   }
 
@@ -106,24 +133,67 @@ export class DashboardComponent implements OnInit {
     this.currentProduct = null;
   }
 
+  startEditCategory(category: Category): void {
+    this.isEditingCategory = true; // Open the edit form
+    this.currentCategory = category; // Set the current category
+    this.editCategoryForm.patchValue({
+      name: category.name,
+      subCategories: category.subCategories || [],
+      show: category.show,
+    });
+
+    // Clear and repopulate the subCategories FormArray if needed
+    this.subCategories.clear();
+    category.subCategories.forEach((subCategory) => {
+      this.subCategories.push(
+        this.fb.control(subCategory, Validators.required)
+      );
+    });
+  }
+
   handleUpdateCategory(): void {
     if (this.editCategoryForm.valid) {
+      console.log('Form data:', this.editCategoryForm.value); // Debugging
+      const updatedCategory = {
+        ...this.newCategory, // Use the existing category details
+        ...this.editCategoryForm.value, // Merge with form changes
+      };
+      const categoryId = this.currentCategory ? this.currentCategory._id : updatedCategory._id;
+      console.log("updatedCategory ID :", categoryId);
+
       this.adminDashboardService
-        .updateCategory(this.newCategory!._id, this.editCategoryForm.value)
-        .subscribe((response) => {
-          console.log('Category updated', response);
-          this.isEditingCategory = false;
-          this.loadCategories(); // Reload categories list
-          Swal.fire('Success', 'Category updated successfully', 'success');
+        .updateCategory(categoryId, updatedCategory)
+        .subscribe({
+          next: (response) => {
+            console.log('Category updated successfully:', response);
+            this.loadCategories(); // Reload categories to reflect changes
+            Swal.fire('Success', 'Category updated successfully', 'success');
+            this.cancelEditCategory(); // Reset form and UI
+          },
+          error: (error) => {
+            console.error('Error updating category:', error);
+            Swal.fire(
+              'Error',
+              'Failed to update category. Please try again.',
+              'error'
+            );
+          },
         });
-        Swal.fire('Error', 'Failed to update category', 'error');
+    } else {
+      console.error('Form is invalid:', this.editCategoryForm.errors);
+      Swal.fire(
+        'Error',
+        'Please correct the errors in the form and try again.',
+        'error'
+      );
     }
   }
 
   // Cancel editing category
   cancelEditCategory(): void {
     this.isEditingCategory = false;
-    this.newCategory = this.initializeNewCategory();
+    this.editCategoryForm.reset(); // Clear form controls
+    this.newCategory = this.initializeNewCategory(); // Reinitialize the category
   }
 
   ngOnInit(): void {
@@ -259,8 +329,9 @@ export class DashboardComponent implements OnInit {
           this.newProduct = this.initializeNewProduct();
           Swal.fire('Success', 'Product added successfully', 'success');
         },
-        (error) => {console.error('Error adding product:', error)
-        Swal.fire('Error', 'Failed to add product', 'error');
+        (error) => {
+          console.error('Error adding product:', error);
+          Swal.fire('Error', 'Failed to add product', 'error');
         }
       );
     }
@@ -285,7 +356,8 @@ export class DashboardComponent implements OnInit {
         },
         (error) => {
           console.error('Error adding category:', error);
-          Swal.fire('Error', 'Failed to add category', 'error');}
+          Swal.fire('Error', 'Failed to add category', 'error');
+        }
       );
     } else {
       console.error('Form invalid:', this.addCategoryForm.errors);
@@ -321,8 +393,7 @@ export class DashboardComponent implements OnInit {
         productImage: file,
       });
       Swal.fire('Success', 'Image uploaded successfully', 'success');
-    }
-    else {
+    } else {
       Swal.fire('Error', 'Failed to upload image', 'error');
     }
   }
@@ -334,8 +405,9 @@ export class DashboardComponent implements OnInit {
         this.loadProducts();
         Swal.fire('Success', 'Product updated successfully', 'success');
       },
-      (error) => {console.error('Error updating product:', error)
-      Swal.fire('Error', 'Failed to update product', 'error');
+      (error) => {
+        console.error('Error updating product:', error);
+        Swal.fire('Error', 'Failed to update product', 'error');
       }
     );
   }
@@ -347,8 +419,9 @@ export class DashboardComponent implements OnInit {
         this.loadProducts();
         Swal.fire('Success', 'Product deleted successfully', 'success');
       },
-      (error) => {console.error('Error deleting product:', error)
-      Swal.fire('Error', 'Failed to delete product', 'error');
+      (error) => {
+        console.error('Error deleting product:', error);
+        Swal.fire('Error', 'Failed to delete product', 'error');
       }
     );
   }
@@ -360,8 +433,9 @@ export class DashboardComponent implements OnInit {
         this.loadUsers();
         Swal.fire('Success', 'User updated successfully', 'success');
       },
-      (error) => {console.error('Error updating user:', error)
-      Swal.fire('Error', 'Failed to update user', 'error');
+      (error) => {
+        console.error('Error updating user:', error);
+        Swal.fire('Error', 'Failed to update user', 'error');
       }
     );
   }
@@ -373,46 +447,59 @@ export class DashboardComponent implements OnInit {
         this.loadUsers();
         Swal.fire('Success', 'User deleted successfully', 'success');
       },
-      (error) => {console.error('Error deleting user:', error)
-      Swal.fire('Error', 'Failed to delete user', 'error');
+      (error) => {
+        console.error('Error deleting user:', error);
+        Swal.fire('Error', 'Failed to delete user', 'error');
       }
     );
   }
 
   updateCategory(category: Category): void {
+    console.log('Category:', category);
+    console.log('Category ID:', category._id);
     this.adminDashboardService.updateCategory(category._id, category).subscribe(
       (updatedCategory) => {
         console.log('Category updated:', updatedCategory);
         this.loadCategories();
+        this.isEditingCategory = false; // Set editing to false
+        this.updateCategory(updatedCategory);
         Swal.fire('Success', 'Category updated successfully', 'success');
       },
-      (error) => {console.error('Error updating category:', error)
-      Swal.fire('Error', 'Failed to update category', 'error');
+      (error) => {
+        console.error('Error updating category:', error);
+        Swal.fire('Error', 'Failed to update category', 'error');
       }
     );
   }
 
   deleteCategory(id: string): void {
+    console.log('Category ID:', id);
     this.adminDashboardService.deleteCategory(id).subscribe(
       () => {
         console.log('Category deleted');
         this.loadCategories();
         Swal.fire('Success', 'Category deleted successfully', 'success');
       },
-      (error) => {console.error('Error deleting category:', error)
-      Swal.fire('Error', 'Failed to delete category', 'error');
+      (error) => {
+        console.error('Error deleting category:', error);
+        Swal.fire('Error', 'Failed to delete category', 'error');
       }
     );
   }
 
-  editCategory(category: Category): void {
-    this.isEditingCategory = true;
-    this.newCategory = category;
-    this.editCategoryForm.patchValue({
-      name: category.name,
-      subCategories: category.subCategories.join(','),
-      show: category.show,
-    });
+  editCategory(categoryId: string, category: Category): void {
+    console.log('Category ID:', categoryId);
+    this.adminDashboardService.editCategory(categoryId, category).subscribe(
+      (updatedCategory) => {
+        console.log('Category updated:', updatedCategory);
+        this.loadCategories();
+        Swal.fire('Success', 'Category updated successfully', 'success');
+      },
+      (error) => {
+        console.error('Error updating category:', error);
+        Swal.fire('Error', 'Failed to update category', 'error');
+      }
+    );
   }
 
   editUser(user: User): void {
@@ -421,7 +508,8 @@ export class DashboardComponent implements OnInit {
         console.log('User updated:', updatedUser);
         this.loadUsers();
       },
-      (error) => {console.error('Error updating user:', error)
+      (error) => {
+        console.error('Error updating user:', error);
         Swal.fire('Error', 'Failed to update user', 'error');
       }
     );

@@ -29,19 +29,18 @@ exports.getCategory = async (req, res) => {
 }
 
 exports.updateCategory = async (req, res) => {
+    console.log("req.body", req.body);
+   const id= req.params.id;
+    const {name, subCategories, show} = req.body;
     try {
-        await CategoryModel.findByIdAndUpdate(req
-            .params.id, req.body, {
-                new: true
-            }); // { new: true } => return updated object
-        res.status(200).json({
-            message: 'Category updated successfully'
-        });
-    }
-    catch (error) {
-        res.status(500).json({
-            message: error.message
-        });
+        const updatedCategory = await CategoryModel.findByIdAndUpdate(
+          id,
+          { name, subCategories, show },
+          { new: true }
+        );
+        res.status(200).json(updatedCategory);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
 

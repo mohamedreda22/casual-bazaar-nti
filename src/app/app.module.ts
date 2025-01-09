@@ -21,6 +21,8 @@ import { CartComponent } from './cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { EditCategoryComponent } from './dashboard/edit-category/edit-category.component';
+import { UsersComponent } from "./dashboard/users/users.component";
 
 
 @NgModule({
@@ -31,7 +33,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ReactiveFormsModule,
     CommonModule,
     ReactiveFormsModule,
-  ],
+    // UsersComponent
+],
   declarations: [
     AppComponent,
     ShopComponent,
@@ -50,6 +53,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     TermsOfServiceComponent,
     CartComponent,
     DashboardComponent,
+    EditCategoryComponent
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

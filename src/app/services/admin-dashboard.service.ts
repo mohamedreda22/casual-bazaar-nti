@@ -71,7 +71,14 @@ export class AdminDashboardService {
   }
 
   // Update a category in the database
-  updateCategory(
+  updateCategory(categoryId: string, categoryData: Category): Observable<any> {
+    return this._http.put(
+      `${this.apiUrl}/categories/${categoryId}`,
+      categoryData
+    );
+  }
+
+  /*   updateCategory(
     categoryId: string,
     updateCategory: Category
   ): Observable<Category> {
@@ -79,11 +86,18 @@ export class AdminDashboardService {
       `${this.apiUrl}/categories/${categoryId}`,
       updateCategory
     );
-  }
+  } */
 
   // Delete a category from the database
   deleteCategory(id: string): Observable<void> {
     return this._http.delete<void>(`${this.apiUrl}/categories/${id}`);
+  }
+
+  editCategory(id: string, category: Partial<Category>): Observable<Category> {
+    return this._http.put<Category>(
+      `${this.apiUrl}/categories/${id}`,
+      category
+    );
   }
 
   // Add a new product to the database
