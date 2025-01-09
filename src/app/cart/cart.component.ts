@@ -58,15 +58,15 @@ export class CartComponent implements OnInit {
     if (newQuantity < 1) return; // Prevent quantity below 1
 
     item.quantity = newQuantity;
-  this.cartService
-    .updateCartItem(this.userId, {
-      productId: item.product,
-      quantity: newQuantity,
-    })
-    .subscribe(
-      () => this.loadCartItems(), // Reload cart to reflect updates
-      (error) => console.error('Error updating cart:', error)
-    );
+    this.cartService
+      .updateCartItem(this.userId, {
+        productId: item.product,
+        quantity: newQuantity,
+      })
+      .subscribe(
+        () => this.loadCartItems(), // Reload cart to reflect updates
+        (error) => console.error('Error updating cart:', error)
+      );
   }
 
   // Remove an item from the cart
@@ -94,9 +94,9 @@ export class CartComponent implements OnInit {
   // Calculate the total price of the cart
   calculateTotal(): void {
     this.totalPrice = this.cartItems.reduce((total, item) => {
-      return item.productDetails
-        ? total + item.productDetails.price * item.quantity
-        : total;
+      const price = parseFloat(item.productDetails?.price || '0'); // Ensure the price is treated as a number
+      const quantity = parseInt(item.quantity, 10); // Ensure quantity is an integer
+      return total + price * quantity;
     }, 0);
   }
 
@@ -104,4 +104,10 @@ export class CartComponent implements OnInit {
   checkout(): void {
     console.log('Proceeding to checkout...');
   }
+
+  sumTotal() {
+    return Number(this.totalPrice) + Number(this.shippingCost);
+  }
 }
+
+
