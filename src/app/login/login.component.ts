@@ -15,8 +15,12 @@ export class LoginComponent {
   login(loginForm: NgForm) {
     this._authS.login(loginForm.value).subscribe({
       next: (res) => {
-        this._router.navigate(['/admin-dashboard']); 
-        console.log(this._authS.decodeAccessToken());
+        console.log("response: ",res);
+        if(this._authS.isAdmin()){
+        this._router.navigate(['/admin-dashboard']);}
+        else{
+          this._router.navigate(['/home']);
+        }
       },
       error: (err) => {
         console.log("error: ",err);

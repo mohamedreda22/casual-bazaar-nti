@@ -23,18 +23,19 @@
       </li>
     </ul>
     <div class="nav-buttons">
-      <a *ngIf="!isAuthanticated" routerLink="/login" class="btn">Login</a>
+      <a *ngIf="!isAuthenticated" routerLink="/login" class="btn">Login</a>
       <a
-        *ngIf="isAuthanticated"
+        *ngIf="isAuthenticated"
         (click)="logout()"
         routerLink="home"
         class="btn"
         >Logout</a
       >
-      <a routerLink="/cart" class="btn" id="cart">
-        <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart ({{
-          cartCount
-        }})
+      <a *ngIf="isAdmin" routerLink="/admin-dashboard" class="btn" id="dashboard">
+        <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
+      </a>
+      <a *ngIf="!isAdmin" routerLink="/cart" class="btn" id="cart">
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart ({{ cartCount }})
       </a>
     </div>
   </nav>

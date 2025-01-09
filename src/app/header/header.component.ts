@@ -7,28 +7,52 @@ import { CartService } from '../services/cart.service';
   selector: 'app-header',
   standalone: false,
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  cartCount: number = 5; // Hardcoded value for testing
+  cartCount: number =0; // Hardcoded value for testing
+  isAuthenticated: boolean = false;
+  isAdmin: boolean = false;
+
   constructor(
     private authService: AuthServiceService,
     private cartService: CartService,
     private router: Router
   ) {}
 
-  isAuthanticated = false;
   ngOnInit(): void {
-    const userId = this.authService.getUserId();
-    this.isAuthanticated = this.authService.isAuthanticated();
-    this.cartService.getCartCount(userId).subscribe({
-      next: (count) => {
-        console.log('Cart count:', count);
-        this.cartCount = count;
+    // Subscribe to isAuthenticated and isAdmin to ensure we wait for the response
+    this.authService.isAuthenticated().subscribe({
+      next: (isAuth) => {
+        this.isAuthenticated = isAuth;
+
+        // Fetch cart count only after authentication status is known
+        if (this.isAuthenticated) {
+          const userId = this.authService.getUserId();
+          this.cartService.getCartCount(userId).subscribe({
+            next: (count) => {
+              console.log('Cart count:', count);
+              this.cartCount = count;
+            },
+            error: (err) => {
+              console.error('Error fetching cart count:', err);
+              this.cartCount = 0;
+            },
+          });
+        }
       },
       error: (err) => {
-        console.error('Error fetching cart count:', err);
-        this.cartCount = 0;
+        console.error('Error checking authentication status:', err);
+      },
+    });
+
+    // Also subscribe to isAdmin for admin-specific logic
+    this.authService.isAdmin().subscribe({
+      next: (isAdmin) => {
+        this.isAdmin = isAdmin;
+      },
+      error: (err) => {
+        console.error('Error checking admin status:', err);
       },
     });
   }
