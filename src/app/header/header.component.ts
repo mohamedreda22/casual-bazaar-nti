@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../services/auth.service.service';
 import { Router } from '@angular/router';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -9,21 +10,31 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
+  cartCount: number = 5; // Hardcoded value for testing
   constructor(
     private authService: AuthServiceService,
-    private router: Router
+    private cartService: CartService,
+    private router: Router,
   ) {}
 
   isAuthenticated = false;
-
   ngOnInit(): void {
-    this.authService.getAccessToken().subscribe((token) => {
-      this.isAuthenticated = token !== null;
+    const userId = this.authService.getUserId();
+    this.cartService.getCartCount(userId).subscribe({
+      next: (count) => {
+        console.log('Cart count:', count);
+        this.cartCount = count;
+      },
+      error: (err) => {
+        console.error('Error fetching cart count:', err);
+        this.cartCount = 0;
+      },
     });
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/home']);
   }
+
 }

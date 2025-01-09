@@ -19,13 +19,13 @@ export class BestSellersComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageURL = this._productS.uploadURL;
-    this._productS.getProducts().subscribe((response) => {
+    this._productS.getProducts().subscribe((response: any) => {
     this.products = response;
     this.bestSellersByCategory = this.groupBestSellersByCategory();
     this.startTimer(); 
     });
 
-    this._productS.getCategories().subscribe((response) => {
+    this._productS.getCategories().subscribe((response:any) => {
       this.categories = response;
     });
   }

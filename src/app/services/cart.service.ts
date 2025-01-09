@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError, map, of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -102,5 +102,16 @@ export class CartService {
     );
   }
 
-  
+  // Get cart total by userId
+  getCartCount(userId: string): Observable<number> {
+    return this.getCartItems(userId).pipe(
+      map((cartItems) => {
+        return cartItems.products.length;
+      }),
+      catchError((error) => {
+        console.error('Error fetching cart items:', error);
+        return of(0); 
+      })
+    );
+  }
 }

@@ -40,10 +40,10 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.imageURL = this._productS.uploadURL;
-    this._productS.getCategories().subscribe((response) => {
-      this.categories = response;
+    this._productS.getCategories().subscribe((response: any) => {
+      this.categories = Array.isArray(response) ? response : [];
     });
-    this._productS.getProducts().subscribe((response) => {
+    this._productS.getProducts().subscribe((response: any) => {
       this.products = response;
       this.filteredProducts = this.products;
       this.carouselProducts = [...this.products].sort(

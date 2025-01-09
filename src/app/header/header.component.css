@@ -58,3 +58,7 @@ body {
 .nav-buttons .btn:hover {
   background-color: #555;
 }
+
+#cart {
+  border: 1px solid red;
+}

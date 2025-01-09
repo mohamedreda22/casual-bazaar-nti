@@ -13,12 +13,22 @@ export class CartComponent implements OnInit {
   userId: string = '';
   totalPrice: number = 0;
   imageURL: string = '';
+  cartCount: number = 0;
 
   constructor(private cartService: CartService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.imageURL = this.cartService.imgURL;
     this.userId = this.cartService.getUserId();
+        this.cartService.getCartCount(this.userId).subscribe({
+      next: (count) => {
+        this.cartCount = count;
+      },
+      error: (error) => {
+        console.error('Error loading cart count:', error);
+      },
+    });
+
     this.loadCartItems();
   }
 
