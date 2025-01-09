@@ -34,12 +34,14 @@ export class CartService {
   }
 
   addToCart(userId: string, productId: string) {
-    return this.http.post(`${this.apiUrl}/user/${userId}`, { productId }).pipe(
-      catchError((error: HttpErrorResponse) => {
+    return this.http
+      .post(`${this.apiUrl}/user/${userId}`, { productId })
+      .pipe
+      /*       catchError((error: HttpErrorResponse) => {
         console.error('Error adding item to cart:', error.message);
         return throwError(() => new Error('Failed to add item to cart'));
-      })
-    );
+      }) */
+      ();
   }
 
   getCartByUser(userId: string) {
@@ -78,12 +80,27 @@ export class CartService {
   }
 
   // Update cart item by userId
-  updateCartItem(userId: string, cart: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/user/${userId}`, cart).pipe(
+  updateCartItem(
+    userId: string,
+    item: { productId: string; quantity: number }
+  ): Observable<any> {
+    return this.http.put(`${this.apiUrl}/user/${userId}`, item).pipe(
       catchError((error) => {
         console.error('Error updating cart item:', error);
         return throwError(() => new Error('Failed to update cart item'));
       })
     );
   }
+
+  // Clear cart by userId
+  clearCart(userId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/user/${userId}/clear`).pipe(
+      catchError((error) => {
+        console.error('Error clearing cart:', error);
+        return throwError(() => new Error('Failed to clear cart'));
+      })
+    );
+  }
+
+  
 }
