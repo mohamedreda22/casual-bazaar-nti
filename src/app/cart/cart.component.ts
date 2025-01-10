@@ -13,60 +13,53 @@ export class CartComponent implements OnInit {
   shippingCost: number = 5;
   userId: string = '';
   totalPrice: number = 0;
-  imageURL: string = '';
   cartCount: number = 0;
 
+  imageURL = 'http://localhost:3000/images/';
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.imageURL = this.cartService.imgURL;
     this.userId = this.cartService.getUserId();
-        this.cartService.getCartCount(this.userId).subscribe({
-      next: (count) => {
-        this.cartCount = count;
-      },
-      error: (error) => {
-        console.error('Error loading cart count:', error);
-      },
-    });
-
     this.loadCartItems();
+    this.updateCartCount();
   }
 
-  // Load cart items for the user
-  loadCartItems(): void {
-    this.cartService.getCartItems(this.userId).subscribe(
-      (response) => {
-        if (response && Array.isArray(response.products)) {
-          this.cartItems = response.products.map((item: any) => ({
-            ...item,
-            productDetails: null,
-          }));
+  // Load cart items
+  private loadCartItems(): void {
+    this.cartService.getCartItems(this.userId).subscribe({
+      next: (response) => {
+        if (response?.products) {
+          this.cartItems = response.products;
           this.cartItems.forEach((item) => this.loadProductDetails(item));
-        } else {
-          console.error('Unexpected cart data:', response);
         }
       },
-      (error) => console.error('Error loading cart:', error)
-    );
+      error: (err) => console.error('Error loading cart:', err),
+    });
   }
 
-  // Load product details for each item
-  loadProductDetails(item: any): void {
-    this.cartService.getProductById(item.product).subscribe(
-      (productDetails) => {
+  // Load product details for each cart item
+  private loadProductDetails(item: any): void {
+    this.cartService.getProductById(item.product).subscribe({
+      next: (productDetails) => {
         item.productDetails = productDetails;
         this.calculateTotal();
       },
-      (error) => console.error('Error loading product details:', error)
-    );
+      error: (err) => console.error(`Error loading product details:`, err),
+    });
   }
 
-  // Update the quantity of a product in the cart
+  // Update cart count
+  private updateCartCount(): void {
+    this.cartService.getCartCount(this.userId).subscribe({
+      next: (count) => (this.cartCount = count),
+      error: (err) => console.error('Error fetching cart count:', err),
+    });
+  }
+
+  // Update quantity
   updateQuantity(item: any, change: number): void {
-    // console.log('Updating quantity:', item.product, change);
     const newQuantity = item.quantity + change;
-    if (newQuantity < 1) return; // Prevent quantity below 1
+    if (newQuantity < 1) return;
 
     item.quantity = newQuantity;
     this.cartService
@@ -74,52 +67,79 @@ export class CartComponent implements OnInit {
         productId: item.product,
         quantity: newQuantity,
       })
-      .subscribe(
-        () => this.loadCartItems(), // Reload cart to reflect updates
-        (error) => console.error('Error updating cart:', error)
-      );
+      .subscribe({
+        next: () => this.calculateTotal(),
+        error: (err) => console.error('Error updating cart item:', err),
+      });
   }
 
-  // Remove an item from the cart
+  // Remove item
   removeItem(productId: string): void {
-    this.cartService.removeCartItem(this.userId, productId).subscribe(
-      () => this.loadCartItems(),
-      (error) => console.error('Error removing item:', error)
-    );
+    this.cartService.removeCartItem(this.userId, productId).subscribe({
+      next: () => {
+        this.cartItems = this.cartItems.filter(
+          (item) => item.product !== productId
+        );
+        this.calculateTotal();
+        this.updateCartCount();
+      },
+      error: (err) => console.error('Error removing item:', err),
+    });
   }
 
+  // Clear cart
   clearCart(): void {
-    this.cartService.clearCart(this.userId).subscribe(
-      () => {
+    this.cartService.clearCart(this.userId).subscribe({
+      next: () => {
         this.cartItems = [];
         this.totalPrice = 0;
-        Swal.fire('Cart cleared successfully.', '', 'success');
-        // console.log('Cart cleared successfully.');
+        this.cartCount = 0;
+        Swal.fire('Cart cleared successfully', '', 'success');
+      },
+      error: (err) => console.error('Error clearing cart:', err),
+    });
+  }
+
+  // Calculate total
+  private calculateTotal(): void {
+    this.totalPrice = this.cartItems.reduce((total, item) => {
+      const price = parseFloat(item.productDetails?.price || '0');
+      return total + price * item.quantity;
+    }, 0);
+  }
+
+  // Checkout
+  checkout(): void {
+    const order = {
+      userId: this.userId,
+      items: this.cartItems.map((item) => ({
+        productId: item.product,
+        quantity: item.quantity,
+        price: item.productDetails.price,
+      })),
+      total: this.sumTotal(),
+    };
+
+    console.log('Order payload:', order);
+
+    this.cartService.createOrder(order).subscribe(
+      () => {
+        this.clearCart();
+        Swal.fire('Order placed successfully.', '', 'success');
+        console.log('Order placed successfully.');
       },
       (error) => {
-        console.error('Error clearing cart:', error);
-        alert('Failed to clear the cart. Please try again.');
+        console.error('Order creation failed:', error);
+        Swal.fire(
+          'Failed to place the order.',
+          error?.error?.message || '',
+          'error'
+        );
       }
     );
   }
 
-  // Calculate the total price of the cart
-  calculateTotal(): void {
-    this.totalPrice = this.cartItems.reduce((total, item) => {
-      const price = parseFloat(item.productDetails?.price || '0'); // Ensure the price is treated as a number
-      const quantity = parseInt(item.quantity, 10); // Ensure quantity is an integer
-      return total + price * quantity;
-    }, 0);
-  }
-
-  // Proceed to checkout
-  checkout(): void {
-    console.log('Proceeding to checkout...');
-  }
-
   sumTotal() {
-    return Number(this.totalPrice) + Number(this.shippingCost);
+    return this.totalPrice + this.shippingCost;
   }
 }
-
-

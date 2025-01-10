@@ -1,137 +1,124 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, throwError, map, of, switchMap } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { AuthServiceService } from './auth.service.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private apiUrl = 'http://localhost:3000/cart'; // Base URL for the cart API
+  private apiUrl = 'http://localhost:3000/cart';
   private productUrl = 'http://localhost:3000/products';
+  private orderUrl = 'http://localhost:3000/orders';
 
-  constructor(private http: HttpClient,private _authS:AuthServiceService) {}
-  imgURL = 'http://localhost:3000/images/';
+  constructor(
+    private http: HttpClient,
+    private authService: AuthServiceService
+  ) {}
 
-  // Get cart items by userId
+  // Fetch cart items
   getCartItems(userId: string): Observable<any> {
-    return this._authS.isAdmin().pipe(
-      map((isAdmin) => {
-        if (!isAdmin) {
-          return this.http.get<any>(`${this.apiUrl}/user/${userId}`).pipe(
-            catchError((error) => {
-              console.error('Error getting cart items:', error);
-              return throwError(() => new Error('Failed to fetch cart items'));
-            })
-          );
-        }
-        return of([
-          {
-            products: [],
-          },
-        ]);
-      }),
-      catchError((error) => {
-        console.error('Error checking admin status:', error);
-        return of([]);
-      }),
-      switchMap((result: any) => result)
-    );
+    return this.http
+      .get(`${this.apiUrl}/user/${userId}`)
+      .pipe(
+        catchError((err) => this.handleError(err, 'Failed to fetch cart items'))
+      );
   }
 
-  // Get product details by productId
+  // Fetch product details
   getProductById(productId: string): Observable<any> {
-    return this.http.get<any>(`${this.productUrl}/${productId}`).pipe(
-      catchError((error) => {
-        console.error('Error getting product details:', error);
-        return throwError(() => new Error('Failed to fetch product details'));
-      })
-    );
+    return this.http
+      .get(`${this.productUrl}/${productId}`)
+      .pipe(
+        catchError((err) =>
+          this.handleError(err, 'Failed to fetch product details')
+        )
+      );
   }
 
-  addToCart(userId: string, productId: string) {
+  // Add item to cart
+  addToCart(userId: string, productId: string): Observable<any> {
     return this.http
       .post(`${this.apiUrl}/user/${userId}`, { productId })
-      .pipe
-      /*       catchError((error: HttpErrorResponse) => {
-        console.error('Error adding item to cart:', error.message);
-        return throwError(() => new Error('Failed to add item to cart'));
-      }) */
-      ();
+      .pipe(
+        catchError((err) => this.handleError(err, 'Failed to add item to cart'))
+      );
   }
 
-  getCartByUser(userId: string) {
-    return this.http.get(`${this.apiUrl}/user/${userId}`).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error('Error fetching user cart:', error.message);
-        return throwError(() => new Error('Failed to fetch cart'));
-      })
-    );
-  }
-
-  // Remove an item from the cart by userId and productId
+  // Remove item from cart
   removeCartItem(userId: string, productId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/user/${userId}/${productId}`).pipe(
-      catchError((error) => {
-        console.error('Error removing cart item:', error);
-        return throwError(() => new Error('Failed to remove cart item'));
-      })
-    );
+    return this.http
+      .delete(`${this.apiUrl}/user/${userId}/${productId}`)
+      .pipe(
+        catchError((err) => this.handleError(err, 'Failed to remove cart item'))
+      );
   }
 
-  // Fetch token from localStorage for userId
-  fetchTokenFromLocalStorage(): string {
-    return localStorage.getItem('accessToken') || '';
-  }
-
-  // Decode token to get userId
-  decodeToken(token: string): any {
-    const payload = token.split('.')[1];
-    return JSON.parse(atob(payload));
-  }
-
-  getUserId(): string {
-    const token = this.fetchTokenFromLocalStorage();
-    return this.decodeToken(token).userId;
-  }
-
-  // Update cart item by userId
+  // Update cart item
   updateCartItem(
     userId: string,
     item: { productId: string; quantity: number }
   ): Observable<any> {
-    return this.http.put(`${this.apiUrl}/user/${userId}`, item).pipe(
-      catchError((error) => {
-        console.error('Error updating cart item:', error);
-        return throwError(() => new Error('Failed to update cart item'));
-      })
-    );
-  }
-
-  // Clear cart by userId
-  clearCart(userId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/user/${userId}/clear`).pipe(
-      catchError((error) => {
-        console.error('Error clearing cart:', error);
-        return throwError(() => new Error('Failed to clear cart'));
-      })
-    );
-  }
-
-  // Get cart total by userId
-  getCartCount(userId: string): Observable<number> {
-    if (!this._authS.isAdmin) {
-      return this.getCartItems(userId).pipe(
-        map((cartItems) => {
-          return cartItems.products.length;
-        }),
-        catchError((error) => {
-          console.error('Error fetching cart items:', error);
-          return of(0); 
-        })
+    return this.http
+      .put(`${this.apiUrl}/user/${userId}`, item)
+      .pipe(
+        catchError((err) => this.handleError(err, 'Failed to update cart item'))
       );
+  }
+
+  // Clear cart
+  clearCart(userId: string): Observable<any> {
+    return this.http
+      .delete(`${this.apiUrl}/user/${userId}/clear`)
+      .pipe(catchError((err) => this.handleError(err, 'Failed to clear cart')));
+  }
+
+  // Fetch cart count
+  getCartCount(userId: string): Observable<number> {
+    return this.getCartItems(userId).pipe(
+      map((response) => response?.products?.length || 0),
+      catchError(() => of(0))
+    );
+  }
+
+  // Create order
+  createOrder(order: any): Observable<any> {
+    if (!order || !order.items || order.items.length === 0) {
+      console.error('Invalid order data:', order);
+      return throwError(() => new Error('Invalid order data.'));
     }
-    return of(0); 
+
+    return this.http.post(`${this.orderUrl}`, order).pipe(
+      catchError((error) => {
+        console.error('Error creating order:', error);
+        console.log("order: ", order);
+        return throwError(() => new Error(error?.error?.message || 'Failed to create order.'));
+      })
+    );
+  }
+
+  // Get user ID
+  getUserId(): string {
+    const token = localStorage.getItem('accessToken');
+    return token ? JSON.parse(atob(token.split('.')[1])).userId : '';
+  }
+
+  // Handle errors
+  private handleError(error: any, message: string): Observable<never> {
+    console.error(message, error);
+    return throwError(() => new Error(message));
+  }
+
+  // Calculate total
+  calculateTotal(cartItems: any[]): number {
+    return cartItems.reduce(
+      (total, item) => total + item.product.price * item.quantity,
+      0
+    );
+  }
+
+  fetchTokenFromLocalStorage(): string {
+    return localStorage.getItem('accessToken') || '';
   }
 }
