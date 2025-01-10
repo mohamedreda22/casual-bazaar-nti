@@ -20,22 +20,16 @@ import Swal from 'sweetalert2';
 })
 export class DashboardComponent implements OnInit {
   currentSection: string = 'products';
-  products: Product[] = [];
   users: User[] = [];
   categories: Category[] = [];
   filteredSubCategories: string[] = [];
 
-  isAddingProduct: boolean = false;
   isAddingCategory: boolean = false;
   isEditingCategory: boolean = false;
-  newProduct: Product = this.initializeNewProduct();
   newCategory: Category = this.initializeNewCategory();
 
   errorMessage: string | null = null;
-  isEditingProduct: boolean = false;
 
-  addProductForm: FormGroup;
-  editProductForm: FormGroup;
   addCategoryForm: FormGroup;
   editCategoryForm: FormGroup;
 
@@ -47,49 +41,8 @@ export class DashboardComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.imageURL = adminDashboardService.apiUrl + '/images/';
-    /*     this.addProductForm = this.fb.group({
-      name: ['', Validators.required],
-      price: [null, Validators.required],
-      category: ['', Validators.required],
-      subCategory: ['', Validators.required],
-      description: ['', Validators.required],
-      bestSellers: [false, Validators.required],
-      productImage: [null, Validators.required],
-      status: this.fb.group({
-        availability: ['', Validators.required], // Nested controls
-        stockStatus: ['', Validators.required],
-      }),
-    }); */
 
-    this.addProductForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      price: new FormControl('', [Validators.required]),
-      category: new FormControl('', [Validators.required]),
-      subCategory: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      bestSellers: new FormControl('', [Validators.required]),
-      rank: new FormControl('', [Validators.required]),
-      status: new FormGroup({
-        availability: new FormControl('', [Validators.required]),
-        stockStatus: new FormControl('', [Validators.required]),
-      }),
-      productImage: new FormControl('', [Validators.required]),
-    });
 
-    this.editProductForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      price: new FormControl('', [Validators.required]),
-      category: new FormControl('', [Validators.required]),
-      subCategory: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      bestSellers: new FormControl(''),
-      rank: new FormControl(''),
-      status: new FormGroup({
-        availability: new FormControl(''),
-        stockStatus: new FormControl(''),
-      }),
-      productImage: new FormControl(''),
-    });
 
     this.addCategoryForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -119,46 +72,6 @@ export class DashboardComponent implements OnInit {
 
   removeSubCategory(index: number): void {
     this.subCategories.removeAt(index);
-  }
-
-  // Start editing product
-  startEditProduct(product: Product): void {
-    this.isEditingProduct = true;
-    this.currentProduct = product;
-    this.editProductForm.patchValue({
-      name: product.name,
-      price: product.price,
-      category: product.category,
-      subCategory: product.subCategory,
-      bestSellers: product.bestSellers,
-      rank: product.rank,
-      status: {
-        availability: product.status.availability,
-        stockStatus: product.status.stockStatus,
-      },
-      description: product.description,
-    });
-  }
-
-  // Handle product update
-  handleUpdateProduct(): void {
-    if (this.editProductForm.valid) {
-      this.adminDashboardService
-        .updateProduct(this.currentProduct!._id, this.editProductForm.value)
-        .subscribe((response) => {
-          console.log('Product updated', response);
-          this.isEditingProduct = false;
-          this.loadProducts(); // Reload products list
-          Swal.fire('Success', 'Product updated successfully', 'success');
-        });
-      Swal.fire('Error', 'Failed to update product', 'error');
-    }
-  }
-
-  // Cancel editing product
-  cancelEditProduct(): void {
-    this.isEditingProduct = false;
-    this.currentProduct = null;
   }
 
   startEditCategory(category: Category): void {
@@ -227,7 +140,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadProducts();
     this.loadUsers();
     this.loadCategories();
   }
@@ -236,22 +148,6 @@ export class DashboardComponent implements OnInit {
     this.currentSection = section;
   }
 
-  initializeNewProduct(): Product {
-    return {
-      _id: '',
-      name: '',
-      price: 0,
-      category: '',
-      subCategory: '',
-      description: '',
-      productImage: '',
-      bestSellers: false,
-      rank: 0,
-      status: { availability: 'available', stockStatus: 'inStock' },
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-  }
 
   initializeNewCategory(): Category {
     return {
@@ -264,18 +160,6 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  loadProducts(): void {
-    this.adminDashboardService.getAllProducts().subscribe(
-      (products) => {
-        this.products = products;
-        this.errorMessage = null;
-      },
-      (error) => {
-        console.error('Error loading products:', error);
-        this.errorMessage = 'Failed to load products. Please try again later.';
-      }
-    );
-  }
 
   loadUsers(): void {
     this.adminDashboardService.getAllUsers().subscribe(
@@ -295,109 +179,24 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  onCategoryChange(categoryId: string): void {
-    const selectedCategory = this.categories.find(
-      (category) => category._id === categoryId
-    );
-    this.filteredSubCategories = selectedCategory
-      ? selectedCategory.subCategories
-      : [];
-    this.addProductForm.get('subCategory')?.setValue(''); // Reset subcategory when category changes
-  }
 
-  showAddProductForm(): void {
-    this.isAddingProduct = true;
-  }
 
   showAddCategoryForm(): void {
     this.isAddingCategory = true;
   }
 
-  toggleAddProductForm(): void {
-    this.isAddingProduct = !this.isAddingProduct;
-  }
+
 
   toggleAddCategoryForm(): void {
     this.isAddingCategory = !this.isAddingCategory;
   }
 
-  cancelAddProduct(): void {
-    this.isAddingProduct = false;
-    this.newProduct = this.initializeNewProduct();
-  }
 
   cancelAddCategory(): void {
     this.isAddingCategory = false;
     this.newCategory = this.initializeNewCategory();
   }
 
-  handleAddProduct(): void {
-    if (this.addProductForm.valid) {
-      console.log('Form data:', this.addProductForm.value); // Debugging step
-
-      const formData = new FormData();
-
-      // Append top-level form controls
-      formData.append('name', this.addProductForm.get('name')?.value || '');
-      formData.append('price', this.addProductForm.get('price')?.value || '');
-      formData.append(
-        'category',
-        this.addProductForm.get('category')?.value || ''
-      );
-      formData.append(
-        'subCategory',
-        this.addProductForm.get('subCategory')?.value || ''
-      );
-      formData.append(
-        'bestSellers',
-        this.addProductForm.get('bestSellers')?.value || 'false'
-      );
-      formData.append('rank', this.addProductForm.get('rank')?.value || '');
-      formData.append(
-        'description',
-        this.addProductForm.get('description')?.value || ''
-      );
-
-      // Handle nested form controls in 'status'
-      const statusGroup = this.addProductForm.get('status');
-      if (statusGroup) {
-        formData.append(
-          'availability',
-          statusGroup.get('availability')?.value || ''
-        );
-        formData.append(
-          'stockStatus',
-          statusGroup.get('stockStatus')?.value || ''
-        );
-      }
-
-      // Handle file input for 'productImage'
-      const productImage = this.addProductForm.get('productImage')?.value;
-      if (productImage) {
-        formData.append('productImage', productImage);
-      }
-
-      // Call service to add product
-      this.adminDashboardService.addProduct(formData).subscribe(
-        (newProduct) => {
-          console.log('Product added:', newProduct);
-          this.loadProducts(); // Refresh the product list
-          this.isAddingProduct = false; // Reset the adding state
-          this.newProduct = this.initializeNewProduct(); // Reset the form
-          Swal.fire('Success', 'Product added successfully', 'success');
-        },
-        (error) => {
-          console.error('Error adding product:', error);
-          Swal.fire('Error', 'Failed to add product', 'error');
-        }
-      );
-    } else {
-      // Form is invalid; provide user feedback
-      Swal.fire('Error', 'Please complete the form before submitting', 'error');
-      console.log('form: ', this.addProductForm.value);
-      this.addProductForm.markAllAsTouched(); // Highlight all invalid fields
-    }
-  }
 
   handleAddCategory(): void {
     if (this.addCategoryForm.valid) {
@@ -446,46 +245,6 @@ export class DashboardComponent implements OnInit {
 
   getUserTypeName(userType: any): string {
     return userType.name;
-  }
-
-  handleImageUpload(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.addProductForm.patchValue({
-        productImage: file,
-      });
-      // Swal.fire('Success', 'Image uploaded successfully', 'success');
-    } else {
-      Swal.fire('Error', 'Failed to upload image', 'error');
-    }
-  }
-
-  updateProduct(product: Product): void {
-    this.adminDashboardService.updateProduct(product._id, product).subscribe(
-      (updatedProduct) => {
-        console.log('Product updated:', updatedProduct);
-        this.loadProducts();
-        Swal.fire('Success', 'Product updated successfully', 'success');
-      },
-      (error) => {
-        console.error('Error updating product:', error);
-        Swal.fire('Error', 'Failed to update product', 'error');
-      }
-    );
-  }
-
-  deleteProduct(id: string): void {
-    this.adminDashboardService.deleteProduct(id).subscribe(
-      () => {
-        console.log('Product deleted');
-        this.loadProducts();
-        Swal.fire('Success', 'Product deleted successfully', 'success');
-      },
-      (error) => {
-        console.error('Error deleting product:', error);
-        Swal.fire('Error', 'Failed to delete product', 'error');
-      }
-    );
   }
 
   updateUser(user: User): void {
