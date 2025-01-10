@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
   register(registerForm: FormGroup) {
     this._authS.register(registerForm.value).subscribe(
       (res) => {
-        console.log(res);
+        // console.log(res);
         // Redirect to login path on success
         window.location.href = '/login';
       },

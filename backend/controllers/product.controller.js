@@ -75,7 +75,7 @@ exports.updateProduct = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    console.log("Updated product:", updatedProduct);
+    // console.log("Updated product:", updatedProduct);
     res.status(200).json({ message: "Product updated successfully", product: updatedProduct });
   } catch (error) {
     res.status(500).json({ message: error.message });

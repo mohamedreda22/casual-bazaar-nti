@@ -99,7 +99,7 @@ export class ProductsComponent implements OnInit {
   deleteProduct(id: string): void {
     this.adminDashboardService.deleteProduct(id).subscribe(
       () => {
-        console.log('Product deleted');
+        // console.log('Product deleted');
         this.loadProducts();
         Swal.fire('Success', 'Product deleted successfully', 'success');
       },
@@ -161,7 +161,7 @@ export class ProductsComponent implements OnInit {
 
   handleAddProduct(): void {
     if (this.addProductForm.valid) {
-      console.log('Form data:', this.addProductForm.value); // Debugging step
+      // console.log('Form data:', this.addProductForm.value); // Debugging step
 
       const formData = new FormData();
 
@@ -208,7 +208,7 @@ export class ProductsComponent implements OnInit {
       // Call service to add product
       this.adminDashboardService.addProduct(formData).subscribe(
         (newProduct) => {
-          console.log('Product added:', newProduct);
+          // console.log('Product added:', newProduct);
           this.loadProducts(); // Refresh the product list
           this.isAddingProduct = false; // Reset the adding state
           this.newProduct = this.initializeNewProduct(); // Reset the form
@@ -222,7 +222,7 @@ export class ProductsComponent implements OnInit {
     } else {
       // Form is invalid; provide user feedback
       Swal.fire('Error', 'Please complete the form before submitting', 'error');
-      console.log('form: ', this.addProductForm.value);
+      // console.log('form: ', this.addProductForm.value);
       this.addProductForm.markAllAsTouched(); // Highlight all invalid fields
     }
   }
@@ -294,7 +294,7 @@ export class ProductsComponent implements OnInit {
       this.adminDashboardService
         .updateProduct(this.currentProduct!._id, this.editProductForm.value)
         .subscribe((response) => {
-          console.log('Product updated', response);
+          // console.log('Product updated', response);
           this.isEditingProduct = false;
           this.loadProducts(); // Reload products list
           Swal.fire('Success', 'Product updated successfully', 'success');
@@ -306,7 +306,7 @@ export class ProductsComponent implements OnInit {
   updateProduct(product: Product): void {
     this.adminDashboardService.updateProduct(product._id, product).subscribe(
       (updatedProduct) => {
-        console.log('Product updated:', updatedProduct);
+        // console.log('Product updated:', updatedProduct);
         this.loadProducts();
         Swal.fire('Success', 'Product updated successfully', 'success');
       },

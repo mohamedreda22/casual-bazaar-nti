@@ -76,7 +76,7 @@ export class CategoriesComponent implements OnInit {
 
   handleUpdateCategory(): void {
     if (this.editCategoryForm.valid) {
-      console.log('Form data:', this.editCategoryForm.value); // Debugging
+      // console.log('Form data:', this.editCategoryForm.value); // Debugging
       const updatedCategory = {
         ...this.newCategory, // Use the existing category details
         ...this.editCategoryForm.value, // Merge with form changes
@@ -84,13 +84,13 @@ export class CategoriesComponent implements OnInit {
       const categoryId = this.currentCategory
         ? this.currentCategory._id
         : updatedCategory._id;
-      console.log('updatedCategory ID :', categoryId);
+      // console.log('updatedCategory ID :', categoryId);
 
       this.adminDashboardService
         .updateCategory(categoryId, updatedCategory)
         .subscribe({
           next: (response) => {
-            console.log('Category updated successfully:', response);
+            // console.log('Category updated successfully:', response);
             this.loadCategories(); // Reload categories to reflect changes
             Swal.fire('Success', 'Category updated successfully', 'success');
             this.cancelEditCategory(); // Reset form and UI
@@ -164,7 +164,7 @@ export class CategoriesComponent implements OnInit {
 
   handleAddCategory(): void {
     if (this.addCategoryForm.valid) {
-      console.log('Form data:', this.addCategoryForm.value); // Debugging
+      // console.log('Form data:', this.addCategoryForm.value); // Debugging
       const formData = {
         name: this.addCategoryForm.get('name')?.value,
         subCategories: this.addCategoryForm.get('subCategories')?.value,
@@ -173,7 +173,7 @@ export class CategoriesComponent implements OnInit {
 
       this.adminDashboardService.addCategory(formData).subscribe(
         (newCategory) => {
-          console.log('Category added:', newCategory);
+          // console.log('Category added:', newCategory);
           this.loadCategories();
           this.isAddingCategory = false;
           this.newCategory = this.initializeNewCategory();
@@ -190,11 +190,11 @@ export class CategoriesComponent implements OnInit {
   }
 
   updateCategory(category: Category): void {
-    console.log('Category:', category);
-    console.log('Category ID:', category._id);
+    // console.log('Category:', category);
+    // console.log('Category ID:', category._id);
     this.adminDashboardService.updateCategory(category._id, category).subscribe(
       (updatedCategory) => {
-        console.log('Category updated:', updatedCategory);
+        // console.log('Category updated:', updatedCategory);
         this.loadCategories();
         this.isEditingCategory = false; // Set editing to false
         this.updateCategory(updatedCategory);
@@ -208,10 +208,10 @@ export class CategoriesComponent implements OnInit {
   }
 
   deleteCategory(id: string): void {
-    console.log('Category ID:', id);
+    // console.log('Category ID:', id);
     this.adminDashboardService.deleteCategory(id).subscribe(
       () => {
-        console.log('Category deleted');
+        // console.log('Category deleted');
         this.loadCategories();
         Swal.fire('Success', 'Category deleted successfully', 'success');
       },
@@ -223,10 +223,10 @@ export class CategoriesComponent implements OnInit {
   }
 
   editCategory(categoryId: string, category: Category): void {
-    console.log('Category ID:', categoryId);
+    // console.log('Category ID:', categoryId);
     this.adminDashboardService.editCategory(categoryId, category).subscribe(
       (updatedCategory) => {
-        console.log('Category updated:', updatedCategory);
+        // console.log('Category updated:', updatedCategory);
         this.loadCategories();
         Swal.fire('Success', 'Category updated successfully', 'success');
       },

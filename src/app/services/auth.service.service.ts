@@ -75,7 +75,7 @@ export class AuthServiceService {
   // Modified to return only the boolean value for isAuthenticated
   isAuthenticated(): Observable<boolean> {
     return this.userStateSubject.asObservable().pipe(
-      tap((state) => console.log('Authenticated:', state.isAuthenticated)),
+      tap((state) => {/* console.log('Authenticated:', state.isAuthenticated) */}),
       map((state) => state.isAuthenticated) // Extract the boolean value
     );
   }
@@ -83,7 +83,7 @@ export class AuthServiceService {
   // Modified to return only the boolean value for isAdmin
   isAdmin(): Observable<boolean> {
     return this.userStateSubject.asObservable().pipe(
-      tap((state) => console.log('Is Admin:', state.isAdmin)),
+      tap((state) => {/* console.log('Is Admin:', state.isAdmin) */}),
       map((state) => state.isAdmin) // Extract the boolean value
     );
   }

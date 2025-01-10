@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthServiceService } from '../services/auth.service.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent {
     if (loginForm.valid) {
       this._authS.login(loginForm.value).subscribe({
         next: (res) => {
-          console.log('response: ', res);
+          // console.log('response: ', res);
           this._authS.isAdmin().subscribe((isAdmin) => {
             if (isAdmin === true) {
               this._router.navigate(['/admin-dashboard']);
@@ -26,11 +27,22 @@ export class LoginComponent {
           });
         },
         error: (err) => {
-          console.log('error: ', err);
+          console.error('Error logging in:', err);
+          Swal.fire({
+            title: 'Error!',
+            text: 'Invalid username or password',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
         },
       });
     } else {
-      console.log('Form is invalid');
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please enter a valid username and password',
+        icon: 'error',
+        confirmButtonText: 'Ok',
+      });
     }
   }
 }

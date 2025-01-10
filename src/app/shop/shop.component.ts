@@ -101,7 +101,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   filterByCategory(categoryName: string, subCategory: string): void {
-    console.log(`Filtering products for ${categoryName} > ${subCategory}`);
+    // console.log(`Filtering products for ${categoryName} > ${subCategory}`);
     this.selectedSubCategory = subCategory;
     this.filteredProducts = this.products.filter(
       (product) =>

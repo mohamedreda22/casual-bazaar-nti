@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
           const userId = this.authService.getUserId();
           this.cartService.getCartCount(userId).subscribe({
             next: (count) => {
-              console.log('Cart count:', count);
+              // console.log('Cart count:', count);
               this.cartCount = count;
             },
             error: (err) => {

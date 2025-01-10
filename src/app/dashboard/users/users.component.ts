@@ -103,11 +103,11 @@ export class UserComponent implements OnInit {
         userType: this.editUserForm.value.userType, // Pass the ObjectId of userType
         ...this.editUserForm.value, // Spread the remaining form data
       };
-      console.log('updatedUser:', updatedUser);
-      console.log('editUserForm:', this.editUserForm.value);
+      // console.log('updatedUser:', updatedUser);
+      // console.log('editUserForm:', this.editUserForm.value);
       this.adminDashboardService.updateUser(updatedUser).subscribe(
         (updatedUser) => {
-          console.log('User updated:', updatedUser);
+          // console.log('User updated:', updatedUser);
           this.loadUsers();
           Swal.fire('Success', 'User updated successfully', 'success');
         },
@@ -130,7 +130,7 @@ export class UserComponent implements OnInit {
   deleteUser(id: string): void {
     this.adminDashboardService.deleteUser(id).subscribe(
       () => {
-        console.log('User deleted');
+        // console.log('User deleted');
         this.loadUsers();
         Swal.fire('Success', 'User deleted successfully', 'success');
       },

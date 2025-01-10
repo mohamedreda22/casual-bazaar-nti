@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cart',
@@ -63,7 +64,7 @@ export class CartComponent implements OnInit {
 
   // Update the quantity of a product in the cart
   updateQuantity(item: any, change: number): void {
-    console.log('Updating quantity:', item.product, change);
+    // console.log('Updating quantity:', item.product, change);
     const newQuantity = item.quantity + change;
     if (newQuantity < 1) return; // Prevent quantity below 1
 
@@ -92,7 +93,8 @@ export class CartComponent implements OnInit {
       () => {
         this.cartItems = [];
         this.totalPrice = 0;
-        console.log('Cart cleared successfully.');
+        Swal.fire('Cart cleared successfully.', '', 'success');
+        // console.log('Cart cleared successfully.');
       },
       (error) => {
         console.error('Error clearing cart:', error);

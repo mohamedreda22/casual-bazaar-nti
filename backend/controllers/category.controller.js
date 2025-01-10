@@ -29,7 +29,7 @@ exports.getCategory = async (req, res) => {
 }
 
 exports.updateCategory = async (req, res) => {
-    console.log("req.body", req.body);
+    // console.log("req.body", req.body);
    const id= req.params.id;
     const {name, subCategories, show} = req.body;
     try {
