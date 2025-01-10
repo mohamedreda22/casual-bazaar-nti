@@ -53,6 +53,12 @@ export class DashboardComponent implements OnInit {
       category: new FormControl('', [Validators.required]),
       subCategory: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
+      bestSellers: new FormControl('', [Validators.required]),
+      rank: new FormControl('', [Validators.required]),
+      status: new FormGroup({
+        availability: new FormControl('', [Validators.required]),
+        stockStatus: new FormControl('', [Validators.required]),
+      }),
       productImage: new FormControl('', [Validators.required]),
     });
 
@@ -62,6 +68,12 @@ export class DashboardComponent implements OnInit {
       category: new FormControl('', [Validators.required]),
       subCategory: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
+      bestSellers: new FormControl(''),
+      rank: new FormControl(''),
+      status: new FormGroup({
+        availability: new FormControl(''),
+        stockStatus: new FormControl(''),
+      }),
       productImage: new FormControl(''),
     });
 
@@ -102,12 +114,14 @@ export class DashboardComponent implements OnInit {
     this.editProductForm.patchValue({
       name: product.name,
       price: product.price,
-      /*       category: {
-        main: product.category,
-        subCategory: product.subCategory,
-      }, */
       category: product.category,
       subCategory: product.subCategory,
+      bestSellers: product.bestSellers,
+      rank: product.rank,
+      status: {
+        availability: product.status.availability,
+        stockStatus: product.status.stockStatus,
+      },
       description: product.description,
     });
   }
@@ -313,6 +327,20 @@ export class DashboardComponent implements OnInit {
         this.addProductForm.get('subCategory')?.value
       );
       formData.append(
+        'bestSellers',
+        this.addProductForm.get('bestSellers')?.value
+      );
+      formData.append('rank', this.addProductForm.get('rank')?.value);
+      formData.append(
+        'status.availability',
+        this.addProductForm.get('status.availability')?.value
+      );
+      formData.append(
+        'status.stockStatus',
+        this.addProductForm.get('status.stockStatus')?.value
+      );
+      
+      formData.append(
         'description',
         this.addProductForm.get('description')?.value
       );
@@ -502,16 +530,4 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-/*   editUser(user: User): void {
-    this.adminDashboardService.updateUser(user).subscribe(
-      (updatedUser) => {
-        console.log('User updated:', updatedUser);
-        this.loadUsers();
-      },
-      (error) => {
-        console.error('Error updating user:', error);
-        Swal.fire('Error', 'Failed to update user', 'error');
-      }
-    );
-  } */
 }

@@ -62,10 +62,21 @@ exports.getProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   try {
-    await productModel.findByIdAndUpdate(req.params.id, req.body, {
+    const updateData = {
+      ...req.body,
+      productImage: req.file?.filename || req.body.productImage.split("\\").pop(), 
+    };
+
+    const updatedProduct = await productModel.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     }); // { new: true } => return updated object
-    res.status(200).json({ message: "Product updated successfully" });
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    console.log("Updated product:", updatedProduct);
+    res.status(200).json({ message: "Product updated successfully", product: updatedProduct });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
