@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, throwError, map, of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthServiceService } from './auth.service.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,17 +11,20 @@ export class CartService {
   private apiUrl = 'http://localhost:3000/cart'; // Base URL for the cart API
   private productUrl = 'http://localhost:3000/products';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private _authS:AuthServiceService) {}
   imgURL = 'http://localhost:3000/images/';
 
   // Get cart items by userId
   getCartItems(userId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/user/${userId}`).pipe(
-      catchError((error) => {
-        console.error('Error getting cart items:', error);
-        return throwError(() => new Error('Failed to fetch cart items'));
-      })
-    );
+    if (!this._authS.isAdmin) {
+      return this.http.get<any>(`${this.apiUrl}/user/${userId}`).pipe(
+        catchError((error) => {
+          console.error('Error getting cart items:', error);
+          return throwError(() => new Error('Failed to fetch cart items'));
+        })
+      );
+    }
+    return of([]); 
   }
 
   // Get product details by productId
@@ -104,14 +108,17 @@ export class CartService {
 
   // Get cart total by userId
   getCartCount(userId: string): Observable<number> {
-    return this.getCartItems(userId).pipe(
-      map((cartItems) => {
-        return cartItems.products.length;
-      }),
-      catchError((error) => {
-        console.error('Error fetching cart items:', error);
-        return of(0); 
-      })
-    );
+    if (!this._authS.isAdmin) {
+      return this.getCartItems(userId).pipe(
+        map((cartItems) => {
+          return cartItems.products.length;
+        }),
+        catchError((error) => {
+          console.error('Error fetching cart items:', error);
+          return of(0); 
+        })
+      );
+    }
+    return of(0); 
   }
 }
