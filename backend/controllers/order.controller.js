@@ -21,6 +21,7 @@ exports.createOrder = async (req, res) => {
       !total_price ||
       !order_date
     ) {
+      console.log(req.body);
       return res.status(400).json({ message: "All fields are required." });
     }
 

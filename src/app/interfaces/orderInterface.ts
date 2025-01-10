@@ -5,7 +5,7 @@ export interface Order {
   quantity: number; // Quantity of the product ordered
   total_price: number; // Total price for the order
   order_date: Date; // Date when the order was placed
-  status: string; // Status of the order (e.g. 'pending', 'shipped', 'delivered')
+  status: 'Pending' | 'Shipped' | 'Completed' | 'Cancelled'; // Status of the order
   createdAt?: Date; // Timestamp of when the order was created (optional)
   updatedAt?: Date; // Timestamp of when the order was last updated (optional)
 }

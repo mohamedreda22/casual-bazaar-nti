@@ -110,36 +110,43 @@ export class CartComponent implements OnInit {
 
   // Checkout
   checkout(): void {
-    const order = {
-      userId: this.userId,
-      items: this.cartItems.map((item) => ({
-        productId: item.product,
-        quantity: item.quantity,
-        price: item.productDetails.price,
-      })),
-      total: this.sumTotal(),
-    };
+    if (!this.cartItems.length) {
+      Swal.fire('Your cart is empty.', '', 'warning');
+      return;
+    }
 
-    console.log('Order payload:', order);
+    const orders = this.cartItems.map((item) => ({
+      customer_id: this.userId, // Ensure this is a valid MongoDB ObjectID
+      product_id: item.product, // Ensure this is a valid MongoDB ObjectID
+      quantity: item.quantity, // Must be a number
+      total_price: item.quantity * item.productDetails.price, // Must be a positive number
+    }));
 
-    this.cartService.createOrder(order).subscribe(
-      () => {
-        this.clearCart();
-        Swal.fire('Order placed successfully.', '', 'success');
-        console.log('Order placed successfully.');
-      },
-      (error) => {
-        console.error('Order creation failed:', error);
-        Swal.fire(
-          'Failed to place the order.',
-          error?.error?.message || '',
-          'error'
-        );
-      }
-    );
+    console.log('Orders payload:', orders);
+
+    orders.forEach((order) => {
+      this.cartService.createOrder(order).subscribe(
+        () => {
+          console.log(
+            `Order placed successfully for product ${order.product_id}.`
+          );
+          this.clearCart(); // Optionally clear cart after all requests succeed
+          Swal.fire('Order placed successfully.', '', 'success');
+        },
+        (error) => {
+          console.log('order failed', order);
+          console.error('Order creation failed:', error);
+          Swal.fire(
+            'Failed to place the order.',
+            error?.error?.message || '',
+            'error'
+          );
+        }
+      );
+    });
   }
 
-  sumTotal() {
+  sumTotal(): number {
     return this.totalPrice + this.shippingCost;
   }
 }
