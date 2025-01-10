@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service'; // Import CartService
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-shop',
@@ -169,6 +170,12 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
       .addToCart(userId, product._id)
       .subscribe(() => {
         // console.log('Added to cart:', product, userId);
+      });
+      Swal.fire({
+        title: 'Success!',
+        text: 'Product added to cart!',
+        icon: 'success',
+        confirmButtonText: 'OK',
       });
   }
 

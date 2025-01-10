@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, throwError, map, of } from 'rxjs';
+import { catchError, Observable, throwError, map, of, switchMap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthServiceService } from './auth.service.service';
 
@@ -16,15 +16,28 @@ export class CartService {
 
   // Get cart items by userId
   getCartItems(userId: string): Observable<any> {
-    if (!this._authS.isAdmin) {
-      return this.http.get<any>(`${this.apiUrl}/user/${userId}`).pipe(
-        catchError((error) => {
-          console.error('Error getting cart items:', error);
-          return throwError(() => new Error('Failed to fetch cart items'));
-        })
-      );
-    }
-    return of([]); 
+    return this._authS.isAdmin().pipe(
+      map((isAdmin) => {
+        if (!isAdmin) {
+          return this.http.get<any>(`${this.apiUrl}/user/${userId}`).pipe(
+            catchError((error) => {
+              console.error('Error getting cart items:', error);
+              return throwError(() => new Error('Failed to fetch cart items'));
+            })
+          );
+        }
+        return of([
+          {
+            products: [],
+          },
+        ]);
+      }),
+      catchError((error) => {
+        console.error('Error checking admin status:', error);
+        return of([]);
+      }),
+      switchMap((result: any) => result)
+    );
   }
 
   // Get product details by productId
