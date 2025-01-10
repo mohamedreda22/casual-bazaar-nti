@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './dashboard/users/users.component';
 import { ProductsComponent } from './dashboard/products/products.component';
+import { CategoriesComponent } from './dashboard/categories/categories.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { ProductsComponent } from './dashboard/products/products.component';
     DashboardComponent,
     UserComponent,
     ProductsComponent,
+    CategoriesComponent,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

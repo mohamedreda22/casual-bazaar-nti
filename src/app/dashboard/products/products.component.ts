@@ -84,6 +84,16 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadCategories();
+  }
+
+  loadCategories(): void {
+    this.adminDashboardService.getAllCategories().subscribe(
+      (categories) => {
+        this.categories = categories;
+      },
+      (error) => console.error('Error loading categories:', error)
+    );
   }
 
   deleteProduct(id: string): void {
@@ -293,20 +303,20 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-    updateProduct(product: Product): void {
-      this.adminDashboardService.updateProduct(product._id, product).subscribe(
-        (updatedProduct) => {
-          console.log('Product updated:', updatedProduct);
-          this.loadProducts();
-          Swal.fire('Success', 'Product updated successfully', 'success');
-        },
-        (error) => {
-          console.error('Error updating product:', error);
-          Swal.fire('Error', 'Failed to update product', 'error');
-        }
-      );
-    }
-    
+  updateProduct(product: Product): void {
+    this.adminDashboardService.updateProduct(product._id, product).subscribe(
+      (updatedProduct) => {
+        console.log('Product updated:', updatedProduct);
+        this.loadProducts();
+        Swal.fire('Success', 'Product updated successfully', 'success');
+      },
+      (error) => {
+        console.error('Error updating product:', error);
+        Swal.fire('Error', 'Failed to update product', 'error');
+      }
+    );
+  }
+
   handleImageUpload(event: any): void {
     const file = event.target.files[0];
     if (file) {

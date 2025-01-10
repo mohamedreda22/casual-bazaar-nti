@@ -1,1 +1,217 @@
-<p>categories works!</p>
+
+      <h2>Categories</h2>
+      <button class="btn btn-success" (click)="toggleAddCategoryForm()">
+        Add Category
+      </button>
+
+      <div *ngIf="isAddingCategory" class="section-form">
+        <h2>Add New Category</h2>
+        <form
+          (ngSubmit)="handleAddCategory()"
+          [formGroup]="addCategoryForm"
+          class="form"
+        >
+          <div class="form-group">
+            <label for="categoryName">Category Name:</label>
+            <input
+              type="text"
+              id="categoryName"
+              class="form-control"
+              placeholder="Category Name"
+              formControlName="name"
+              required
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                addCategoryForm.get('name')!.touched &&
+                addCategoryForm.get('name')!.invalid
+              "
+            >
+              <span *ngIf="addCategoryForm.get('name')!.errors?.['required']"
+                >*Category Name is required</span
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subCategories">SubCategories:</label>
+            <input
+              type="text"
+              id="subCategories"
+              class="form-control"
+              placeholder="SubCategories"
+              formControlName="subCategories"
+              required
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                addCategoryForm.get('subCategories')!.touched &&
+                addCategoryForm.get('subCategories')!.invalid
+              "
+            >
+              <span
+                *ngIf="addCategoryForm.get('subCategories')!.errors?.['required']"
+                >*SubCategories are required</span
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="show">Show:</label>
+            <select
+              id="show"
+              class="form-control"
+              formControlName="show"
+              required
+              [value]="addCategoryForm.get('show')!.value"
+            >
+              <option value="" disabled selected>Select Show</option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+            <div
+              class="text-danger"
+              *ngIf="
+                addCategoryForm.get('show')!.touched &&
+                addCategoryForm.get('show')!.invalid
+              "
+            >
+              <span *ngIf="addCategoryForm.get('show')!.errors?.['required']"
+                >*Show is required</span
+              >
+            </div>
+          </div>
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-primary">Add Category</button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="cancelAddCategory()"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="isEditingCategory" class="section-form">
+        <h2>Edit Category</h2>
+        <form
+          (ngSubmit)="handleUpdateCategory()"
+          [formGroup]="editCategoryForm"
+          class="form"
+        >
+          <div class="form-group">
+            <label for="editCategoryName">Category Name:</label>
+            <input
+              type="text"
+              id="editCategoryName"
+              class="form-control"
+              placeholder="Category Name"
+              formControlName="name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editSubCategories">SubCategories:</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">SubCategory</span>
+              </div>
+              <input
+                type="text"
+                #newSubCategory
+                class="form-control"
+                placeholder="Enter subcategory"
+              />
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="
+                  addSubCategory(newSubCategory.value);
+                  newSubCategory.value = ''
+                "
+              >
+                Add
+              </button>
+            </div>
+            <div class="subcategory-list mt-2</div>">
+              <span
+                *ngFor="
+                  let sub of editCategoryForm.get('subCategories')?.value;
+                  let i = index
+                "
+                class="badge bg-primary me-2"
+              >
+                {{ sub }}
+                <button
+                  type="button"
+                  class="btn-close ms-1"
+                  (click)="removeSubCategory(i)"
+                >
+                  Remove
+                </button>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editShow">Show:</label>
+            <select
+              id="editShow"
+              class="form-control"
+              formControlName="show"
+              required
+            >
+              <option value="" disabled>Select Show</option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+          </div>
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-primary">
+              Update Category
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="cancelEditCategory()"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>SubCategories</th>
+            <th>Show</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories">
+            <td>{{ category.name }}</td>
+            <td>{{ category.subCategories.join(", ") }}</td>
+            <td>{{ category.show }}</td>
+            <td>
+              <button
+                class="btn btn-warning"
+                (click)="startEditCategory(category)"
+              >
+                Edit
+              </button>
+              <button
+                class="btn btn-danger"
+                (click)="deleteCategory(category._id)"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
