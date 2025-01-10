@@ -42,35 +42,37 @@
           </div>
           <div class="row">
             <div class="col-md-6">
-                  <div class="form-group">
-                  <label for="category">Category:</label>
-                  <select id="category" class="form-control" formControlName="category" required>
-                    <option value="" disabled selected>Select Category</option>
-                     <ng-container *ngFor="let category of categories">
-                      <option *ngFor="let category of categories" [value]="category.name">
-                        {{ category.name }}
-                      </option>
-                    </ng-container>
-                  </select>
-                  <div class="text-danger" *ngIf="addProductForm.get('category')!.touched && addProductForm.get('category')!.invalid">
-                    <span *ngIf="addProductForm.get('category')!.errors?.['required']">*Category is required</span>
-                  </div>
-                  </div>
+              <div class="form-group">
+              <label for="category">Category:</label>
+              <select id="category" class="form-control" formControlName="category" required>
+                <option value="" disabled selected>Select Category</option>
+                <ng-container *ngFor="let category of categories">
+                <option [value]="category.name">{{ category.name }}</option>
+                </ng-container>
+              </select>
+              <div class="text-danger" *ngIf="addProductForm.get('category')!.touched && addProductForm.get('category')!.invalid">
+                <span *ngIf="addProductForm.get('category')!.errors?.['required']">*Category is required</span>
+              </div>
+              </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="subCategory">SubCategory:</label>
-                <select id="subCategory" class="form-control" formControlName="subCategory" required>
-                  <option value="" disabled selected>Select SubCategory</option>
-                  <ng-container *ngFor="let category of categories">
-                    <option *ngFor="let subCategory of category.subCategories" [value]="subCategory">
-                      {{ subCategory }}
-                    </option>
+              <label for="subCategory">SubCategory:</label>
+              <select id="subCategory" class="form-control" formControlName="subCategory" required>
+                <option value="" disabled selected>Select SubCategory</option>
+                <ng-container *ngIf="addProductForm.get('category')!.value">
+                <ng-container *ngFor="let category of categories">
+                  <ng-container *ngIf="category.name === addProductForm.get('category')!.value">
+                  <option *ngFor="let subCategory of category.subCategories" [value]="subCategory">
+                    {{ subCategory }}
+                  </option>
                   </ng-container>
-                </select>
-                <div class="text-danger" *ngIf="addProductForm.get('subCategory')!.touched && addProductForm.get('subCategory')!.invalid">
-                  <span *ngIf="addProductForm.get('subCategory')!.errors?.['required']">*SubCategory is required</span>
-                </div>
+                </ng-container>
+                </ng-container>
+              </select>
+              <div class="text-danger" *ngIf="addProductForm.get('subCategory')!.touched && addProductForm.get('subCategory')!.invalid">
+                <span *ngIf="addProductForm.get('subCategory')!.errors?.['required']">*SubCategory is required</span>
+              </div>
               </div>
             </div>
           </div>
