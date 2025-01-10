@@ -21,7 +21,6 @@ import { CartComponent } from './cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { EditCategoryComponent } from './dashboard/edit-category/edit-category.component';
 import { UserComponent } from './dashboard/users/users.component';
 import { ProductsComponent } from './dashboard/products/products.component';
 
@@ -53,7 +52,6 @@ import { ProductsComponent } from './dashboard/products/products.component';
     TermsOfServiceComponent,
     CartComponent,
     DashboardComponent,
-    EditCategoryComponent,
     UserComponent,
     ProductsComponent,
   ],

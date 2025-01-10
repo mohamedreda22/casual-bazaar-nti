@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminDashboardService } from '../services/admin-dashboard.service';
 import { Product } from '../interfaces/productInterface';
-import { User } from '../interfaces/userInterface';
 import { Category } from '../interfaces/categoryInterface';
 import {
   FormArray,
@@ -20,20 +19,13 @@ import Swal from 'sweetalert2';
 })
 export class DashboardComponent implements OnInit {
   currentSection: string = 'products';
-  users: User[] = [];
   categories: Category[] = [];
-  filteredSubCategories: string[] = [];
-
   isAddingCategory: boolean = false;
   isEditingCategory: boolean = false;
   newCategory: Category = this.initializeNewCategory();
 
-  errorMessage: string | null = null;
-
   addCategoryForm: FormGroup;
   editCategoryForm: FormGroup;
-
-  currentProduct: Product | null = null;
   currentCategory: Category | null = null;
   imageURL: string = '';
   constructor(
@@ -140,7 +132,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadUsers();
     this.loadCategories();
   }
 
@@ -160,15 +151,6 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-
-  loadUsers(): void {
-    this.adminDashboardService.getAllUsers().subscribe(
-      (users) => {
-        this.users = users;
-      },
-      (error) => console.error('Error loading users:', error)
-    );
-  }
 
   loadCategories(): void {
     this.adminDashboardService.getAllCategories().subscribe(
@@ -225,55 +207,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  loadUserTypes(): void {
-    this.adminDashboardService.getUserTypes().subscribe(
-      (userTypes) => {
-        console.log('User types:', userTypes);
-      },
-      (error) => console.error('Error loading user types:', error)
-    );
-  }
 
-  addUserType(): void {
-    this.adminDashboardService.addUserType({}).subscribe(
-      (response) => {
-        console.log('User type added:', response);
-      },
-      (error) => console.error('Error adding user type:', error)
-    );
-  }
-
-  getUserTypeName(userType: any): string {
-    return userType.name;
-  }
-
-  updateUser(user: User): void {
-    this.adminDashboardService.updateUser(user).subscribe(
-      (updatedUser) => {
-        console.log('User updated:', updatedUser);
-        this.loadUsers();
-        Swal.fire('Success', 'User updated successfully', 'success');
-      },
-      (error) => {
-        console.error('Error updating user:', error);
-        Swal.fire('Error', 'Failed to update user', 'error');
-      }
-    );
-  }
-
-  deleteUser(id: string): void {
-    this.adminDashboardService.deleteUser(id).subscribe(
-      () => {
-        console.log('User deleted');
-        this.loadUsers();
-        Swal.fire('Success', 'User deleted successfully', 'success');
-      },
-      (error) => {
-        console.error('Error deleting user:', error);
-        Swal.fire('Error', 'Failed to delete user', 'error');
-      }
-    );
-  }
 
   updateCategory(category: Category): void {
     console.log('Category:', category);
