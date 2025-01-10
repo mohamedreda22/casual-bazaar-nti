@@ -47,18 +47,32 @@ export class DashboardComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.imageURL = adminDashboardService.apiUrl + '/images/';
+    /*     this.addProductForm = this.fb.group({
+      name: ['', Validators.required],
+      price: [null, Validators.required],
+      category: ['', Validators.required],
+      subCategory: ['', Validators.required],
+      description: ['', Validators.required],
+      bestSellers: [false, Validators.required],
+      productImage: [null, Validators.required],
+      status: this.fb.group({
+        availability: ['', Validators.required], // Nested controls
+        stockStatus: ['', Validators.required],
+      }),
+    }); */
+
     this.addProductForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       price: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       subCategory: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
-      bestSellers: new FormControl('', [Validators.required]),
-      rank: new FormControl('', [Validators.required]),
-      status: new FormGroup({
-        availability: new FormControl('', [Validators.required]),
-        stockStatus: new FormControl('', [Validators.required]),
-      }),
+      // bestSellers: new FormControl('', [Validators.required]),
+      // rank: new FormControl('', [Validators.required]),
+      // status: new FormGroup({
+      //   availability: new FormControl('', [Validators.required]),
+      //   stockStatus: new FormControl('', [Validators.required]),
+      // }),
       productImage: new FormControl('', [Validators.required]),
     });
 
@@ -68,12 +82,12 @@ export class DashboardComponent implements OnInit {
       category: new FormControl('', [Validators.required]),
       subCategory: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
-      bestSellers: new FormControl(''),
-      rank: new FormControl(''),
-      status: new FormGroup({
-        availability: new FormControl(''),
-        stockStatus: new FormControl(''),
-      }),
+      // bestSellers: new FormControl(''),
+      // rank: new FormControl(''),
+      // status: new FormGroup({
+      //   availability: new FormControl(''),
+      //   stockStatus: new FormControl(''),
+      // }),
       productImage: new FormControl(''),
     });
 
@@ -172,8 +186,10 @@ export class DashboardComponent implements OnInit {
         ...this.newCategory, // Use the existing category details
         ...this.editCategoryForm.value, // Merge with form changes
       };
-      const categoryId = this.currentCategory ? this.currentCategory._id : updatedCategory._id;
-      console.log("updatedCategory ID :", categoryId);
+      const categoryId = this.currentCategory
+        ? this.currentCategory._id
+        : updatedCategory._id;
+      console.log('updatedCategory ID :', categoryId);
 
       this.adminDashboardService
         .updateCategory(categoryId, updatedCategory)
@@ -317,6 +333,75 @@ export class DashboardComponent implements OnInit {
 
   handleAddProduct(): void {
     if (this.addProductForm.valid) {
+      console.log('Form data:', this.addProductForm.value); // Debugging step
+
+      const formData = new FormData();
+
+      // Append top-level form controls
+      formData.append('name', this.addProductForm.get('name')?.value || '');
+      formData.append('price', this.addProductForm.get('price')?.value || '');
+      formData.append(
+        'category',
+        this.addProductForm.get('category')?.value || ''
+      );
+      formData.append(
+        'subCategory',
+        this.addProductForm.get('subCategory')?.value || ''
+      );
+/*       formData.append(
+        'bestSellers',
+        this.addProductForm.get('bestSellers')?.value || 'false'
+      ); */
+      formData.append('rank', this.addProductForm.get('rank')?.value || '');
+      formData.append(
+        'description',
+        this.addProductForm.get('description')?.value || ''
+      );
+
+      // Handle nested form controls in 'status'
+      const statusGroup = this.addProductForm.get('status');
+/*       if (statusGroup) {
+        formData.append(
+          'availability',
+          statusGroup.get('availability')?.value || ''
+        );
+        formData.append(
+          'stockStatus',
+          statusGroup.get('stockStatus')?.value || ''
+        );
+      } */
+
+      // Handle file input for 'productImage'
+      const productImage = this.addProductForm.get('productImage')?.value;
+      if (productImage) {
+        formData.append('productImage', productImage);
+      }
+
+      // Call service to add product
+      this.adminDashboardService.addProduct(formData).subscribe(
+        (newProduct) => {
+          console.log('Product added:', newProduct);
+          this.loadProducts(); // Refresh the product list
+          this.isAddingProduct = false; // Reset the adding state
+          this.newProduct = this.initializeNewProduct(); // Reset the form
+          Swal.fire('Success', 'Product added successfully', 'success');
+        },
+        (error) => {
+          console.error('Error adding product:', error);
+          Swal.fire('Error', 'Failed to add product', 'error');
+        }
+      );
+    } else {
+      // Form is invalid; provide user feedback
+      Swal.fire('Error', 'Please complete the form before submitting', 'error');
+      console.log('form: ', this.addProductForm.value);
+      this.addProductForm.markAllAsTouched(); // Highlight all invalid fields
+    }
+  }
+
+  /* 
+  handleAddProduct(): void {
+    if (this.addProductForm.valid) {
       console.log('Form data:', this.addProductForm.value); // Debug here
       const formData = new FormData();
       formData.append('name', this.addProductForm.get('name')?.value);
@@ -363,7 +448,7 @@ export class DashboardComponent implements OnInit {
         }
       );
     }
-  }
+  } */
 
   handleAddCategory(): void {
     if (this.addCategoryForm.valid) {
@@ -420,7 +505,7 @@ export class DashboardComponent implements OnInit {
       this.addProductForm.patchValue({
         productImage: file,
       });
-      Swal.fire('Success', 'Image uploaded successfully', 'success');
+      // Swal.fire('Success', 'Image uploaded successfully', 'success');
     } else {
       Swal.fire('Error', 'Failed to upload image', 'error');
     }
@@ -529,5 +614,4 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-
 }
