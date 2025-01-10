@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   selector: 'app-user',
   standalone: false,
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css'],
+  styleUrl: '../dashboard.component.css',
 })
 export class UserComponent implements OnInit {
   users: User[] = [];

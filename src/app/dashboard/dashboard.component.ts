@@ -67,12 +67,12 @@ export class DashboardComponent implements OnInit {
       category: new FormControl('', [Validators.required]),
       subCategory: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
-      // bestSellers: new FormControl('', [Validators.required]),
-      // rank: new FormControl('', [Validators.required]),
-      // status: new FormGroup({
-      //   availability: new FormControl('', [Validators.required]),
-      //   stockStatus: new FormControl('', [Validators.required]),
-      // }),
+      bestSellers: new FormControl('', [Validators.required]),
+      rank: new FormControl('', [Validators.required]),
+      status: new FormGroup({
+        availability: new FormControl('', [Validators.required]),
+        stockStatus: new FormControl('', [Validators.required]),
+      }),
       productImage: new FormControl('', [Validators.required]),
     });
 
@@ -82,12 +82,12 @@ export class DashboardComponent implements OnInit {
       category: new FormControl('', [Validators.required]),
       subCategory: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
-      // bestSellers: new FormControl(''),
-      // rank: new FormControl(''),
-      // status: new FormGroup({
-      //   availability: new FormControl(''),
-      //   stockStatus: new FormControl(''),
-      // }),
+      bestSellers: new FormControl(''),
+      rank: new FormControl(''),
+      status: new FormGroup({
+        availability: new FormControl(''),
+        stockStatus: new FormControl(''),
+      }),
       productImage: new FormControl(''),
     });
 
@@ -348,10 +348,10 @@ export class DashboardComponent implements OnInit {
         'subCategory',
         this.addProductForm.get('subCategory')?.value || ''
       );
-/*       formData.append(
+      formData.append(
         'bestSellers',
         this.addProductForm.get('bestSellers')?.value || 'false'
-      ); */
+      );
       formData.append('rank', this.addProductForm.get('rank')?.value || '');
       formData.append(
         'description',
@@ -360,7 +360,7 @@ export class DashboardComponent implements OnInit {
 
       // Handle nested form controls in 'status'
       const statusGroup = this.addProductForm.get('status');
-/*       if (statusGroup) {
+      if (statusGroup) {
         formData.append(
           'availability',
           statusGroup.get('availability')?.value || ''
@@ -369,7 +369,7 @@ export class DashboardComponent implements OnInit {
           'stockStatus',
           statusGroup.get('stockStatus')?.value || ''
         );
-      } */
+      }
 
       // Handle file input for 'productImage'
       const productImage = this.addProductForm.get('productImage')?.value;
@@ -398,57 +398,6 @@ export class DashboardComponent implements OnInit {
       this.addProductForm.markAllAsTouched(); // Highlight all invalid fields
     }
   }
-
-  /* 
-  handleAddProduct(): void {
-    if (this.addProductForm.valid) {
-      console.log('Form data:', this.addProductForm.value); // Debug here
-      const formData = new FormData();
-      formData.append('name', this.addProductForm.get('name')?.value);
-      formData.append('price', this.addProductForm.get('price')?.value);
-      formData.append('category', this.addProductForm.get('category')?.value);
-      formData.append(
-        'subCategory',
-        this.addProductForm.get('subCategory')?.value
-      );
-      formData.append(
-        'bestSellers',
-        this.addProductForm.get('bestSellers')?.value
-      );
-      formData.append('rank', this.addProductForm.get('rank')?.value);
-      formData.append(
-        'status.availability',
-        this.addProductForm.get('status.availability')?.value
-      );
-      formData.append(
-        'status.stockStatus',
-        this.addProductForm.get('status.stockStatus')?.value
-      );
-      
-      formData.append(
-        'description',
-        this.addProductForm.get('description')?.value
-      );
-      formData.append(
-        'productImage',
-        this.addProductForm.get('productImage')?.value
-      );
-
-      this.adminDashboardService.addProduct(formData).subscribe(
-        (newProduct) => {
-          console.log('Product added:', newProduct);
-          this.loadProducts();
-          this.isAddingProduct = false;
-          this.newProduct = this.initializeNewProduct();
-          Swal.fire('Success', 'Product added successfully', 'success');
-        },
-        (error) => {
-          console.error('Error adding product:', error);
-          Swal.fire('Error', 'Failed to add product', 'error');
-        }
-      );
-    }
-  } */
 
   handleAddCategory(): void {
     if (this.addCategoryForm.valid) {

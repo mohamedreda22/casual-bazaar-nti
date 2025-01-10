@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditCategoryComponent } from './dashboard/edit-category/edit-category.component';
 import { UserComponent } from './dashboard/users/users.component';
+import { ProductsComponent } from './dashboard/products/products.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { UserComponent } from './dashboard/users/users.component';
     CartComponent,
     DashboardComponent,
     EditCategoryComponent,
-    UserComponent
+    UserComponent,
+    ProductsComponent,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

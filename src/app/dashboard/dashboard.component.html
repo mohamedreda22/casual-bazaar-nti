@@ -14,178 +14,10 @@
 
     <!-- Products Section -->
     <div *ngIf="currentSection === 'products'" class="section">
-      <h2>Products</h2>
-      <button class="btn btn-success" (click)="toggleAddProductForm()">Add Product</button>
-
-      <div *ngIf="isAddingProduct" class="section-form">
-        <h2>Add New Product</h2>
-        <form (ngSubmit)="handleAddProduct()" [formGroup]="addProductForm" class="form">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" class="form-control" placeholder="Product Name" formControlName="name" required />
-                <div class="text-danger" *ngIf="addProductForm.get('name')!.touched && addProductForm.get('name')!.invalid">
-                  <span *ngIf="addProductForm.get('name')!.errors?.['required']">*Product Name is required</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="number" id="price" class="form-control" placeholder="Product Price" formControlName="price" required />
-                <div class="text-danger" *ngIf="addProductForm.get('price')!.touched && addProductForm.get('price')!.invalid">
-                  <span *ngIf="addProductForm.get('price')!.errors?.['required']">*Product Price is required</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-              <label for="category">Category:</label>
-              <select id="category" class="form-control" formControlName="category" required>
-                <option value="" disabled selected>Select Category</option>
-                <ng-container *ngFor="let category of categories">
-                <option [value]="category.name">{{ category.name }}</option>
-                </ng-container>
-              </select>
-              <div class="text-danger" *ngIf="addProductForm.get('category')!.touched && addProductForm.get('category')!.invalid">
-                <span *ngIf="addProductForm.get('category')!.errors?.['required']">*Category is required</span>
-              </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-              <label for="subCategory">SubCategory:</label>
-              <select id="subCategory" class="form-control" formControlName="subCategory" required>
-                <option value="" disabled selected>Select SubCategory</option>
-                <ng-container *ngIf="addProductForm.get('category')!.value">
-                <ng-container *ngFor="let category of categories">
-                  <ng-container *ngIf="category.name === addProductForm.get('category')!.value">
-                  <option *ngFor="let subCategory of category.subCategories" [value]="subCategory">
-                    {{ subCategory }}
-                  </option>
-                  </ng-container>
-                </ng-container>
-                </ng-container>
-              </select>
-              <div class="text-danger" *ngIf="addProductForm.get('subCategory')!.touched && addProductForm.get('subCategory')!.invalid">
-                <span *ngIf="addProductForm.get('subCategory')!.errors?.['required']">*SubCategory is required</span>
-              </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea id="description" class="form-control" placeholder="Product Description" formControlName="description" required></textarea>
-            <div class="text-danger" *ngIf="addProductForm.get('description')!.touched && addProductForm.get('description')!.invalid">
-              <span *ngIf="addProductForm.get('description')!.errors?.['required']">*Product Description is required</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="productImage">Product Image:</label>
-            <input type="file" id="productImage" class="form-control" required (change)="handleImageUpload($event)" />
-            <div class="text-danger" *ngIf="addProductForm.get('productImage')!.invalid && addProductForm.get('productImage')!.touched">
-              <span *ngIf="addProductForm.get('productImage')!.errors?.['required']">*Product Image is required</span>
-            </div>
-          </div>
-          <div class="form-buttons">
-            <button type="submit" class="btn btn-primary">Add Product</button>
-            <button type="button" class="btn btn-danger" (click)="cancelAddProduct()">Cancel</button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Edit Product Form -->
-      <div *ngIf="isEditingProduct" class="section-form">
-        <h2>Edit Product</h2>
-        <form (ngSubmit)="handleUpdateProduct()" [formGroup]="editProductForm" class="form">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="editName">Name:</label>
-                <input type="text" id="editName" class="form-control" placeholder="Product Name" formControlName="name" required />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="editPrice">Price:</label>
-                <input type="number" id="editPrice" class="form-control" placeholder="Product Price" formControlName="price" required />
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="editCategory">Category:</label>
-                <select id="editCategory" class="form-control" formControlName="category" required>
-                  <option value="" disabled>Select Category</option>
-                  <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="editSubCategory">SubCategory:</label>
-                <select id="editSubCategory" class="form-control" formControlName="subCategory" required>
-                  <option value="" disabled>Select SubCategory</option>
-                  <ng-container *ngFor="let category of categories">
-                    <option *ngFor="let subCategory of category.subCategories" [value]="subCategory">
-                      {{ subCategory }}
-                    </option>
-                  </ng-container>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="editDescription">Description:</label>
-            <textarea id="editDescription" class="form-control" placeholder="Product Description" formControlName="description" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="editProductImage">Product Image:</label>
-            <input type="file" id="editProductImage" class="form-control" formControlName="productImage" (change)="handleImageUpload($event)" />
-          </div>
-          <div class="form-buttons">
-            <button type="submit" class="btn btn-primary">Update Product</button>
-            <button type="button" class="btn btn-danger" (click)="cancelEditProduct()">Cancel</button>
-          </div>
-        </form>
-      </div>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>SubCategory</th>
-            <th>status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let product of products">
-            <td><img [src]="imageURL + product.productImage" alt="Product Image" /></td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.description }}</td>
-            <td>${{ product.price }}</td>
-            <td>{{ product.category }}</td>
-            <td>{{ product.subCategory }}</td>
-            <td>{{product.status.availability}} // {{product.status.stockStatus}}</td>
-            <td>
-              <button class="btn btn-warning" (click)="startEditProduct(product)">Edit</button>
-              <button class="btn btn-danger" (click)="deleteProduct(product._id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <app-products></app-products>
     </div>
 
-       <!-- Users Section -->
+    <!-- Users Section -->
     <div *ngIf="currentSection === 'users'" class="section">
       <app-user></app-user>
     </div>
@@ -193,81 +25,188 @@
     <!-- Categories Section -->
     <div *ngIf="currentSection === 'categories'" class="section">
       <h2>Categories</h2>
-      <button class="btn btn-success" (click)="toggleAddCategoryForm()">Add Category</button>
+      <button class="btn btn-success" (click)="toggleAddCategoryForm()">
+        Add Category
+      </button>
 
       <div *ngIf="isAddingCategory" class="section-form">
         <h2>Add New Category</h2>
-        <form (ngSubmit)="handleAddCategory()" [formGroup]="addCategoryForm" class="form">
+        <form
+          (ngSubmit)="handleAddCategory()"
+          [formGroup]="addCategoryForm"
+          class="form"
+        >
           <div class="form-group">
             <label for="categoryName">Category Name:</label>
-            <input type="text" id="categoryName" class="form-control" placeholder="Category Name" formControlName="name" required />
-            <div class="text-danger" *ngIf="addCategoryForm.get('name')!.touched && addCategoryForm.get('name')!.invalid">
-              <span *ngIf="addCategoryForm.get('name')!.errors?.['required']">*Category Name is required</span>
+            <input
+              type="text"
+              id="categoryName"
+              class="form-control"
+              placeholder="Category Name"
+              formControlName="name"
+              required
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                addCategoryForm.get('name')!.touched &&
+                addCategoryForm.get('name')!.invalid
+              "
+            >
+              <span *ngIf="addCategoryForm.get('name')!.errors?.['required']"
+                >*Category Name is required</span
+              >
             </div>
           </div>
           <div class="form-group">
             <label for="subCategories">SubCategories:</label>
-            <input type="text" id="subCategories" class="form-control" placeholder="SubCategories" formControlName="subCategories" required />
-            <div class="text-danger" *ngIf="addCategoryForm.get('subCategories')!.touched && addCategoryForm.get('subCategories')!.invalid">
-              <span *ngIf="addCategoryForm.get('subCategories')!.errors?.['required']">*SubCategories are required</span>
+            <input
+              type="text"
+              id="subCategories"
+              class="form-control"
+              placeholder="SubCategories"
+              formControlName="subCategories"
+              required
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                addCategoryForm.get('subCategories')!.touched &&
+                addCategoryForm.get('subCategories')!.invalid
+              "
+            >
+              <span
+                *ngIf="addCategoryForm.get('subCategories')!.errors?.['required']"
+                >*SubCategories are required</span
+              >
             </div>
           </div>
           <div class="form-group">
             <label for="show">Show:</label>
-            <select id="show" class="form-control" formControlName="show" required [value]="addCategoryForm.get('show')!.value">
+            <select
+              id="show"
+              class="form-control"
+              formControlName="show"
+              required
+              [value]="addCategoryForm.get('show')!.value"
+            >
               <option value="" disabled selected>Select Show</option>
               <option value="true">True</option>
               <option value="false">False</option>
             </select>
-            <div class="text-danger" *ngIf="addCategoryForm.get('show')!.touched && addCategoryForm.get('show')!.invalid">
-              <span *ngIf="addCategoryForm.get('show')!.errors?.['required']">*Show is required</span>
+            <div
+              class="text-danger"
+              *ngIf="
+                addCategoryForm.get('show')!.touched &&
+                addCategoryForm.get('show')!.invalid
+              "
+            >
+              <span *ngIf="addCategoryForm.get('show')!.errors?.['required']"
+                >*Show is required</span
+              >
             </div>
           </div>
           <div class="form-buttons">
             <button type="submit" class="btn btn-primary">Add Category</button>
-            <button type="button" class="btn btn-danger" (click)="cancelAddCategory()">Cancel</button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="cancelAddCategory()"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>
 
       <div *ngIf="isEditingCategory" class="section-form">
         <h2>Edit Category</h2>
-        <form (ngSubmit)="handleUpdateCategory()" [formGroup]="editCategoryForm" class="form">
+        <form
+          (ngSubmit)="handleUpdateCategory()"
+          [formGroup]="editCategoryForm"
+          class="form"
+        >
           <div class="form-group">
             <label for="editCategoryName">Category Name:</label>
-            <input type="text" id="editCategoryName" class="form-control" placeholder="Category Name" formControlName="name" required />
+            <input
+              type="text"
+              id="editCategoryName"
+              class="form-control"
+              placeholder="Category Name"
+              formControlName="name"
+              required
+            />
           </div>
-            <div class="form-group">
+          <div class="form-group">
             <label for="editSubCategories">SubCategories:</label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">SubCategory</span>
-            </div>
-              <input type="text" #newSubCategory class="form-control" placeholder="Enter subcategory" />
-              <button type="button" class="btn btn-secondary" (click)="addSubCategory(newSubCategory.value); newSubCategory.value=''">Add</button>
+              </div>
+              <input
+                type="text"
+                #newSubCategory
+                class="form-control"
+                placeholder="Enter subcategory"
+              />
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="
+                  addSubCategory(newSubCategory.value);
+                  newSubCategory.value = ''
+                "
+              >
+                Add
+              </button>
             </div>
             <div class="subcategory-list mt-2</div>">
-              <span *ngFor="let sub of editCategoryForm.get('subCategories')?.value; let i = index" class="badge bg-primary me-2">
-              {{sub}} <button type="button" class="btn-close ms-1" (click)="removeSubCategory(i)">Remove</button>
+              <span
+                *ngFor="
+                  let sub of editCategoryForm.get('subCategories')?.value;
+                  let i = index
+                "
+                class="badge bg-primary me-2"
+              >
+                {{ sub }}
+                <button
+                  type="button"
+                  class="btn-close ms-1"
+                  (click)="removeSubCategory(i)"
+                >
+                  Remove
+                </button>
               </span>
             </div>
-            </div>
-            
+          </div>
+
           <div class="form-group">
             <label for="editShow">Show:</label>
-            <select id="editShow" class="form-control" formControlName="show" required>
+            <select
+              id="editShow"
+              class="form-control"
+              formControlName="show"
+              required
+            >
               <option value="" disabled>Select Show</option>
               <option value="true">True</option>
               <option value="false">False</option>
             </select>
           </div>
           <div class="form-buttons">
-            <button type="submit" class="btn btn-primary">Update Category</button>
-            <button type="button" class="btn btn-danger" (click)="cancelEditCategory()">Cancel</button>
+            <button type="submit" class="btn btn-primary">
+              Update Category
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="cancelEditCategory()"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>
-
 
       <table class="table">
         <thead>
@@ -281,11 +220,21 @@
         <tbody>
           <tr *ngFor="let category of categories">
             <td>{{ category.name }}</td>
-            <td>{{ category.subCategories.join(', ') }}</td>
-            <td>{{category.show}}</td>
+            <td>{{ category.subCategories.join(", ") }}</td>
+            <td>{{ category.show }}</td>
             <td>
-              <button class="btn btn-warning" (click)="startEditCategory(category)">Edit</button>
-              <button class="btn btn-danger" (click)="deleteCategory(category._id)">Delete</button>
+              <button
+                class="btn btn-warning"
+                (click)="startEditCategory(category)"
+              >
+                Edit
+              </button>
+              <button
+                class="btn btn-danger"
+                (click)="deleteCategory(category._id)"
+              >
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>
