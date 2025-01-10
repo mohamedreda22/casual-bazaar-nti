@@ -1,21 +1,37 @@
-<div class="login-container" >
+<div class="login-container">
   <div class="form-box">
     <h2>Welcome Back</h2>
     <p>Login to access your account</p>
-    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" >
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
       <div class="form-group">
-        <input type="email" placeholder="Email Address"  ngModel name="email" #email="ngModel" required email/>
+        <input
+          type="email"
+          placeholder="Email Address"
+          ngModel
+          name="email"
+          #email="ngModel"
+          required
+          email
+        />
         <div class="error-msg" *ngIf="email.invalid && email.touched">
           <span *ngIf="email.errors?.['required']">*This field is required</span>
           <span *ngIf="email.errors?.['email']">*Invalid email address</span>
-      </div></div>
+        </div>
+      </div>
       <div class="form-group">
-        <input type="password" placeholder="Password"  ngModel name="password" #password="ngModel" required />
+        <input
+          type="password"
+          placeholder="Password"
+          ngModel
+          name="password"
+          #password="ngModel"
+          required
+        />
         <div class="error-msg" *ngIf="password.invalid && password.touched">
           <span *ngIf="password.errors?.['required']">*This field is required</span>
-          </div>
+        </div>
       </div>
-      <button type="submit" class="btn-primary">Login</button>
+      <button type="submit" class="btn-primary" [disabled]="loginForm.invalid">Login</button>
       <div class="links">
         <a href="#">Forgot Password?</a>
         <a href="/register">Don't have an account? Register</a>
