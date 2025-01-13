@@ -12,6 +12,7 @@ export interface Product {
     availability: 'available' | 'unavailable';
     stockStatus: 'inStock' | 'outOfStock';
   };
+  carousel: boolean;
   createdAt: string;
   updatedAt: string;
 }

@@ -1,12 +1,18 @@
 <div class="container">
-    <h1>Wishlist</h1>
-    <!-- <ul *ngIf="wishlist.items.length > 0; else noItems"> -->
-        <li *ngFor="let item of wishlist.items">
-            {{ item.productId }}  
-        </li>
-    <!-- </ul> -->
-    <!-- <ng-template #noItems>
-        <p>No items in your wishlist</p>
-    </ng-template> -->
-    
+  <h1>Wishlist</h1>
+  <ul
+    *ngIf="
+      wishlist && wishlist.items && wishlist.items.length > 0;
+      else noItems
+    "
+  >
+    <li *ngFor="let item of wishlist.items">
+      <strong>Product ID:</strong> {{ item.productId }}
+      <button (click)="removeFromWishlist(item.productId)">Remove</button>
+    </li>
+  </ul>
+
+  <ng-template #noItems>
+    <p>No items in your wishlist</p>
+  </ng-template>
 </div>

@@ -142,6 +142,7 @@ export class ProductsComponent implements OnInit {
       description: '',
       productImage: '',
       bestSellers: false,
+      carousel:false,
       rank: 0,
       status: { availability: 'available', stockStatus: 'inStock' },
       createdAt: new Date().toISOString(),

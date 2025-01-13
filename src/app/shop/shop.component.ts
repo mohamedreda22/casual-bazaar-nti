@@ -11,6 +11,7 @@ import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service'; // Import CartService
 import Swal from 'sweetalert2';
 import { AuthServiceService } from '../services/auth.service.service';
+import { Product } from '../interfaces/productInterface';
 
 @Component({
   selector: 'app-shop',
@@ -150,7 +151,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // Add an item to the cart
-  addToCart(product: any): void {
+  addToCart(product: Product): void {
     this.fetchToken(); // Ensure the token is fetched and userId is set
 
     const userId = this.decodeToken(
@@ -205,6 +206,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log('Adding to wishlist:', productId);
     this._productS.addToWishlist(productId, userId).subscribe({
       next: () => {
+        
         Swal.fire({
           title: 'Success!',
           text: 'Product added to wishlist!',

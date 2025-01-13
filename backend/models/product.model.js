@@ -44,6 +44,10 @@ const productSchema = new mongoose.Schema(
         required: true,
       },
     },
+    carousel: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

@@ -1,22 +1,22 @@
-
 const Wishlist = require('../models/wishlist.model');
 
 exports.createWishlist = async (req, res) => {
     try {
         const wishlist = new Wishlist({
-            userId: req.body.userId,
-            items: req.body.items
+          userId: req.body.userId,
+          items: req.body.productId ? [{ productId: req.body.productId }] : []
         });
-        const savedWishlist = await wishlist.save();
-        res.status(201).json(savedWishlist);
+        const newWishlist = await wishlist.save();
+        res.status(201).json(newWishlist);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+
 };
 
 exports.getWishlist = async (req, res) => {
     try {
-        const wishlist = await Wishlist.findOne({ userId: req.params.userId }).populate('items.productId');
+        const wishlist = await Wishlist.find({ userId: req.params.userId }).populate('items.productId');
         if (!wishlist) {
             return res.status(404).json({ message: 'Wishlist not found' });
         }
