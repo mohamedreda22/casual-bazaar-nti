@@ -29,14 +29,21 @@
         (click)="logout()"
         routerLink="home"
         class="btn"
-        >Logout</a
+        >【﻿⏻】Logout</a
       >
       <a *ngIf="isAdmin" routerLink="/admin-dashboard" class="btn" id="dashboard">
         <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
       </a>
       <a *ngIf="!isAdmin" routerLink="/cart" class="btn" id="cart">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart ({{ cartCount }})
+        <i class="fa fa-angle-down" aria-hidden="true"></i> 
       </a>
+      <a *ngIf="!isAdmin" routerLink="/wishlist" class="btn" id="wishlist">
+        <i class="fa fa-heart" aria-hidden="true"></i> Wishlist
+      </a>
+      <a *ngIf="!isAdmin" routerLink="/orders" class="btn" id="orders">
+        <i class="fa fa-truck" aria-hidden="true"></i> Orders
+        </a>
     </div>
   </nav>
 </header>

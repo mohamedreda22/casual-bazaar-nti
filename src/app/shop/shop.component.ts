@@ -166,17 +166,15 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // Send updated cart to backend
-    this._cartS
-      .addToCart(userId, product._id)
-      .subscribe(() => {
-        // console.log('Added to cart:', product, userId);
-      });
-      Swal.fire({
-        title: 'Success!',
-        text: 'Product added to cart!',
-        icon: 'success',
-        confirmButtonText: 'OK',
-      });
+    this._cartS.addToCart(userId, product._id).subscribe(() => {
+      // console.log('Added to cart:', product, userId);
+    });
+    Swal.fire({
+      title: 'Success!',
+      text: 'Product added to cart!',
+      icon: 'success',
+      confirmButtonText: 'OK',
+    });
   }
 
   fetchToken(): void {
@@ -195,5 +193,36 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.categories.filter((category) => category.show);
   }
 
-  
+  userId: string = ''; 
+
+  getUserId(): string {
+    this.userId = this._cartS.getUserId();
+    return this.userId;
+  }
+
+  addToWishlist(productId: any): void {
+    console.log('Adding to wishlist:', productId);
+    this._productS.addToWishlist(productId, this.userId).subscribe({
+      next: () => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Product added to wishlist!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+      },
+      error: (error) => {
+        console.log('error posting to wishlist', productId);
+        console.error('Error adding to wishlist', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to add product to wishlist.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      },
+    });
+    
+  }
+
 }

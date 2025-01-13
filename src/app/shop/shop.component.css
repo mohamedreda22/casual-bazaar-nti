@@ -235,6 +235,22 @@ body {
   margin-top: 20px;
 }
 
+.btn-wishlist {
+  background-color: #faf8f8;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.btn-wishlist:hover {
+  background-color: #b26f6f;
+}
+
 @media (max-width: 768px) {
   .products-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

@@ -18,6 +18,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { authGuard } from './guards/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OrdersComponent } from './orders/orders.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 const routes: Routes = [
   {
@@ -84,6 +85,10 @@ const routes: Routes = [
   {
     path: 'orders',
     component: OrdersComponent,
+  },
+  {
+    path:'wishlist',
+    component:WishlistComponent
   },
   {
     // we use the canActivate property to protect the dashboard route from unauthorized access by using the authGuard

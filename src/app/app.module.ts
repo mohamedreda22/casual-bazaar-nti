@@ -25,6 +25,7 @@ import { UserComponent } from './dashboard/users/users.component';
 import { ProductsComponent } from './dashboard/products/products.component';
 import { CategoriesComponent } from './dashboard/categories/categories.component';
 import { OrdersComponent } from './orders/orders.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { OrdersComponent } from './orders/orders.component';
     UserComponent,
     ProductsComponent,
     CategoriesComponent,
-    OrdersComponent
+    OrdersComponent,
+    WishlistComponent,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
