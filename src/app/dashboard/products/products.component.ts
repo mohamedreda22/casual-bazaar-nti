@@ -322,7 +322,7 @@ export class ProductsComponent implements OnInit {
       this.adminDashboardService
         .updateProduct(this.currentProduct!._id, this.editProductForm.value)
         .subscribe((response) => {
-          // console.log('Product updated', response);
+          console.log('Product updated', response);
           this.isEditingProduct = false;
           this.loadProducts(); // Reload products list
           Swal.fire('Success', 'Product updated successfully', 'success');
@@ -334,7 +334,8 @@ export class ProductsComponent implements OnInit {
   updateProduct(product: Product): void {
     this.adminDashboardService.updateProduct(product._id, product).subscribe(
       (updatedProduct) => {
-        // console.log('Product updated:', updatedProduct);
+        console.log('Product updated:', updatedProduct);
+        // set the new data        
         this.loadProducts();
         Swal.fire('Success', 'Product updated successfully', 'success');
       },
@@ -356,6 +357,27 @@ export class ProductsComponent implements OnInit {
       Swal.fire('Error', 'Failed to upload image', 'error');
     }
   }
+
+  handleUpdateImageUpload(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length >0){
+      const file =input.files[0];
+      this.editProductForm.patchValue({
+        productImage :file
+      })
+    }}
+
+   /*  const file = event.target.files[0];
+    if (file) {
+      this.editProductForm.patchValue({
+        productImage: file,
+      });
+      this.editProductForm.get('productImage')?.updateValueAndValidity();
+    } else {
+      Swal.fire('Error', 'Failed to upload image', 'error');
+    }
+  } */
 
 /*   handleImageUpload(event: any): void {
     const file = event.target.files[0];
