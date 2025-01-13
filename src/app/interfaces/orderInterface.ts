@@ -4,6 +4,7 @@ export interface OrderItem {
 }
 
 export interface Order {
+  _id: string;
   // order_id: string; // Unique identifier for the order
   customer_id: string; // ID of the customer placing the order
   items: OrderItem[]; // Array of items in the order

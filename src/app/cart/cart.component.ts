@@ -14,7 +14,7 @@ export class CartComponent implements OnInit {
   shippingCost: number = 5;
   userId: string = '';
   totalPrice: number = 0;
-  cartCount: number = 0;
+  // cartCount: number = 0;
 
   imageURL = 'http://localhost:3000/images/';
   constructor(private cartService: CartService) {}
@@ -22,7 +22,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.cartService.getUserId();
     this.loadCartItems();
-    this.updateCartCount();
+    // this.updateCartCount();
   }
 
   private loadCartItems(): void {
@@ -47,12 +47,12 @@ export class CartComponent implements OnInit {
     });
   }
 
-  private updateCartCount(): void {
-    this.cartService.getCartCount(this.userId).subscribe({
-      next: (count) => (this.cartCount = count),
-      error: (err) => console.error('Error fetching cart count:', err),
-    });
-  }
+  // private updateCartCount(): void {
+  //   this.cartService.getCartCount(this.userId).subscribe({
+  //     next: (count) => (this.cartCount = count),
+  //     error: (err) => console.error('Error fetching cart count:', err),
+  //   });
+  // }
 
   updateQuantity(item: any, change: number): void {
     const newQuantity = item.quantity + change;
@@ -77,7 +77,7 @@ export class CartComponent implements OnInit {
           (item) => item.product !== productId
         );
         this.calculateTotal();
-        this.updateCartCount();
+        // this.updateCartCount();
       },
       error: (err) => console.error('Error removing item:', err),
     });
@@ -88,7 +88,7 @@ export class CartComponent implements OnInit {
       next: () => {
         this.cartItems = [];
         this.totalPrice = 0;
-        this.cartCount = 0;
+        // this.cartCount = 0;
         Swal.fire('Cart cleared successfully', '', 'success');
       },
       error: (err) => console.error('Error clearing cart:', err),
@@ -100,7 +100,7 @@ export class CartComponent implements OnInit {
       next: () => {
         this.cartItems = [];
         this.totalPrice = 0;
-        this.cartCount = 0;
+        // this.cartCount = 0;
       },
       error: (err) => console.error('Error clearing cart:', err),
     });
@@ -121,6 +121,7 @@ export class CartComponent implements OnInit {
 
     const orders: Order[] = [
       {
+        _id: '',
         // order_id: this.generateUniqueId(),
         customer_id: this.userId,
         items: this.cartItems.map((item) => ({
@@ -137,7 +138,7 @@ export class CartComponent implements OnInit {
       this.cartService.createOrder(order).subscribe({
         next: () => {
           Swal.fire('Order placed successfully.', '', 'success');
-          this.updateCartCount();
+          // this.updateCartCount();
           this.loadCartItems();
            this.clearCartAfterOrder();
         },
@@ -151,7 +152,7 @@ export class CartComponent implements OnInit {
     });
   }
 
-  sumTotal(): number {
-    return this.totalPrice + this.shippingCost;
-  }
+sumTotal(): number {
+  return Number(this.totalPrice) + Number(this.shippingCost);
+}
 }

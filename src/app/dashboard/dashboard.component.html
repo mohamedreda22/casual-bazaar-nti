@@ -5,6 +5,7 @@
       <li (click)="showSection('products')">Products</li>
       <li (click)="showSection('users')">Users</li>
       <li (click)="showSection('categories')">Categories</li>
+      <li (click)="showSection('orders')">Orders</li>
     </ul>
   </div>
 
@@ -26,5 +27,10 @@
     <div *ngIf="currentSection === 'categories'" class="section">
       <app-categories></app-categories>
     </div>
+
+    <!-- Orders Section -->
+    <div *ngIf="currentSection === 'orders'" class="section">
+      <app-order1></app-order1>
+      </div>
   </div>
 </div>

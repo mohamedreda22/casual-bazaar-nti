@@ -1,0 +1,106 @@
+<div *ngIf="!isEditingOrder">
+  <h2>Order Management</h2>
+  <table *ngIf="orders.length > 0">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Total Price</th>
+        <th>Items</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order._id }}</td>
+        <td>{{ order.total_price | currency }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let item of order.items">
+              <img
+                [src]="getProductById(item.product_id)?.productImage"
+                alt="Product Image"
+              />
+              {{ getProductById(item.product_id)?.name || item.product_id }} ({{
+                item.quantity
+              }})
+            </li>
+          </ul>
+        </td>
+        <td>{{ order.status }}</td>
+        <td>
+          <button (click)="startEditOrder(order)" class="btn btn-warning">
+            Edit
+          </button>
+          <button (click)="deleteOrder(order._id)" class="btn btn-danger">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="orders.length === 0">
+    <p>No orders available.</p>
+  </div>
+</div>
+
+<div *ngIf="isEditingOrder" class="section-form">
+  <h2>Edit Order</h2>
+  <form
+    (ngSubmit)="handleUpdateOrder()"
+    [formGroup]="editOrderForm"
+    class="form"
+  >
+    <div class="form-group">
+      <label for="editTotalPrice">Total Price:</label>
+      <input
+        type="number"
+        id="editTotalPrice"
+        class="form-control"
+        placeholder="Total Price"
+        formControlName="total_price"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="editItems">Items:</label>
+      <select
+        id="editItems"
+        class="form-control"
+        formControlName="items"
+        required
+        multiple
+      >
+        <option
+          *ngFor="let product of products | keyvalue"
+          [value]="product.key"
+        >
+          {{ product.value.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="editStatus">Status:</label>
+      <select
+        id="editStatus"
+        class="form-control"
+        formControlName="status"
+        required
+      >
+        <option value="pending">Pending</option>
+        <option value="shipped">Shipped</option>
+        <option value="delivered">Delivered</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit" class="btn btn-primary">Update Order</button>
+      <button type="button" class="btn btn-danger" (click)="cancelEditOrder()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

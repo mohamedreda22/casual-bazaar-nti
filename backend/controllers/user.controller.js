@@ -28,8 +28,8 @@ exports.getUsers = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    // const user = await userModel.findById(req.params.id);
-    const user = await userModel.findById(req.params.id).populate("userType");
+    const user = await userModel.findById(req.params.id);
+    // const user = await userModel.findById(req.params.id).populate("userType");
     res.status(200).send(user);
   } catch (error) {
     res.status(500).json({ message: error.message });

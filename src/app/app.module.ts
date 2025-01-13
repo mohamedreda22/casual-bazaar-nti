@@ -26,6 +26,7 @@ import { ProductsComponent } from './dashboard/products/products.component';
 import { CategoriesComponent } from './dashboard/categories/categories.component';
 import { OrdersComponent } from './orders/orders.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { Order1Component } from './dashboard/orders/orders.component';
 
 
 @NgModule({
@@ -36,7 +37,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     ReactiveFormsModule,
     CommonModule,
     ReactiveFormsModule,
-],
+  ],
   declarations: [
     AppComponent,
     ShopComponent,
@@ -60,6 +61,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     CategoriesComponent,
     OrdersComponent,
     WishlistComponent,
+    Order1Component
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

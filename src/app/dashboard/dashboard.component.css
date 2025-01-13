@@ -56,6 +56,9 @@ h2 {
   margin-bottom: 15px;
 }
 
+ul {
+  list-style-type: none;
+}
 /* Buttons */
 .btn {
   padding: 10px 15px;

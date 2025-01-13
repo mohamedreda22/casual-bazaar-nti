@@ -32,7 +32,7 @@ exports.getAllOrders = async (req, res) => {
       "customer_id",
       "username  email"
     ).then((orders) => {
-    console.log("Orders with customer details:", orders);
+    // console.log("Orders with customer details:", orders);
     res.status(200).json(orders);
     });
     // res.status(200).json(orders);
@@ -50,14 +50,15 @@ exports.getOrderById = async (req, res) => {
   try {
     const { id } = req.params;
     const order = await Order.findById(id).populate("orders").then((user)=>{
-      console.log("Orders with customer details:", user);
+          res.status(200).json(order);
+
+      // console.log("Orders with customer details:", user);
     })
 
     if (!order) {
       return res.status(404).json({ message: "Order not found." });
     }
 
-    res.status(200).json(order);
   } catch (error) {
     res
       .status(500)

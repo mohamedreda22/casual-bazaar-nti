@@ -5,6 +5,7 @@ import { Category } from '../interfaces/categoryInterface';
 // import { Order } from '../interfaces/orderInterface';
 import { Product } from '../interfaces/productInterface';
 import { User } from '../interfaces/userInterface';
+import { Order } from '../interfaces/orderInterface';
 
 @Injectable({
   providedIn: 'root',
@@ -118,4 +119,22 @@ export class AdminDashboardService {
   addUserType(userType: any): Observable<any> {
     return this._http.post<any>(`${this.apiUrl}/userTypes`, userType);
   }
+
+  getAllOrders() {
+    return this._http.get<Order[]>(`${this.apiUrl}/orders`);
+  }
+
+  updateOrder(order: Order) {
+    return this._http.put(`${this.apiUrl}/orders/${order._id}`, order);
+  }
+  getProductById(productId: string): Observable<Product> {
+    return this._http.get<Product>(`${this.apiUrl}/products/${productId}`);
+  }
+
+  getUserById(userId: string): Observable<User> { 
+    return this._http.get<User>(`${this.apiUrl}/users/${userId}`);
 }
+
+}
+
+

@@ -10,6 +10,7 @@ import {
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service'; // Import CartService
 import Swal from 'sweetalert2';
+import { AuthServiceService } from '../services/auth.service.service';
 
 @Component({
   selector: 'app-shop',
@@ -26,7 +27,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   carouselProducts: any[] = [];
   currentIndex = 0;
   selectedSubCategory: string | null = null;
-
+  isAdmin: boolean = false;
   cartItems: any[] = []; // Track cart items
 
   @ViewChild('carouselTrack', { static: false })
@@ -34,7 +35,8 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private _productS: ProductService,
-    private _cartS: CartService // Inject CartService
+    private _cartS: CartService, // Inject CartService
+    private _authS: AuthServiceService // Inject AuthService
   ) {}
 
   imageURL = '';
@@ -51,9 +53,17 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
         (a, b) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
-    });
 
-    // this.loadCart(); // Load cart items
+      // Also subscribe to isAdmin for admin-specific logic
+      this._authS.isAdmin().subscribe({
+        next: (isAdmin) => {
+          this.isAdmin = isAdmin;
+        },
+        error: (err) => {
+          console.error('Error checking admin status:', err);
+        },
+      });
+    });
   }
 
   ngAfterViewInit(): void {
@@ -102,7 +112,6 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   filterByCategory(categoryName: string, subCategory: string): void {
-    // console.log(`Filtering products for ${categoryName} > ${subCategory}`);
     this.selectedSubCategory = subCategory;
     this.filteredProducts = this.products.filter(
       (product) =>
@@ -179,30 +188,22 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
 
   fetchToken(): void {
     const token = this._cartS.fetchTokenFromLocalStorage();
-    const decodedToken = this.decodeToken(token);
-    const userId = decodedToken.userId; // Extract userId from decoded token
-    // console.log('User ID:', userId);
+    // Token fetching logic
   }
 
   decodeToken(token: string): any {
     return JSON.parse(atob(token.split('.')[1]));
   }
 
-  // show only the categories that have show = true in it's attributes
+  // Show only the categories that have show = true in their attributes
   get visibleCategories(): any[] {
     return this.categories.filter((category) => category.show);
   }
 
-  userId: string = ''; 
-
-  getUserId(): string {
-    this.userId = this._cartS.getUserId();
-    return this.userId;
-  }
-
   addToWishlist(productId: any): void {
+    const userId = this.getUserId(); // Use the getUserId method here to fetch userId dynamically
     console.log('Adding to wishlist:', productId);
-    this._productS.addToWishlist(productId, this.userId).subscribe({
+    this._productS.addToWishlist(productId, userId).subscribe({
       next: () => {
         Swal.fire({
           title: 'Success!',
@@ -212,7 +213,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       },
       error: (error) => {
-        console.log('error posting to wishlist', productId);
+        console.log('Error posting to wishlist', productId);
         console.error('Error adding to wishlist', error);
         Swal.fire({
           title: 'Error!',
@@ -222,7 +223,9 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       },
     });
-    
   }
 
+  getUserId(): string {
+    return this._cartS.getUserId();
+  }
 }
