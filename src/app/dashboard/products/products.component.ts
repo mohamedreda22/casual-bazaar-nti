@@ -72,13 +72,14 @@ export class ProductsComponent implements OnInit {
       price: product.price,
       category: product.category,
       subCategory: product.subCategory,
+      description: product.description,
       bestSellers: product.bestSellers,
       rank: product.rank,
       status: {
         availability: product.status.availability,
         stockStatus: product.status.stockStatus,
       },
-      description: product.description,
+      productImage: product.productImage, // Ensure this is included
     });
   }
 
@@ -227,11 +228,38 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  handleEditProduct(): void {
+  /*   handleEditProduct(): void {
     if (this.addProductForm.valid && this.currentProduct) {
       const updatedProduct = {
         ...this.currentProduct,
         ...this.addProductForm.value,
+      };
+
+      this.adminDashboardService
+        .updateProduct(this.currentProduct._id, updatedProduct)
+        .subscribe(
+          () => {
+            this.loadProducts();
+            this.isEditingProduct = false;
+            Swal.fire('Success', 'Product updated successfully', 'success');
+          },
+          (error) => {
+            console.error('Error updating product:', error);
+            Swal.fire(
+              'Error',
+              'Failed to update product. Please try again.',
+              'error'
+            );
+          }
+        );
+    }
+  } */
+
+  handleEditProduct(): void {
+    if (this.editProductForm.valid && this.currentProduct) {
+      const updatedProduct = {
+        ...this.currentProduct,
+        ...this.editProductForm.value,
       };
 
       this.adminDashboardService
@@ -317,7 +345,7 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-  handleImageUpload(event: any): void {
+    handleImageUpload(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.addProductForm.patchValue({
@@ -328,6 +356,29 @@ export class ProductsComponent implements OnInit {
       Swal.fire('Error', 'Failed to upload image', 'error');
     }
   }
+
+/*   handleImageUpload(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      this.adminDashboardService.uploadImage(formData).subscribe(
+        (response) => {
+          const newFileName = response.fileName; // Adjust based on your API response
+          this.editProductForm.patchValue({ productImage: newFileName });
+          Swal.fire('Success', 'Image uploaded successfully', 'success');
+        },
+        (error) => {
+          console.log('DATA: ',formData)
+          console.error('Error uploading image:', error);
+          Swal.fire('Error', 'Failed to upload image', 'error');
+        }
+      );
+    } else {
+      Swal.fire('Error', 'No file selected', 'error');
+    }
+  } */
 
   resetForm(): void {
     this.addProductForm.reset();
