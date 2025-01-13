@@ -59,11 +59,13 @@
     </div>
     <div class="products-grid">
       <div class="product-card" *ngFor="let product of filteredProducts">
-        <img [src]="imageURL + product.productImage" [alt]="product.name" />
-        <div class="details">
+        <img [src]="imageURL + product.productImage" [alt]="product.name" />        
+        <div class="details">       
+           <a [routerLink]="['/product', product._id]">
           <h3>{{ product.name }}</h3>
           <p>{{ product.description }}</p>
-          <p class="price">${{ product.price }}</p>
+          <p class="price">${{ product.price }}</p>   
+             </a>
           <div *ngIf="!isAdmin">
             <button class="btn" (click)="addToCart(product)">
               🛒 Add to Cart

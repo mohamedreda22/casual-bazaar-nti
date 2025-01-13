@@ -151,13 +151,16 @@ h2 {
 }
 
 .clear-cart{
-  display: block;
-  width: 100%;
   padding: 10px;
+  width: 55vw;
   background-color: #000;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  position: absolute;
+  bottom: 5vh;
+  left: 6vw;
+
 }

@@ -1,0 +1,26 @@
+<div class="product-page">
+  <div *ngIf="product; else loading" class="product-container">
+    <div class="product-info">
+      <img class="product-image" [src]="imageURL + product.productImage" [alt]="product.name" />
+      <div class="product-details">
+        <h1 class="product-title">{{ product.name }}</h1>
+        <p class="product-price">
+          <span class="discounted-price">$ {{ product.price }}</span>
+          <span class="original-price">$ {{ product.price *1.5}}</span>
+          <span class="discount-percentage" *ngIf="product.price">({{ calculateDiscount(product.price, product.price *1.5) }}% Off)</span>
+        </p>
+        <p class="product-detail"><strong>Description:</strong> {{ product.description }}</p>
+        <p class="product-detail"><strong>Category:</strong> {{ product.category }}</p>
+      </div>
+    </div>
+
+    <div class="product-buy">
+      <button class="add-to-cart" (click)="addToCart(product)" >Add to Cart</button>
+      <!-- <button class="buy-now" (click)="checkout()">Buy Now</button> -->
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <p class="loading">Loading product details...</p>
+  </ng-template>
+</div>

@@ -15,17 +15,19 @@
         <td>{{ order._id }}</td>
         <td>{{ order.total_price | currency }}</td>
         <td>
-          <ul>
-            <li *ngFor="let item of order.items">
+            <table>
+            <tr *ngFor="let item of order.items">
+              <td>
               <img
-                [src]="getProductById(item.product_id)?.productImage"
+                [src]="imageURL + getProductById(item.product_id)?.productImage"
                 alt="Product Image"
               />
-              {{ getProductById(item.product_id)?.name || item.product_id }} ({{
-                item.quantity
-              }})
-            </li>
-          </ul>
+              </td>
+              <td>
+              {{ getProductById(item.product_id)?.name || item.product_id }} ({{ item.quantity }})
+              </td>
+            </tr>
+            </table>
         </td>
         <td>{{ order.status }}</td>
         <td>

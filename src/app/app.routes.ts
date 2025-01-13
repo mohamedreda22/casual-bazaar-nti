@@ -19,6 +19,7 @@ import { authGuard } from './guards/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OrdersComponent } from './orders/orders.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { SinglepageComponent } from './singlepage/singlepage.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
     path: 'shop',
     component: ShopComponent,
   },
+  { path: 'product/:productId', component: SinglepageComponent },
   {
     path: 'login',
     component: LoginComponent,
@@ -87,12 +89,10 @@ const routes: Routes = [
     component: OrdersComponent,
   },
   {
-    path:'wishlist',
-    component:WishlistComponent
+    path: 'wishlist',
+    component: WishlistComponent,
   },
   {
-    // we use the canActivate property to protect the dashboard route from unauthorized access by using the authGuard
-    // we use authGuard to check if the user is authenticated or not and if the user is authenticated then we allow the user to access the dashboard route
     path: 'admin-dashboard',
     component: DashboardComponent,
     canActivate: [authGuard],

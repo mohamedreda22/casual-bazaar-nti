@@ -17,7 +17,7 @@ export class Order1Component implements OnInit {
   currentOrder: Order | null = null;
   editOrderForm: FormGroup;
   products: { [key: string]: Product } = {}; // Cache for fetched products
-  imageURL = 'http://localhost:3000/'; // Your API base URL
+  imageURL = 'http://localhost:3000/images/'; // Your API base URL
 
   constructor(
     private adminDashboardService: AdminDashboardService,

@@ -27,6 +27,7 @@ import { CategoriesComponent } from './dashboard/categories/categories.component
 import { OrdersComponent } from './orders/orders.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { Order1Component } from './dashboard/orders/orders.component';
+import { SinglepageComponent } from './singlepage/singlepage.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { Order1Component } from './dashboard/orders/orders.component';
     CategoriesComponent,
     OrdersComponent,
     WishlistComponent,
-    Order1Component
+    Order1Component,
+    SinglepageComponent
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

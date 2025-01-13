@@ -40,4 +40,8 @@ export class ProductService {
   updateWishlist(wishlist: Wishlist): Observable<Wishlist> {
     return this._http.put<Wishlist>('http://localhost:3000/wishlist', wishlist);
   }
+
+  getProductById(productId: string): Observable<Product> {
+    return this._http.get<Product>(`http://localhost:3000/products/${productId}`);
+  }
 }
