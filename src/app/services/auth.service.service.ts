@@ -72,20 +72,16 @@ export class AuthServiceService {
     this.userStateSubject.next({ isAuthenticated: false, isAdmin: false });
   }
 
-  // Modified to return only the boolean value for isAuthenticated
   isAuthenticated(): Observable<boolean> {
-    return this.userStateSubject.asObservable().pipe(
-      tap((state) => {/* console.log('Authenticated:', state.isAuthenticated) */}),
-      map((state) => state.isAuthenticated) // Extract the boolean value
-    );
+    return this.userStateSubject
+      .asObservable()
+      .pipe(map((state) => state.isAuthenticated));
   }
 
-  // Modified to return only the boolean value for isAdmin
   isAdmin(): Observable<boolean> {
-    return this.userStateSubject.asObservable().pipe(
-      tap((state) => {/* console.log('Is Admin:', state.isAdmin) */}),
-      map((state) => state.isAdmin) // Extract the boolean value
-    );
+    return this.userStateSubject
+      .asObservable()
+      .pipe(map((state) => state.isAdmin));
   }
 
   getUserId(): string {
