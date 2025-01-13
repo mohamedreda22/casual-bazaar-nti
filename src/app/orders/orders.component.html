@@ -1,18 +1,36 @@
 <div class="container main-content">
-    <h1>Orders</h1>
-    <table class="table table-striped">
-        <thead>
+    <h1 class="text-center my-4">Orders</h1>
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
             <tr>
-                <th>Order ID</th>
-                <th>Order Date</th>
                 <th>Order Status</th>
+                <th>Order Date</th>
+                <th>Total Price</th>
+                <th>Items</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let order of orders">
-                <td>{{ order.order_id }}</td>
-                <td>{{ order.order_date }}</td>
                 <td>{{ order.status }}</td>
+                <td>{{ order.createdAt | date:'medium' }}</td>
+                <td>{{ order.total_price | currency }}</td>
+                <td>
+                    <ul class="list-unstyled" >
+                        <li *ngFor="let product of order.items" class="media my-2">
+                            <ng-container *ngIf="getProduct(product.product_id) as productData">
+                                <img [src]="imgURL+productData.productImage" alt="{{ productData.name }}" class="mr-3" width="50" height="50">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1">{{ productData.name }}</h5>
+                                    {{ productData.price | currency }} (Qty: {{ product.quantity }})
+                                </div>
+                                <br>
+                            </ng-container>
+                            <ng-container *ngIf="!getProduct(product.product_id)">
+                                Loading product details...
+                            </ng-container>
+                        </li>
+                    </ul>
+                </td>
             </tr>
         </tbody>
     </table>

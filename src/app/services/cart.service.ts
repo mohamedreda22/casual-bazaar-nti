@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AuthServiceService } from './auth.service.service';
+import { Order } from '../interfaces/orderInterface';
 
 @Injectable({
   providedIn: 'root',
@@ -83,17 +84,19 @@ export class CartService {
   }
 
   // Create order
-  createOrder(order: any): Observable<any> {
+  createOrder(order: Order): Observable<Order> {
     if (!order || !order.items || order.items.length === 0) {
       console.error('Invalid order data:', order);
       return throwError(() => new Error('Invalid order data.'));
     }
 
-    return this.http.post(`${this.orderUrl}`, order).pipe(
+    return this.http.post<Order>(`${this.orderUrl}`, order).pipe(
       catchError((error) => {
         console.error('Error creating order:', error);
-        console.log("order: ", order);
-        return throwError(() => new Error(error?.error?.message || 'Failed to create order.'));
+        console.log('order: ', order);
+        return throwError(
+          () => new Error(error?.error?.message || 'Failed to create order.')
+        );
       })
     );
   }

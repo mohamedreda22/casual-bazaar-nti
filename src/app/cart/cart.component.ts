@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import Swal from 'sweetalert2';
+import { Order } from '../interfaces/orderInterface';
 
 @Component({
   selector: 'app-cart',
@@ -24,7 +25,6 @@ export class CartComponent implements OnInit {
     this.updateCartCount();
   }
 
-  // Load cart items
   private loadCartItems(): void {
     this.cartService.getCartItems(this.userId).subscribe({
       next: (response) => {
@@ -37,18 +37,16 @@ export class CartComponent implements OnInit {
     });
   }
 
-  // Load product details for each cart item
   private loadProductDetails(item: any): void {
     this.cartService.getProductById(item.product).subscribe({
       next: (productDetails) => {
         item.productDetails = productDetails;
         this.calculateTotal();
       },
-      error: (err) => console.error(`Error loading product details:`, err),
+      error: (err) => console.error('Error loading product details:', err),
     });
   }
 
-  // Update cart count
   private updateCartCount(): void {
     this.cartService.getCartCount(this.userId).subscribe({
       next: (count) => (this.cartCount = count),
@@ -56,7 +54,6 @@ export class CartComponent implements OnInit {
     });
   }
 
-  // Update quantity
   updateQuantity(item: any, change: number): void {
     const newQuantity = item.quantity + change;
     if (newQuantity < 1) return;
@@ -73,7 +70,6 @@ export class CartComponent implements OnInit {
       });
   }
 
-  // Remove item
   removeItem(productId: string): void {
     this.cartService.removeCartItem(this.userId, productId).subscribe({
       next: () => {
@@ -87,7 +83,6 @@ export class CartComponent implements OnInit {
     });
   }
 
-  // Clear cart
   clearCart(): void {
     this.cartService.clearCart(this.userId).subscribe({
       next: () => {
@@ -100,7 +95,17 @@ export class CartComponent implements OnInit {
     });
   }
 
-  // Calculate total
+  clearCartAfterOrder(): void {
+    this.cartService.clearCart(this.userId).subscribe({
+      next: () => {
+        this.cartItems = [];
+        this.totalPrice = 0;
+        this.cartCount = 0;
+      },
+      error: (err) => console.error('Error clearing cart:', err),
+    });
+  }
+
   private calculateTotal(): void {
     this.totalPrice = this.cartItems.reduce((total, item) => {
       const price = parseFloat(item.productDetails?.price || '0');
@@ -108,45 +113,53 @@ export class CartComponent implements OnInit {
     }, 0);
   }
 
-  // Checkout
   checkout(): void {
-    if (!this.cartItems.length) {
-      Swal.fire('Your cart is empty.', '', 'warning');
+    if (this.cartItems.length === 0) {
+      Swal.fire('Cart is empty.', 'Please add items to cart.', 'warning');
       return;
     }
 
-    const orders = this.cartItems.map((item) => ({
-      customer_id: this.userId, // Ensure this is a valid MongoDB ObjectID
-      product_id: item.product, // Ensure this is a valid MongoDB ObjectID
-      quantity: item.quantity, // Must be a number
-      total_price: item.quantity * item.productDetails.price, // Must be a positive number
-    }));
-
-    console.log('Orders payload:', orders);
+    const orders: Order[] = [
+      {
+        // order_id: this.generateUniqueId(),
+        customer_id: this.userId,
+        items: this.cartItems.map((item) => ({
+          product_id: item.product,
+          quantity: item.quantity,
+        })),
+        total_price: this.sumTotal(),
+        // order_date: new Date(),
+        status: 'Pending',
+      },
+    ];
 
     orders.forEach((order) => {
-      this.cartService.createOrder(order).subscribe(
-        () => {
-          console.log(
-            `Order placed successfully for product ${order.product_id}.`
-          );
-          this.clearCart(); // Optionally clear cart after all requests succeed
+      this.cartService.createOrder(order).subscribe({
+        next: () => {
           Swal.fire('Order placed successfully.', '', 'success');
+          this.updateCartCount();
+          this.loadCartItems();
+           this.clearCartAfterOrder();
         },
-        (error) => {
-          console.log('order failed', order);
+        error: (error) => {
           console.error('Order creation failed:', error);
-          Swal.fire(
-            'Failed to place the order.',
-            error?.error?.message || '',
-            'error'
-          );
-        }
-      );
+          console.log('order failed from cart: ', order);
+          console.log('cartItems: ', this.cartItems);
+          Swal.fire('Failed to place order.', '', 'error');
+        },
+      });
     });
   }
 
   sumTotal(): number {
     return this.totalPrice + this.shippingCost;
+  }
+
+  private generateUniqueId(): string {
+    return 'xxxx-xxxx-4xxx-yxxx-xxxx-xxxx-xxxx'.replace(/[xy]/g, function (c) {
+      const r = (Math.random() * 16) | 0,
+        v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Order } from '../interfaces/orderInterface';
+import { Product } from '../interfaces/productInterface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,5 +30,17 @@ export class OrdersService {
 
   deleteOrder(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+  
+  cancelOrder(orderId: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${orderId}/cancel`, {});
+  }
+
+  completeOrder(orderId: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${orderId}/complete`, {});
+  }
+
+  fetchProductById(productId: string): Observable<Product> {
+    return this.http.get<Product>(`http://localhost:3000/products/${productId}`);
   }
 }

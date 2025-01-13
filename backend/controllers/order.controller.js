@@ -4,34 +4,37 @@ const Order = require("../models/order.model"); // Adjust the path as necessary
 exports.createOrder = async (req, res) => {
   try {
     const {
-      order_id,
+      // order_id,
       customer_id,
-      product_id,
-      quantity,
+      // product_id,
+      // quantity,
       total_price,
-      order_date,
+      items,
+      // order_date,
     } = req.body;
 
     // Validate request body
     if (
-      !order_id ||
+      // !order_id ||
       !customer_id ||
-      !product_id ||
-      !quantity ||
+      // !product_id ||
+      // !quantity ||
       !total_price ||
-      !order_date
+      !items
+      // !order_date,
     ) {
       console.log(req.body);
       return res.status(400).json({ message: "All fields are required." });
     }
 
     const newOrder = new Order({
-      order_id,
+      // order_id,
       customer_id,
-      product_id,
-      quantity,
+      // product_id,
+      // quantity,
       total_price,
-      order_date,
+      items,
+      // order_date,
     });
 
     const savedOrder = await newOrder.save();
