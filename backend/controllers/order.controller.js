@@ -1,70 +1,57 @@
 const Order = require("../models/order.model"); // Adjust the path as necessary
+const { v4: uuidv4 } = require("uuid"); // Install this package: npm install uuid
 
 // Create a new order
-exports.createOrder = async (req, res) => {
-  try {
-    const {
-      // order_id,
-      customer_id,
-      // product_id,
-      // quantity,
-      total_price,
-      items,
-      // order_date,
-    } = req.body;
 
-    // Validate request body
-    if (
-      // !order_id ||
-      !customer_id ||
-      // !product_id ||
-      // !quantity ||
-      !total_price ||
-      !items
-      // !order_date,
-    ) {
-      console.log(req.body);
-      return res.status(400).json({ message: "All fields are required." });
-    }
+exports.createOrder = async function (req, res) {
+  try {
+    const { customer_id, total_price, items } = req.body;
 
     const newOrder = new Order({
-      // order_id,
       customer_id,
-      // product_id,
-      // quantity,
       total_price,
       items,
-      // order_date,
     });
 
-    const savedOrder = await newOrder.save();
+    await newOrder.save();
     res
       .status(201)
-      .json({ message: "Order created successfully.", order: savedOrder });
+      .json({ message: "Order created successfully", order: newOrder });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error creating order.", error: error.message });
+    console.error("Error creating order:", error);
+    res.status(500).json({ message: "Error creating order.", error });
   }
-};
+}
+
+
 
 // Get all orders
 exports.getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().populate(
+      "customer_id",
+      "username  email"
+    ).then((orders) => {
+    console.log("Orders with customer details:", orders);
     res.status(200).json(orders);
+    });
+    // res.status(200).json(orders);
   } catch (error) {
+    console.error("Error fetching all orders:", error);
     res
       .status(500)
       .json({ message: "Error fetching orders.", error: error.message });
   }
 };
 
+
 // Get a single order by ID
 exports.getOrderById = async (req, res) => {
   try {
     const { id } = req.params;
-    const order = await Order.findById(id);
+    const order = await Order.findById(id).populate("orders").then((user)=>{
+      console.log("Orders with customer details:", user);
+    })
 
     if (!order) {
       return res.status(404).json({ message: "Order not found." });
@@ -77,6 +64,27 @@ exports.getOrderById = async (req, res) => {
       .json({ message: "Error fetching order.", error: error.message });
   }
 };
+
+exports.getOrdersByCustomer = async (req, res) => {
+  try {
+    const { customer_id } = req.params;
+
+    if (!customer_id) {
+      return res.status(400).json({ message: "Customer ID is required." });
+    }
+
+    const orders = await Order.find({ customer_id }).populate(
+      "items.product_id"
+    ); // Populating product details (optional)
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("Error fetching orders for customer:", error);
+    res
+      .status(500)
+      .json({ message: "Error fetching orders.", error: error.message });
+  }
+};
+
 
 // Update an order
 exports.updateOrder = async (req, res) => {
@@ -104,16 +112,22 @@ exports.updateOrder = async (req, res) => {
 exports.deleteOrder = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedOrder = await Order.findByIdAndDelete(id);
 
+    if (!id) {
+      return res.status(400).json({ message: "Order ID is required." });
+    }
+
+    const deletedOrder = await Order.findByIdAndDelete(id);
     if (!deletedOrder) {
       return res.status(404).json({ message: "Order not found." });
     }
 
     res.status(200).json({ message: "Order deleted successfully." });
   } catch (error) {
+    console.error("Error deleting order:", error);
     res
       .status(500)
       .json({ message: "Error deleting order.", error: error.message });
   }
 };
+

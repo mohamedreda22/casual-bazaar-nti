@@ -30,4 +30,10 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("user", userSchema);
+userSchema.virtual("orders", {
+  ref: "Order",
+  localField: "_id",
+  foreignField: "customer_id",
+});
+
+module.exports = mongoose.model("User", userSchema);
