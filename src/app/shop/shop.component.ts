@@ -50,10 +50,14 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     this._productS.getProducts().subscribe((response: any) => {
       this.products = response;
       this.filteredProducts = this.products;
-      this.carouselProducts = [...this.products].sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
+
+      // Filter products for the carousel
+      this.carouselProducts = this.products
+        .filter((product: Product) => product.carousel) // Include only products with carousel: true
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
 
       // Also subscribe to isAdmin for admin-specific logic
       this._authS.isAdmin().subscribe({

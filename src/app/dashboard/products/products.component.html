@@ -220,6 +220,26 @@
       </div>
     </div>
     <div class="form-group">
+      <label for="carousel">Carousel:</label>
+      <select
+        id="carousel"
+        class="form-control"
+        formControlName="carousel"
+        required
+      >
+        <option value="" disabled selected>Select Carousel</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+      </select>
+      <div
+        class="text-danger"
+        *ngIf="
+          addProductForm.get('carousel')!.touched &&
+          addProductForm.get('carousel')!.invalid"
+      ></div>
+
+    </div>
+    <div class="form-group">
       <label for="description">Description:</label>
       <textarea
         id="description"
@@ -404,6 +424,20 @@
       ></div>
     </div>
     <div class="form-group">
+      <label for="editCarousel">Carousel:</label>
+      <select
+        id="editCarousel"
+        class="form-control"
+        formControlName="carousel"
+        required
+      >
+        <option value="" disabled>Select Carousel</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+      </select>
+    </div>
+
+    <div class="form-group">
       <label for="editDescription">Description:</label>
       <textarea
         id="editDescription"
@@ -449,6 +483,7 @@
       <th>status</th>
       <th>Best Seller</th>
       <th>Rank</th>
+      <th>Carousel</th>
       <th>Edit</th>
       <th>Delete</th>
     </tr>
@@ -469,6 +504,7 @@
       </td>
       <td>{{ product.bestSellers }}</td>
       <td>{{ product.rank }}</td>
+      <td>{{ product.carousel }}</td>
       <td>
         <button class="btn btn-warning" (click)="startEditProduct(product)">
           Edit

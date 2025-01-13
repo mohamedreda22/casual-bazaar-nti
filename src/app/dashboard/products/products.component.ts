@@ -40,6 +40,7 @@ export class ProductsComponent implements OnInit {
       description: new FormControl('', [Validators.required]),
       bestSellers: new FormControl(false),
       rank: new FormControl(0),
+      carousel: new FormControl(false),
       productImage: new FormControl('', [Validators.required]),
       status: this.fb.group({
         availability: new FormControl('', [Validators.required]),
@@ -55,6 +56,7 @@ export class ProductsComponent implements OnInit {
       description: new FormControl('', [Validators.required]),
       bestSellers: new FormControl(''),
       rank: new FormControl(''),
+      carousel: new FormControl(''),
       status: new FormGroup({
         availability: new FormControl(''),
         stockStatus: new FormControl(''),
@@ -75,6 +77,7 @@ export class ProductsComponent implements OnInit {
       description: product.description,
       bestSellers: product.bestSellers,
       rank: product.rank,
+      carousel: product.carousel,
       status: {
         availability: product.status.availability,
         stockStatus: product.status.stockStatus,
@@ -184,6 +187,10 @@ export class ProductsComponent implements OnInit {
       );
       formData.append('rank', this.addProductForm.get('rank')?.value || '');
       formData.append(
+        'carousel',
+        this.addProductForm.get('carousel')?.value || 'false'
+      );
+      formData.append(
         'description',
         this.addProductForm.get('description')?.value || ''
       );
@@ -228,33 +235,6 @@ export class ProductsComponent implements OnInit {
       this.addProductForm.markAllAsTouched(); // Highlight all invalid fields
     }
   }
-
-  /*   handleEditProduct(): void {
-    if (this.addProductForm.valid && this.currentProduct) {
-      const updatedProduct = {
-        ...this.currentProduct,
-        ...this.addProductForm.value,
-      };
-
-      this.adminDashboardService
-        .updateProduct(this.currentProduct._id, updatedProduct)
-        .subscribe(
-          () => {
-            this.loadProducts();
-            this.isEditingProduct = false;
-            Swal.fire('Success', 'Product updated successfully', 'success');
-          },
-          (error) => {
-            console.error('Error updating product:', error);
-            Swal.fire(
-              'Error',
-              'Failed to update product. Please try again.',
-              'error'
-            );
-          }
-        );
-    }
-  } */
 
   handleEditProduct(): void {
     if (this.editProductForm.valid && this.currentProduct) {
@@ -368,40 +348,6 @@ export class ProductsComponent implements OnInit {
         productImage :file
       })
     }}
-
-   /*  const file = event.target.files[0];
-    if (file) {
-      this.editProductForm.patchValue({
-        productImage: file,
-      });
-      this.editProductForm.get('productImage')?.updateValueAndValidity();
-    } else {
-      Swal.fire('Error', 'Failed to upload image', 'error');
-    }
-  } */
-
-/*   handleImageUpload(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
-
-      this.adminDashboardService.uploadImage(formData).subscribe(
-        (response) => {
-          const newFileName = response.fileName; // Adjust based on your API response
-          this.editProductForm.patchValue({ productImage: newFileName });
-          Swal.fire('Success', 'Image uploaded successfully', 'success');
-        },
-        (error) => {
-          console.log('DATA: ',formData)
-          console.error('Error uploading image:', error);
-          Swal.fire('Error', 'Failed to upload image', 'error');
-        }
-      );
-    } else {
-      Swal.fire('Error', 'No file selected', 'error');
-    }
-  } */
 
   resetForm(): void {
     this.addProductForm.reset();
