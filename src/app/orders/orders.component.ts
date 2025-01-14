@@ -1,7 +1,9 @@
+import { catchError } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../interfaces/orderInterface';
 import { OrdersService } from '../services/orders.service';
 import { Product } from '../interfaces/productInterface';
+import { AuthServiceService } from '../services/auth.service.service';
 
 @Component({
   selector: 'app-orders',
@@ -13,17 +15,47 @@ export class OrdersComponent implements OnInit {
   orders: Order[] = [];
   products: { [key: string]: Product } = {}; // Cache for fetched products
   imgURL = 'http://localhost:3000/images/';
+  userId: string = '';
 
-  constructor(private ordersService: OrdersService) {}
+  constructor(
+    private ordersService: OrdersService,
+    private _authS: AuthServiceService
+  ) {}
 
   ngOnInit(): void {
+    this.userId = this._authS.getUserId();
+    if (!this.userId) {
+      console.error('User ID is missing. Ensure the user is logged in.');
+      return; // Prevent the fetchOrders call if userId is missing
+    }
     this.fetchOrders();
   }
 
-  fetchOrders(): void {
-    this.ordersService.getOrders().subscribe((orders: Order[]) => {
-      this.orders = orders;
-      this.prefetchProducts(orders);
+  private fetchOrders(): void {
+    if (!this.userId) {
+      console.error('User ID is missing');
+      return;
+    }
+
+    this.ordersService.getOrdersByUserId(this.userId).subscribe({
+      next: (response) => {
+        this.orders = Array.isArray(response) ? response : [response];
+        this.orders.forEach((item) => this.loadOrderDetails(item));
+        console.log('orders: ', this.orders);
+      },
+      error: (err) => console.error('Error loading order:', err),
+    });
+  }
+
+  private loadOrderDetails(item: any): void {
+    item.items.forEach((orderItem: any) => {
+      if (!this.products[orderItem.product_id]) {
+        this.ordersService
+          .fetchProductById(orderItem.product_id)
+          .subscribe((product: Product) => {
+            this.products[orderItem.product_id] = product;
+          });
+      }
     });
   }
 

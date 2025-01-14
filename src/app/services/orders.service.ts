@@ -43,4 +43,8 @@ export class OrdersService {
   fetchProductById(productId: string): Observable<Product> {
     return this.http.get<Product>(`http://localhost:3000/products/${productId}`);
   }
+
+  getOrdersByUserId(userId:string):Observable<Order[]>{
+    return this.http.get<Order[]>(`${this.apiUrl}/user/${userId}`);
+  }
 }

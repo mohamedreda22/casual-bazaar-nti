@@ -1,5 +1,5 @@
 const Order = require("../models/order.model"); // Adjust the path as necessary
-const { v4: uuidv4 } = require("uuid"); // Install this package: npm install uuid
+const mongoose = require("mongoose");
 
 // Create a new order
 
@@ -68,15 +68,16 @@ exports.getOrderById = async (req, res) => {
 
 exports.getOrdersByCustomer = async (req, res) => {
   try {
-    const { customer_id } = req.params;
+    const customer_id  = req.params.userId;
+    // console.log("customer_id", customer_id);
 
     if (!customer_id) {
-      return res.status(400).json({ message: "Customer ID is required." });
+      return res
+        .status(400)
+        .json({ message: "Invalid Customer ID." });
     }
 
-    const orders = await Order.find({ customer_id }).populate(
-      "items.product_id"
-    ); // Populating product details (optional)
+    const orders = await Order.find({ customer_id });
     res.status(200).json(orders);
   } catch (error) {
     console.error("Error fetching orders for customer:", error);
