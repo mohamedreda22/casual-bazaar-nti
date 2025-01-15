@@ -1,0 +1,76 @@
+[{
+  "_id": {
+    "$oid": "677f5a93541c42cc616711b7"
+  },
+  "username": "mohamed reda",
+  "email": "mohamedreda.dev@gmail.com",
+  "password": "$2b$10$GuuTPJBoSTMiuABZMbKLK.8U01OLmIxlJnf7b2F1b3v2kXokepw1q",
+  "retypepassword": "$2b$10$sR6pSWIuzl44jw5uobyqc.U8PWYm/x5FPixWKtKg6uOVqby73osTu",
+  "userType": {
+    "$oid": "676beb8d676057a11051a907"
+  },
+  "createdAt": {
+    "$date": "2025-01-09T05:11:47.131Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-09T19:47:01.977Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "677f5cba541c42cc616711ee"
+  },
+  "username": "mohamed reda",
+  "email": "mohamedreda.swe@gmail.com",
+  "password": "$2b$10$eY6mMvcI5hF.lFyEBQScHOPdk.nLi/CtHaStIVp6Aiecn2MACqbY2",
+  "retypepassword": "$2b$10$416urdGXWHrEzYn6yQYa8uP550limMrwSEwtMNOIIglatqE5/Y24K",
+  "userType": {
+    "$oid": "676be7aa83fa41220a472e5a"
+  },
+  "createdAt": {
+    "$date": "2025-01-09T05:20:58.021Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-09T20:00:42.703Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6781117632ded2c7e139e97a"
+  },
+  "username": "admin",
+  "email": "admin@gmail.com",
+  "password": "$2b$10$VOX0m0Fd29zguzpxnzJlXOKvFbQ3LBq6bOuGP5meuc6urT5eP8hlu",
+  "retypepassword": "$2b$10$R7OZujHy1YhW9jir1tocP.1l7IQ/EQRBNhu.UjzISgb8OvpXg6cvC",
+  "userType": {
+    "$oid": "676be7aa83fa41220a472e5a"
+  },
+  "createdAt": {
+    "$date": "2025-01-10T12:24:22.695Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-10T12:25:01.067Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67815bd16e707612e49eea04"
+  },
+  "username": "user1",
+  "email": "user@gmail.com",
+  "password": "$2b$10$IzwWb5Ok1DeypnA2//EWVOa9RrOUgmG8XhIfpoMT3cY0szaGmexJu",
+  "retypepassword": "$2b$10$GWNxzTjzTxxZt0b6NimCaOe95KQEnK3nYd.qSjvQplQc.r3PekNeO",
+  "userType": {
+    "$oid": "676beb8d676057a11051a907"
+  },
+  "createdAt": {
+    "$date": "2025-01-10T17:41:37.411Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-10T17:41:37.411Z"
+  },
+  "__v": 0
+}]

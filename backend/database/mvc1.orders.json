@@ -1,0 +1,174 @@
+[{
+  "_id": {
+    "$oid": "6787a4a6e4c7742b93f66cdd"
+  },
+  "customer_id": {
+    "$oid": "677f5a93541c42cc616711b7"
+  },
+  "items": [
+    {
+      "product_id": {
+        "$oid": "6785286e2ac5c214e0dbb735"
+      },
+      "quantity": 1,
+      "_id": {
+        "$oid": "6787cbf8dc338305f4be99dc"
+      }
+    }
+  ],
+  "total_price": 2000,
+  "status": "Shipped",
+  "orderDetails": {
+    "fullName": "mohamed reda",
+    "address": "15th of may",
+    "city": "Cairo",
+    "government": "cairo",
+    "extraPhone": "01013201998",
+    "payment": "instapay",
+    "_id": {
+      "$oid": "6787cbf8dc338305f4be99dd"
+    }
+  },
+  "createdAt": {
+    "$date": "2025-01-15T12:05:58.549Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-15T14:53:44.736Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6787a4cee4c7742b93f66ce6"
+  },
+  "customer_id": {
+    "$oid": "677f5a93541c42cc616711b7"
+  },
+  "items": [
+    {
+      "product_id": {
+        "$oid": "6785286e2ac5c214e0dbb735"
+      },
+      "quantity": 5,
+      "_id": {
+        "$oid": "6787a4cee4c7742b93f66ce7"
+      }
+    }
+  ],
+  "total_price": 2000,
+  "status": "Pending",
+  "orderDetails": {
+    "fullName": "mohamed reda",
+    "address": "15th of may",
+    "city": "Cairo",
+    "government": "cairo",
+    "extraPhone": "01013201998",
+    "payment": "vodafoneCash",
+    "_id": {
+      "$oid": "6787a4cee4c7742b93f66ce8"
+    }
+  },
+  "createdAt": {
+    "$date": "2025-01-15T12:06:38.094Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-15T12:06:38.094Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6787cbc3dc338305f4be99a2"
+  },
+  "customer_id": {
+    "$oid": "677f5a93541c42cc616711b7"
+  },
+  "items": [
+    {
+      "product_id": {
+        "$oid": "6785290f2ac5c214e0dbb74e"
+      },
+      "quantity": 2,
+      "_id": {
+        "$oid": "6787cbc3dc338305f4be99a3"
+      }
+    },
+    {
+      "product_id": {
+        "$oid": "678528db2ac5c214e0dbb74b"
+      },
+      "quantity": 2,
+      "_id": {
+        "$oid": "6787cbc3dc338305f4be99a4"
+      }
+    },
+    {
+      "product_id": {
+        "$oid": "678529542ac5c214e0dbb751"
+      },
+      "quantity": 1,
+      "_id": {
+        "$oid": "6787cbc3dc338305f4be99a5"
+      }
+    }
+  ],
+  "total_price": 1500,
+  "status": "Pending",
+  "orderDetails": {
+    "fullName": "Abo reda isamil",
+    "address": "block 22",
+    "city": "15th of may city",
+    "government": "cairo",
+    "extraPhone": "01155921429",
+    "payment": "onDelively",
+    "_id": {
+      "$oid": "6787cbc3dc338305f4be99a6"
+    }
+  },
+  "createdAt": {
+    "$date": "2025-01-15T14:52:51.662Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-15T14:52:51.662Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6787d541dc338305f4be9a8a"
+  },
+  "customer_id": {
+    "$oid": "67815bd16e707612e49eea04"
+  },
+  "items": [
+    {
+      "product_id": {
+        "$oid": "678529902ac5c214e0dbb754"
+      },
+      "quantity": 1,
+      "_id": {
+        "$oid": "6787d541dc338305f4be9a8b"
+      }
+    }
+  ],
+  "total_price": 44,
+  "status": "Pending",
+  "orderDetails": {
+    "fullName": "mohamed reda",
+    "address": "15th of may",
+    "city": "Cairo",
+    "government": "giza",
+    "extraPhone": "01013201998",
+    "payment": "vodafoneCash",
+    "_id": {
+      "$oid": "6787d541dc338305f4be9a8c"
+    }
+  },
+  "createdAt": {
+    "$date": "2025-01-15T15:33:21.359Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-15T15:33:21.359Z"
+  },
+  "__v": 0
+}]

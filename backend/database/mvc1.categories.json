@@ -9,7 +9,10 @@
     "Wearables",
     "Clothing"
   ],
-  "show": false
+  "show": true,
+  "updatedAt": {
+    "$date": "2025-01-09T01:51:32.940Z"
+  }
 },
 {
   "_id": {
@@ -21,7 +24,10 @@
     "Heels",
     "Accessories"
   ],
-  "show": false
+  "show": true,
+  "updatedAt": {
+    "$date": "2025-01-09T01:13:25.775Z"
+  }
 },
 {
   "_id": {
@@ -34,13 +40,13 @@
     "Toys",
     "Accessories"
   ],
-  "show": false
+  "show": true
 },
 {
   "_id": {
-    "$oid": "677311bb0e5ab696cfe3163f"
+    "$oid": "677f755949c3a11b1e725eb4"
   },
-  "name": "electronics",
+  "name": "electronicsNew",
   "subCategories": [
     "Smartphones",
     "Laptops",
@@ -51,5 +57,8 @@
     "Tablets",
     "Gaming"
   ],
-  "show": false
+  "show": false,
+  "updatedAt": {
+    "$date": "2025-01-13T14:34:31.075Z"
+  }
 }]

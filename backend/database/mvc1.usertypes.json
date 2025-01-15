@@ -1,0 +1,28 @@
+[{
+  "_id": {
+    "$oid": "676be7aa83fa41220a472e5a"
+  },
+  "name": "Admin",
+  "description": "This person has an admin controll",
+  "createdAt": {
+    "$date": "2024-12-25T11:08:26.263Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-25T11:08:26.263Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676beb8d676057a11051a907"
+  },
+  "name": "User",
+  "description": "This person has an User viewer",
+  "createdAt": {
+    "$date": "2024-12-25T11:25:01.424Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-25T11:25:01.424Z"
+  },
+  "__v": 0
+}]

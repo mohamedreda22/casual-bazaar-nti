@@ -1,0 +1,684 @@
+[{
+  "_id": {
+    "$oid": "6785286e2ac5c214e0dbb735"
+  },
+  "name": "Evening Dress",
+  "price": 399,
+  "description": "Elegant evening dress for special occasions",
+  "productImage": "1736786074009_dress.jpg",
+  "category": "women",
+  "subCategory": "Clothing",
+  "bestSellers": true,
+  "rank": 1,
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "createdAt": {
+    "$date": "2025-01-13T14:51:26.357Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-13T17:10:53.894Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "678528db2ac5c214e0dbb74b"
+  },
+  "name": "Winter Jacket",
+  "price": 199,
+  "description": "Waterproof winter jacket with fleece lining",
+  "productImage": "1736779995774_Winter-Jacket.jpeg",
+  "category": "men",
+  "subCategory": "Clothing",
+  "bestSellers": true,
+  "rank": 1,
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "createdAt": {
+    "$date": "2025-01-13T14:53:15.778Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-13T17:05:04.117Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6785290f2ac5c214e0dbb74e"
+  },
+  "name": "Running Sneakers",
+  "price": 99,
+  "description": "Lightweight running sneakers for men",
+  "productImage": "1736780047942_sneakers.jpg",
+  "category": "men",
+  "subCategory": "Footwear",
+  "bestSellers": true,
+  "rank": 2,
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "createdAt": {
+    "$date": "2025-01-13T14:54:07.948Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-13T14:54:07.948Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678529542ac5c214e0dbb751"
+  },
+  "name": "Designer Handbag",
+  "price": 899,
+  "description": "Stylish designer handbag for women",
+  "productImage": "1736780116221_handbag.webp",
+  "category": "women",
+  "subCategory": "Accessories",
+  "bestSellers": true,
+  "rank": 2,
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "createdAt": {
+    "$date": "2025-01-13T14:55:16.229Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-13T14:55:16.229Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "678529902ac5c214e0dbb754"
+  },
+  "name": "School Backpack",
+  "price": 39,
+  "description": "Durable backpack for school kids",
+  "productImage": "1736780176531_backpack.jpg",
+  "category": "kids",
+  "subCategory": "Accessories",
+  "bestSellers": true,
+  "rank": 1,
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "createdAt": {
+    "$date": "2025-01-13T14:56:16.533Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-13T18:26:07.506Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6785301e2ac5c214e0dbb745"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Sports Watch",
+  "price": 149,
+  "description": "Durable sports watch with fitness tracking features",
+  "productImage": "1736792174009_sports_watch.jpg",
+  "category": "men",
+  "subCategory": "Wearables",
+  "bestSellers": true,
+  "rank": 3,
+  "createdAt": {
+    "$date": "2025-01-15T15:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-15T18:20:29.869Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6785302b2ac5c214e0dbb746"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Cotton T-shirt",
+  "price": 49,
+  "description": "Soft and breathable cotton T-shirt for casual wear",
+  "productImage": "1736793995774_cotton_tshirt.webp",
+  "category": "men",
+  "subCategory": "Clothing",
+  "bestSellers": true,
+  "rank": 4,
+  "createdAt": {
+    "$date": "2025-01-15T15:05:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-15T18:20:42.384Z"
+  },
+  "__v": 0,
+  "carousel": false
+},
+{
+  "_id": {
+    "$oid": "6785303f2ac5c214e0dbb747"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Mini Backpack",
+  "price": 69,
+  "description": "Compact and stylish mini backpack for women",
+  "productImage": "1736794107942_mini_backpack.jpg",
+  "category": "women",
+  "subCategory": "Accessories",
+  "bestSellers": true,
+  "rank": 3,
+  "createdAt": {
+    "$date": "2025-01-15T15:10:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-15T18:15:23.208Z"
+  },
+  "__v": 0,
+  "carousel": false
+},
+{
+  "_id": {
+    "$oid": "6785304d2ac5c214e0dbb748"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Fleece Hoodie",
+  "price": 89,
+  "description": "Warm fleece hoodie for winter wear",
+  "productImage": "1736795146221_fleece_hoodie.webp",
+  "category": "men",
+  "subCategory": "Clothing",
+  "bestSellers": true,
+  "rank": 5,
+  "createdAt": {
+    "$date": "2025-01-15T15:20:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-15T18:20:54.189Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6785305c2ac5c214e0dbb749"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Luxury Sunglasses",
+  "price": 299,
+  "description": "Stylish sunglasses with UV protection",
+  "productImage": "1736796285176_sunglasses.jpg",
+  "category": "women",
+  "subCategory": "Accessories",
+  "bestSellers": true,
+  "rank": 4,
+  "createdAt": {
+    "$date": "2025-01-15T15:25:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-15T18:15:47.870Z"
+  },
+  "__v": 0,
+  "carousel": false
+},
+{
+  "_id": {
+    "$oid": "6787f4ebcd606233c104df30"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Stylish Ankle Boots",
+  "price": 139,
+  "description": "Chic ankle boots for women, ideal for all seasons",
+  "productImage": "1736797407942_ankle_boots.avif",
+  "category": "women",
+  "subCategory": "Footwear",
+  "bestSellers": true,
+  "rank": 5,
+  "createdAt": "2025-01-15T15:30:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:16:03.030Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6787f51dcd606233c104df31"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Designer Wallet",
+  "price": 159,
+  "description": "Premium leather designer wallet for women",
+  "productImage": "1736798534009_wallet.webp",
+  "category": "women",
+  "subCategory": "Accessories",
+  "bestSellers": true,
+  "rank": 6,
+  "createdAt": "2025-01-15T15:40:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:18:42.535Z"
+  },
+  "__v": 0,
+  "carousel": false
+},
+{
+  "_id": {
+    "$oid": "6787f53bcd606233c104df32"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Sports Cap",
+  "price": 39,
+  "description": "Breathable sports cap with adjustable strap",
+  "productImage": "1736799626221_sports_cap.jpg",
+  "category": "men",
+  "subCategory": "Wearables",
+  "bestSellers": true,
+  "rank": 6,
+  "createdAt": "2025-01-15T15:45:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:21:08.653Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6787f549cd606233c104df33"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Kids Sneakers",
+  "price": 49,
+  "description": "Comfortable sneakers for kids, ideal for everyday wear",
+  "productImage": "1736800734009_kids_sneakers.webp",
+  "category": "kids",
+  "subCategory": "Footwear",
+  "bestSellers": true,
+  "rank": 2,
+  "createdAt": "2025-01-15T15:50:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:24:52.909Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6787f55bcd606233c104df34"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Leather Jacket",
+  "price": 299,
+  "description": "Stylish leather jacket for men, perfect for casual outings",
+  "productImage": "1736786574009_leather_jacket.webp",
+  "category": "men",
+  "subCategory": "Clothing",
+  "bestSellers": true,
+  "rank": 7,
+  "createdAt": "2025-01-15T14:51:26.357Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:21:31.431Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6787f56ecd606233c104df35"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Summer Dress",
+  "price": 129,
+  "description": "Light and airy summer dress for women, perfect for warm weather",
+  "productImage": "1736787995774_summer_dress.webp",
+  "category": "women",
+  "subCategory": "Clothing",
+  "bestSellers": true,
+  "rank": 7,
+  "createdAt": "2025-01-15T14:53:15.778Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:16:31.583Z"
+  },
+  "__v": 0,
+  "carousel": false
+},
+{
+  "_id": {
+    "$oid": "6787f581cd606233c104df36"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "High Heels",
+  "price": 179,
+  "description": "Elegant high heels for women, ideal for special events",
+  "productImage": "1736784047942_heels.webp",
+  "category": "women",
+  "subCategory": "Heels",
+  "bestSellers": true,
+  "rank": 8,
+  "createdAt": "2025-01-15T14:54:07.948Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:16:42.992Z"
+  },
+  "__v": 0,
+  "carousel": false
+},
+{
+  "_id": {
+    "$oid": "6787f58bcd606233c104df37"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Kids T-shirt",
+  "price": 19,
+  "description": "Comfortable and colorful T-shirt for kids",
+  "productImage": "1736789116221_kids_tshirt.webp",
+  "category": "kids",
+  "subCategory": "T-shirts",
+  "bestSellers": true,
+  "rank": 3,
+  "createdAt": "2025-01-15T14:55:16.229Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:24:06.239Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6787f598cd606233c104df38"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Sports Sneakers",
+  "price": 89,
+  "description": "Durable and comfortable sneakers for kids, ideal for sports activities",
+  "productImage": "1736785176531_sneakers.jpg",
+  "category": "kids",
+  "subCategory": "Footwear",
+  "bestSellers": true,
+  "rank": 4,
+  "createdAt": "2025-01-15T14:56:16.533Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:24:15.181Z"
+  },
+  "__v": 0,
+  "carousel": false
+},
+{
+  "_id": {
+    "$oid": "6787fa39cd606233c104df39"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Leather Jacket",
+  "price": 199,
+  "description": "Stylish leather jacket for men, perfect for cold weather",
+  "productImage": "1736801842259_leather_jacket.avif",
+  "category": "men",
+  "subCategory": "Clothing",
+  "bestSellers": true,
+  "rank": 8,
+  "createdAt": "2025-01-15T16:00:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:21:52.208Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6787faa8cd606233c104df3a"
+  },
+  "name": "Casual Suit",
+  "price": 2000,
+  "description": "this is a suit for casual events",
+  "productImage": "1736961530336_gp photo.jpg",
+  "category": "men",
+  "subCategory": "Clothing",
+  "bestSellers": true,
+  "rank": 9,
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "carousel": true,
+  "createdAt": {
+    "$date": "2025-01-15T17:18:50.428Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-15T18:22:13.342Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6787fabdcd606233c104df3b"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Kids' Play Tent",
+  "price": 49,
+  "description": "Fun and colorful play tent for kids",
+  "productImage": "beige-teepee-play-tent-petite-amelie_2.jpg",
+  "category": "kids",
+  "subCategory": "Toys",
+  "bestSellers": true,
+  "rank": 5,
+  "createdAt": "2025-01-15T16:40:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:24:26.489Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6787facfcd606233c104df3c"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Wireless Earbuds",
+  "price": 79,
+  "description": "High-quality wireless earbuds with noise cancellation",
+  "productImage": "1736809723162_wireless_earbuds.jpg",
+  "category": "electronicsNew",
+  "subCategory": "Audio",
+  "bestSellers": true,
+  "rank": 1,
+  "createdAt": "2025-01-15T16:35:00.000Z",
+  "updatedAt": "2025-01-15T16:40:00.000Z",
+  "__v": 0,
+  "carousel": false
+},
+{
+  "_id": {
+    "$oid": "6787fadccd606233c104df3d"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Men's Sneakers",
+  "price": 99,
+  "description": "Comfortable sneakers for men, perfect for casual wear",
+  "productImage": "1736808586125_mens_sneakers.jpg",
+  "category": "men",
+  "subCategory": "Footwear",
+  "bestSellers": true,
+  "rank": 10,
+  "createdAt": "2025-01-15T16:30:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:22:37.125Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6787fae6cd606233c104df3e"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Crossbody Bag",
+  "price": 109,
+  "description": "Trendy crossbody bag for women, ideal for daily use",
+  "productImage": "1736807482019_crossbody_bag.webp",
+  "category": "women",
+  "subCategory": "Accessories",
+  "bestSellers": true,
+  "rank": 9,
+  "createdAt": "2025-01-15T16:25:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:16:56.983Z"
+  },
+  "__v": 0,
+  "carousel": false
+},
+{
+  "_id": {
+    "$oid": "6787faf3cd606233c104df3f"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Smartwatch for Women",
+  "price": 179,
+  "description": "Sleek and stylish smartwatch for women with fitness tracking",
+  "productImage": "1736806315873_smartwatch_women.avif",
+  "category": "women",
+  "subCategory": "Wearables",
+  "bestSellers": true,
+  "rank": 10,
+  "createdAt": "2025-01-15T16:20:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:17:32.267Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6787fafdcd606233c104df40"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Chic Dress",
+  "price": 159,
+  "description": "Elegant dress for women, ideal for formal occasions",
+  "productImage": "1736805176037_chic_dress.jpg",
+  "category": "women",
+  "subCategory": "Clothing",
+  "bestSellers": true,
+  "rank": 11,
+  "createdAt": "2025-01-15T16:15:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:17:47.933Z"
+  },
+  "__v": 0,
+  "carousel": false
+},
+{
+  "_id": {
+    "$oid": "6787fb07cd606233c104df41"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Running Shoes",
+  "price": 129,
+  "description": "Comfortable and lightweight running shoes for men",
+  "productImage": "1736804089263_running_shoes.jpg",
+  "category": "men",
+  "subCategory": "Footwear",
+  "bestSellers": true,
+  "rank": 11,
+  "createdAt": "2025-01-15T16:10:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:23:26.251Z"
+  },
+  "__v": 0,
+  "carousel": true
+},
+{
+  "_id": {
+    "$oid": "6787fb11cd606233c104df42"
+  },
+  "status": {
+    "availability": "available",
+    "stockStatus": "inStock"
+  },
+  "name": "Tote Bag",
+  "price": 89,
+  "description": "Versatile tote bag made of eco-friendly materials",
+  "productImage": "1736802970134_tote_bag.jpg",
+  "category": "women",
+  "subCategory": "Accessories",
+  "bestSellers": true,
+  "rank": 12,
+  "createdAt": "2025-01-15T16:05:00.000Z",
+  "updatedAt": {
+    "$date": "2025-01-15T18:18:01.728Z"
+  },
+  "__v": 0,
+  "carousel": false
+}]
