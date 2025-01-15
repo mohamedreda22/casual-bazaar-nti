@@ -19,10 +19,6 @@
     </div>
 
     <app-filter (applyFilters)="onApplyFilter($event)" (resetFilters)="onResetFilter()"></app-filter> 
-    <!-- Display chosen subcategory -->
-    <div *ngIf="selectedSubCategory" class="selected-subcategory">
-      <h3>Selected Subcategory: {{ selectedSubCategory }}</h3>
-    </div>
 
     <div class="products-grid">
       <div class="product-card" *ngFor="let product of filteredProducts">

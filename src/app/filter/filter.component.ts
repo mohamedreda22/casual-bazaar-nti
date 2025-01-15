@@ -12,19 +12,25 @@ import { AdminDashboardService } from '../services/admin-dashboard.service';
 export class FilterComponent implements OnInit {
   filterForm: FormGroup;
   categories: Category[] = [];
+  subCategories: Category['subCategories'] = [];
 
   @Output() applyFilters: EventEmitter<any> = new EventEmitter();
   @Output() resetFilters: EventEmitter<void> = new EventEmitter();
 
-  constructor(private fb: FormBuilder,private adminDashboardService: AdminDashboardService) {
+  constructor(
+    private fb: FormBuilder,
+    private adminDashboardService: AdminDashboardService
+  ) {
     this.filterForm = this.fb.group({
       name: [''],
       category: [''],
+      subCategory: [''],
       priceRange: [''],
       availability: [''],
       stockStatus: [''],
     });
   }
+
   ngOnInit(): void {
     this.loadCategories();
   }
@@ -33,10 +39,31 @@ export class FilterComponent implements OnInit {
     this.adminDashboardService.getAllCategories().subscribe(
       (categories) => {
         this.categories = categories;
+        if (categories.length > 0) {
+          this.onCategoryChange();
+        }
       },
       (error) => console.error('Error loading categories:', error)
     );
   }
+
+  onCategoryChange(): void {
+    const selectedCategoryName = this.filterForm.get('category')?.value;
+    const selectedCategory = this.categories.find(
+      (category) => category.name === selectedCategoryName
+    );
+
+    if (selectedCategory) {
+      this.subCategories = selectedCategory.subCategories; 
+      this.filterForm.get('subCategory')?.setValue(''); 
+      this.filterForm.get('subCategory')?.enable(); 
+    } else {
+      this.subCategories = [];
+      this.filterForm.get('subCategory')?.disable(); 
+      this.filterForm.get('subCategory')?.setValue(''); 
+    }
+  }
+
   onApplyFilter(): void {
     this.applyFilters.emit(this.filterForm.value);
   }

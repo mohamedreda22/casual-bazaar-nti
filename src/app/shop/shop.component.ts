@@ -29,6 +29,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedSubCategory: string | null = null;
   isAdmin: boolean = false;
   userId: string = '';
+  timer: any; // Timer property to store the interval ID
 
   @ViewChild('carouselTrack', { static: false })
   carouselTrack!: ElementRef<HTMLDivElement>;
@@ -71,10 +72,18 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.updateCarousel();
     window.addEventListener('resize', this.updateCarousel.bind(this));
+
+    // Start the carousel timer when the component is initialized
+    this.startCarouselTimer();
   }
 
   ngOnDestroy(): void {
     window.removeEventListener('resize', this.updateCarousel.bind(this));
+
+    // Clear the timer when the component is destroyed
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
   }
 
   updateCarousel(): void {
@@ -171,5 +180,12 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       },
     });
+  }
+
+  // Function to start the carousel timer
+  startCarouselTimer(): void {
+    this.timer = setInterval(() => {
+      this.next();
+    }, 3000); // Change the value to control the interval (e.g., 3000ms = 3 seconds)
   }
 }
