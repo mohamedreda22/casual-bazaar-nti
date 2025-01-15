@@ -26,7 +26,9 @@ export class ProductsComponent implements OnInit {
   editProductForm: FormGroup;
   imageURL: string = '';
   categories: Category[] = [];
-
+  filterForm: FormGroup;
+  allProducts: Product[] = [];
+  filteredProducts = [...this.allProducts];
   constructor(
     private adminDashboardService: AdminDashboardService,
     private fb: FormBuilder
@@ -63,6 +65,60 @@ export class ProductsComponent implements OnInit {
       }),
       productImage: new FormControl(''),
     });
+
+    this.filterForm = this.fb.group({
+      name: [''],
+      category: [''],
+      priceRange: [''],
+      availability: [''],
+      stockStatus: [''],
+    });
+  }
+
+  applyFilter(): void {
+    const filters = this.filterForm.value;
+    console.log('Filter values:', filters);
+    console.log('All Products:', this.allProducts); // Check if products exist here
+
+    const [minPrice, maxPrice] = filters.priceRange
+      ? filters.priceRange.split('-').map(Number)
+      : [null, null];
+
+    this.filteredProducts = this.allProducts.filter((product: Product) => {
+      const matchesName = filters.name
+        ? product.name.toLowerCase().includes(filters.name.toLowerCase())
+        : true;
+      const matchesCategory = filters.category
+        ? product.category === filters.category
+        : true;
+      const matchesPrice =
+        minPrice !== null && maxPrice !== null
+          ? product.price >= minPrice && product.price <= maxPrice
+          : true;
+      const matchesAvailability = filters.availability
+        ? product.status.availability === filters.availability
+        : true;
+      const matchesStockStatus = filters.stockStatus
+        ? product.status.stockStatus === filters.stockStatus
+        : true;
+
+      return (
+        matchesName &&
+        matchesCategory &&
+        matchesPrice &&
+        matchesAvailability &&
+        matchesStockStatus
+      );
+    });
+    this.allProducts = [...this.filteredProducts];
+
+    console.log('Filtered Products:', this.filteredProducts);
+  }
+
+  resetFilter(): void {
+    this.filterForm.reset();
+    this.filteredProducts = [...this.allProducts];
+    this.allProducts = [...this.filteredProducts];
   }
 
   // Start editing product
@@ -88,6 +144,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
+    this.filteredProducts = [...this.products];
     this.loadCategories();
   }
 
@@ -123,6 +180,8 @@ export class ProductsComponent implements OnInit {
     this.adminDashboardService.getAllProducts().subscribe(
       (products) => {
         this.products = products;
+        this.allProducts = [...products];
+        this.filteredProducts = [...products];
       },
       (error) => {
         console.error('Error fetching products:', error);
@@ -145,7 +204,7 @@ export class ProductsComponent implements OnInit {
       description: '',
       productImage: '',
       bestSellers: false,
-      carousel:false,
+      carousel: false,
       rank: 0,
       status: { availability: 'available', stockStatus: 'inStock' },
       createdAt: new Date().toISOString(),
@@ -316,7 +375,7 @@ export class ProductsComponent implements OnInit {
     this.adminDashboardService.updateProduct(product._id, product).subscribe(
       (updatedProduct) => {
         console.log('Product updated:', updatedProduct);
-        // set the new data        
+        // set the new data
         this.loadProducts();
         Swal.fire('Success', 'Product updated successfully', 'success');
       },
@@ -327,7 +386,7 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-    handleImageUpload(event: any): void {
+  handleImageUpload(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.addProductForm.patchValue({
@@ -342,12 +401,13 @@ export class ProductsComponent implements OnInit {
   handleUpdateImageUpload(event: Event): void {
     const input = event.target as HTMLInputElement;
 
-    if (input.files && input.files.length >0){
-      const file =input.files[0];
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
       this.editProductForm.patchValue({
-        productImage :file
-      })
-    }}
+        productImage: file,
+      });
+    }
+  }
 
   resetForm(): void {
     this.addProductForm.reset();

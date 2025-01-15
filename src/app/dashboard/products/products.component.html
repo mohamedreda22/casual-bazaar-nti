@@ -1,4 +1,80 @@
 <h2>Products</h2>
+<!-- Filter Section -->
+<div class="filter-section">
+  <h3>Filter Products</h3>
+  <form [formGroup]="filterForm" (ngSubmit)="applyFilter()" class="filter-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="filterName">Name:</label>
+        <input
+          type="text"
+          id="filterName"
+          class="form-control"
+          placeholder="Product Name"
+          formControlName="name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="filterCategory">Category:</label>
+        <select
+          id="filterCategory"
+          class="form-control"
+          formControlName="category"
+        >
+          <option value="" disabled selected>Select Category</option>
+          <option *ngFor="let category of categories" [value]="category.name">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="filterPriceRange">Price Range:</label>
+        <input
+          type="text"
+          id="filterPriceRange"
+          class="form-control"
+          placeholder="e.g., 100-500"
+          formControlName="priceRange"
+        />
+      </div>
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-primary">Apply Filter</button>
+        <button type="button" class="btn btn-secondary" (click)="resetFilter()">
+          Reset
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Table to Display Filtered Products -->
+<div class="product-table">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Availability</th>
+        <th>Stock Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of filteredProducts">
+        <td>{{ product.name }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.status.availability }}</td>
+        <td>{{ product.status.stockStatus }}</td>
+      </tr>
+      <tr *ngIf="filteredProducts.length === 0">
+        <td colspan="5" class="text-center">No products match your filters.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
 <button class="btn btn-success" (click)="toggleAddProductForm()">
   Add Product
 </button>
@@ -235,9 +311,9 @@
         class="text-danger"
         *ngIf="
           addProductForm.get('carousel')!.touched &&
-          addProductForm.get('carousel')!.invalid"
+          addProductForm.get('carousel')!.invalid
+        "
       ></div>
-
     </div>
     <div class="form-group">
       <label for="description">Description:</label>
@@ -491,7 +567,7 @@
   <tbody>
     <tr *ngFor="let product of products">
       <td>
-        <img [src]="imageURL + product.productImage" alt="{{product.name}}" />
+        <img [src]="imageURL + product.productImage" alt="{{ product.name }}" />
       </td>
       <td>{{ product.name }}</td>
       <td>{{ product.description }}</td>

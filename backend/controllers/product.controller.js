@@ -76,8 +76,8 @@ exports.updateProduct = async (req, res) => {
     }
 
     res.status(200).json({ message: "Product updated successfully", product: updatedProduct });
-    console.log("updateData", updateData);
-    console.log("updatedProduct" ,updatedProduct);
+    // console.log("updateData", updateData);
+    // console.log("updatedProduct" ,updatedProduct);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
