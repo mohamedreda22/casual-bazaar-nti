@@ -78,7 +78,6 @@ export class ProductsComponent implements OnInit {
   applyFilter(): void {
     const filters = this.filterForm.value;
     console.log('Filter values:', filters);
-    console.log('All Products:', this.allProducts); // Check if products exist here
 
     const [minPrice, maxPrice] = filters.priceRange
       ? filters.priceRange.split('-').map(Number)
@@ -96,10 +95,10 @@ export class ProductsComponent implements OnInit {
           ? product.price >= minPrice && product.price <= maxPrice
           : true;
       const matchesAvailability = filters.availability
-        ? product.status.availability === filters.availability
+        ? product.status?.availability === filters.availability
         : true;
       const matchesStockStatus = filters.stockStatus
-        ? product.status.stockStatus === filters.stockStatus
+        ? product.status?.stockStatus === filters.stockStatus
         : true;
 
       return (
@@ -110,7 +109,6 @@ export class ProductsComponent implements OnInit {
         matchesStockStatus
       );
     });
-    this.allProducts = [...this.filteredProducts];
 
     console.log('Filtered Products:', this.filteredProducts);
   }
@@ -118,7 +116,7 @@ export class ProductsComponent implements OnInit {
   resetFilter(): void {
     this.filterForm.reset();
     this.filteredProducts = [...this.allProducts];
-    this.allProducts = [...this.filteredProducts];
+    // this.allProducts = [...this.filteredProducts];
   }
 
   // Start editing product
