@@ -9,7 +9,7 @@ import { Product } from './../../interfaces/productInterface';
   selector: 'app-order1',
   standalone: false,
   templateUrl: './orders.component.html',
-  styleUrl: '../dashboard.component.css',
+  styleUrls: ['../dashboard.component.css'],
 })
 export class Order1Component implements OnInit {
   orders: Order[] = [];
@@ -28,6 +28,12 @@ export class Order1Component implements OnInit {
       total_price: ['', [Validators.required]],
       items: ['', Validators.required], // Multiple items for the order
       status: ['', Validators.required], // Status field added for order update
+      fullName: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      government: ['', Validators.required],
+      extraPhone: [''],
+      payment: ['', Validators.required],
     });
   }
 
@@ -73,7 +79,13 @@ export class Order1Component implements OnInit {
     this.editOrderForm.setValue({
       total_price: order.total_price,
       items: order.items.map((item) => item.product_id), // Populate the form with selected items
-      status: order.status, // Populate status as well
+      status: order.status,
+      fullName: order.orderDetails.fullName,
+      address: order.orderDetails.address,
+      city: order.orderDetails.city,
+      government: order.orderDetails.government,
+      extraPhone: order.orderDetails.extraPhone,
+      payment: order.orderDetails.payment,
     });
   }
 
@@ -86,7 +98,15 @@ export class Order1Component implements OnInit {
           product_id: productId,
           quantity: 1, // Default quantity (can be updated as needed)
         })),
-        status: this.editOrderForm.value.status, // Update status as well
+        status: this.editOrderForm.value.status,
+        orderDetails: {
+          fullName: this.editOrderForm.value.fullName,
+          address: this.editOrderForm.value.address,
+          city: this.editOrderForm.value.city,
+          government: this.editOrderForm.value.government,
+          extraPhone: this.editOrderForm.value.extraPhone,
+          payment: this.editOrderForm.value.payment,
+        },
       };
 
       this.adminDashboardService.updateOrder(updatedOrder).subscribe(

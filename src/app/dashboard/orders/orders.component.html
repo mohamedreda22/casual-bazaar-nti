@@ -7,6 +7,7 @@
         <th>Total Price</th>
         <th>Items</th>
         <th>Status</th>
+        <th>Address</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -15,21 +16,28 @@
         <td>{{ order._id }}</td>
         <td>{{ order.total_price | currency }}</td>
         <td>
-            <table>
+          <table>
             <tr *ngFor="let item of order.items">
               <td>
-              <img
-                [src]="imageURL + getProductById(item.product_id)?.productImage"
-                alt="Product Image"
-              />
+                <img
+                  [src]="imageURL + getProductById(item.product_id)?.productImage"
+                  alt="Product Image"
+                />
               </td>
               <td>
-              {{ getProductById(item.product_id)?.name || item.product_id }} ({{ item.quantity }})
+                {{ getProductById(item.product_id)?.name || item.product_id }} ({{ item.quantity }})
               </td>
             </tr>
-            </table>
+          </table>
         </td>
         <td>{{ order.status }}</td>
+        <td>
+          {{ order.orderDetails.address }}, {{ order.orderDetails.city }}, {{ order.orderDetails.government }}
+          <br />
+          {{ order.orderDetails.extraPhone }}
+          <br />
+          {{ order.orderDetails.payment }}
+        </td>
         <td>
           <button (click)="startEditOrder(order)" class="btn btn-warning">
             Edit
@@ -91,11 +99,86 @@
         formControlName="status"
         required
       >
-        <option value="pending">Pending</option>
-        <option value="shipped">Shipped</option>
-        <option value="delivered">Delivered</option>
-        <option value="cancelled">Cancelled</option>
+        <option value="Pending">Pending</option>
+        <option value="Shipped">Shipped</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
       </select>
+    </div>
+
+    <div class="form-group">
+      <label for="editFullName">Full Name:</label>
+      <input
+        type="text"
+        id="editFullName"
+        class="form-control"
+        formControlName="fullName"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="editAddress">Address:</label>
+      <input
+        type="text"
+        id="editAddress"
+        class="form-control"
+        formControlName="address"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="editCity">City:</label>
+      <select
+      id="editCity"
+      class="form-control"
+      formControlName="city"
+      required
+      >
+        <option value="" disabled selected>Select Governorate</option>
+        <option value="cairo">Cairo</option>
+        <option value="giza">Giza</option>
+        <option value="alexandria">Alexandria</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="editGovernment">Government:</label>
+      <input
+        type="text"
+        id="editGovernment"
+        class="form-control"
+        formControlName="government"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="editExtraPhone">Extra Phone:</label>
+      <input
+        type="text"
+        id="editExtraPhone"
+        class="form-control"
+        formControlName="extraPhone"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="editPayment">Payment:</label>
+      <select
+        id="editPayment"
+        class="form-control"
+        formControlName="payment"
+        required
+      >
+        <option value="" disabled selected>Select Payment Method</option>
+        <option value="creditCard">Credit Card</option>
+        <option value="vodafoneCash">Vodafone Cash</option>
+        <option value="instapay">Instapay</option>
+        <option value="onDelively">On Delively</option>
+      </select>
+      
     </div>
 
     <div class="form-buttons">
