@@ -27,7 +27,7 @@ export class NewArrivalsComponent implements OnInit {
   ngOnInit(): void {
     this.imageURL = this._productS.uploadURL;
     this._authS.isAdmin().subscribe((isAdmin) => (this.isAdmin = isAdmin));
-    this.userId = this._cart.getUserId() || ''; // Fallback to empty string if no userId is found
+    this.userId = this._authS.getUserId() || ''; 
 
     if (this.userId) {
       this._productS.getProducts().subscribe({

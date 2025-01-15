@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../services/cart.service';
 import Swal from 'sweetalert2';
 import { Order } from '../interfaces/orderInterface';
+import { AuthServiceService } from '../services/auth.service.service';
 
 @Component({
   selector: 'app-cart',
@@ -21,7 +22,7 @@ export class CartComponent implements OnInit {
 
   readonly imageURL = 'http://localhost:3000/images/';
 
-  constructor(private cartService: CartService, private fb: FormBuilder) {
+  constructor(private cartService: CartService, private fb: FormBuilder,private _authS:AuthServiceService) {
     // Initialize the reactive form
     this.orderForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
@@ -34,7 +35,7 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userId = this.cartService.getUserId();
+    this.userId = this._authS.getUserId();
     this.loadCartItems();
   }
 
@@ -46,10 +47,6 @@ export class CartComponent implements OnInit {
       },
       error: () => Swal.fire('Failed to load cart items.', '', 'error'),
     });
-  }
-
-  private handleError(message: string): void {
-    Swal.fire(message, '', 'error');
   }
 
   private loadProductDetails(item: any): void {

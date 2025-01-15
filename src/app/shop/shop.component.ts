@@ -31,6 +31,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedSubCategory: string | null = null;
   isAdmin: boolean = false;
   cartItems: any[] = []; // Track cart items
+  userId: string = '';
 
   @ViewChild('carouselTrack', { static: false })
   carouselTrack!: ElementRef<HTMLDivElement>;
@@ -43,13 +44,12 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   imageURL = '';
-  userId: string = '';
 
   ngOnInit(): void {
     this.imageURL = this._productS.uploadURL;
-    this.userId = this._cartS.getUserId();
+    this.userId = this._authS.getUserId();
     this._productS.getCategories().subscribe((response: any) => {
-      this.categories = Array.isArray(response) ? response : [];
+      this.categories = Array.isArray(response) ? response.filter((category: any) => category.show === true) : [];
     });
     this._productS.getProducts().subscribe((response: any) => {
       this.products = response;
@@ -153,18 +153,8 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  // Handle checkout process (optional)
-  checkout(): void {
-    alert('Proceeding to checkout...');
-  }
-
   // Add an item to the cart
   addToCart(product: Product): void {
-    this.fetchToken(); // Ensure the token is fetched and userId is set
-
-    const userId = this.decodeToken(
-      localStorage.getItem('accessToken') || ''
-    ).userId;
 
     // Check if the product is already in the cart
     const existingProduct = this.cartItems.find(
@@ -177,15 +167,14 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       // Otherwise, add a new product to the cart
       this.cartItems.push({
-        userId: userId,
+        userId: this.userId,
         product: product._id,
         quantity: 1,
       });
     }
 
     // Send updated cart to backend
-    this._cartS.addToCart(userId, product._id).subscribe(() => {
-      // console.log('Added to cart:', product, userId);
+    this._cartS.addToCart(this.userId, product._id).subscribe(() => {
     });
     Swal.fire({
       title: 'Success!',

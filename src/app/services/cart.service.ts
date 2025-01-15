@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AuthServiceService } from './auth.service.service';
 import { Order } from '../interfaces/orderInterface';
 
 @Injectable({
@@ -15,7 +14,6 @@ export class CartService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthServiceService
   ) {}
 
   // Fetch cart items
@@ -99,12 +97,6 @@ export class CartService {
         );
       })
     );
-  }
-
-  // Get user ID
-  getUserId(): string {
-    const token = localStorage.getItem('accessToken');
-    return token ? JSON.parse(atob(token.split('.')[1])).userId : '';
   }
 
   // Handle errors

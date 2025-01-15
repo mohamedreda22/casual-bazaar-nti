@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Wishlist } from '../interfaces/wishlistInterface';
 import { WishlistService } from '../services/wishlist.service';
-import { CartService } from '../services/cart.service';
-import { ProductService } from '../services/product.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
+import { AuthServiceService } from '../services/auth.service.service';
 
 @Component({
   selector: 'app-wishlist',
@@ -19,18 +17,17 @@ export class WishlistComponent implements OnInit {
   imgURL = 'http://localhost:3000/images/';
   constructor(
     private wishlistService: WishlistService,
-    private cartService: CartService,
-    private productService: ProductService,
-    private router :Router
+    private router: Router,
+    private _authS: AuthServiceService
   ) {}
 
   ngOnInit(): void {
-    this.userId = this.cartService.getUserId();
+    this.userId = this._authS.getUserId();
     this.getWishlistItems();
     this.fetchWishlist();
   }
 
-  navigateToAddItems(){
+  navigateToAddItems() {
     this.router.navigate(['/shop']);
   }
 
@@ -47,7 +44,6 @@ export class WishlistComponent implements OnInit {
         }));
       });
   }
-
 
   // Fetch wishlist items
   getWishlistItems(): void {

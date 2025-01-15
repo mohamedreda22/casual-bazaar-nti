@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from '../interfaces/categoryInterface';
-// import { Order } from '../interfaces/orderInterface';
 import { Product } from '../interfaces/productInterface';
 import { User } from '../interfaces/userInterface';
 import { Order } from '../interfaces/orderInterface';
@@ -11,7 +10,7 @@ import { Order } from '../interfaces/orderInterface';
   providedIn: 'root',
 })
 export class AdminDashboardService {
-  apiUrl = 'http://localhost:3000'; // Your API base URL
+  apiUrl = 'http://localhost:3000'; 
 
   constructor(private _http: HttpClient) {}
 
@@ -24,11 +23,6 @@ export class AdminDashboardService {
   getAllUsers(): Observable<User[]> {
     return this._http.get<User[]>(`${this.apiUrl}/users`);
   }
-
-  // // Get all orders from the database
-  // getAllOrders(): Observable<Order[]> {
-  //   return this._http.get<Order[]>(`${this.apiUrl}/orders`);
-  // }
 
   // Get all categories from the database
   getAllCategories(): Observable<Category[]> {
@@ -61,11 +55,6 @@ export class AdminDashboardService {
     return this._http.delete<void>(`${this.apiUrl}/users/${id}`);
   }
 
-  // // Update an order in the database
-  // updateOrder(order: Order): Observable<Order> {
-  //   return this._http.put<Order>(`${this.apiUrl}/orders/${order.id}`, order);
-  // }
-
   // Delete an order from the database
   deleteOrder(id: string): Observable<void> {
     return this._http.delete<void>(`${this.apiUrl}/orders/${id}`);
@@ -78,16 +67,6 @@ export class AdminDashboardService {
       categoryData
     );
   }
-
-  /*   updateCategory(
-    categoryId: string,
-    updateCategory: Category
-  ): Observable<Category> {
-    return this._http.put<Category>(
-      `${this.apiUrl}/categories/${categoryId}`,
-      updateCategory
-    );
-  } */
 
   // Delete a category from the database
   deleteCategory(id: string): Observable<void> {
