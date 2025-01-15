@@ -1,1 +1,74 @@
-<p>filter works!</p>
+<div class="filter-container">
+  <div class="filter-section">
+    <h3>Filter Products</h3>
+    <form
+      [formGroup]="filterForm"
+      (ngSubmit)="onApplyFilter()"
+      class="filter-form"
+    >
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Product Name:</label>
+          <input id="name" formControlName="name" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="filterCategory">Category:</label>
+          <select
+            id="filterCategory"
+            class="form-control"
+            formControlName="category"
+          >
+            <option value="" disabled selected>Select Category</option>
+            <option *ngFor="let category of categories" [value]="category.name">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="priceRange">Price Range:</label>
+          <input
+            id="priceRange"
+            formControlName="priceRange"
+            class="form-control"
+            placeholder="100-500"
+          />
+        </div>
+        <div class="form-group">
+          <label for="availability">Availability:</label>
+          <select
+            id="availability"
+            formControlName="availability"
+            class="form-control"
+          >
+            <option value="">Select Availability</option>
+            <option value="available">Available</option>
+            <option value="unavailable">Unavailable</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="stockStatus">Stock Status:</label>
+          <select
+            id="stockStatus"
+            formControlName="stockStatus"
+            class="form-control"
+          >
+            <option value="">Select Status</option>
+            <option value="inStock">In Stock</option>
+            <option value="outOfStock">Out of Stock</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-primary">Apply Filters</button>
+        <button
+          type="button"
+          (click)="onResetFilter()"
+          class="btn btn-secondary"
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+    
+  </div>
+</div>

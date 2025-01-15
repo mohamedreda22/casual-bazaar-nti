@@ -75,10 +75,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  applyFilter(): void {
-    const filters = this.filterForm.value;
-    console.log('Filter values:', filters);
-
+  onApplyFilter(filters: any): void {
     const [minPrice, maxPrice] = filters.priceRange
       ? filters.priceRange.split('-').map(Number)
       : [null, null];
@@ -109,12 +106,10 @@ export class ProductsComponent implements OnInit {
         matchesStockStatus
       );
     });
-
-    console.log('Filtered Products:', this.filteredProducts);
   }
 
-  resetFilter(): void {
-    this.filterForm.reset();
+  onResetFilter(): void {
+    // this.filterForm.reset();
     this.filteredProducts = [...this.allProducts];
     // this.allProducts = [...this.filteredProducts];
   }
