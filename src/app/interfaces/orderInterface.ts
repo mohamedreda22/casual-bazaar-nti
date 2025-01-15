@@ -11,6 +11,15 @@ export interface Order {
   total_price: number; // Total price for the order
   // order_date: Date; // Date when the order was placed
   status: 'Pending' | 'Shipped' | 'Completed' | 'Cancelled'; // Status of the order
+  orderDetails: {
+    fullName: string; // Full name of the customer
+    address: string; // Address for delivery
+    city: string; // City for delivery
+    government: string; // Government for delivery
+    extraPhone: string; // Extra phone number for contact
+    payment: string; // Payment method
+  };
   createdAt?: Date; // Timestamp of when the order was created (optional)
   updatedAt?: Date; // Timestamp of when the order was last updated (optional)
+
 }

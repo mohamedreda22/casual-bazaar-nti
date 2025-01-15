@@ -44,6 +44,26 @@
       <span>TOTAL PRICE</span>
       <span>€ {{ (sumTotal())}}</span>
     </div>
+    <div class="order-address">
+      <h3>Shipping Address</h3>
+      <input type="text" placeholder="Full Name" [(ngModel)]="orderDetails.fullName" />
+      <input type="text" placeholder="Address" [(ngModel)]="orderDetails.address" />
+      <input type="text" placeholder="City" [(ngModel)]="orderDetails.city" />
+      <select [(ngModel)]="orderDetails.government">
+        <option value="" disabled selected>Select Governorate</option>
+        <option value="cairo">Cairo</option>
+        <option value="giza">Giza</option>
+        <option value="alexandria">Alexandria</option>
+      </select>
+      <input type="text" placeholder="Extra Phone" [(ngModel)]="orderDetails.extraPhone" />    
+      <select [(ngModel)]="orderDetails.payment">
+        <option value="" disabled selected>Select Payment Method</option>
+        <option value="creditCard">Credit Card</option>
+        <option value="vodafoneCash">Vodafone Cash</option>
+        <option value="instapay">Instapay</option>
+        <option value="onDelively">On Delively</option>
+      </select>
+    </div>
     <button class="register-btn" (click)="checkout()">✅Check Out</button>
   </div>
 </div>

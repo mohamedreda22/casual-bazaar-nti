@@ -164,3 +164,38 @@ h2 {
   left: 6vw;
 
 }
+
+.order-address{
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top:5vh;
+}
+
+.order-address h3{
+  margin: 0 0 10px;
+}
+
+.order-address input{
+  width: 100%;
+  padding: 10px;
+  background-color: #555;
+  border: 1px solid #666;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.order-address select{
+  width: 100%;
+  padding: 5px;
+  background-color: #555;
+  border: 1px solid #666;
+  color: #fff;
+  border-radius: 5px;
+}
+
+

@@ -11,29 +11,41 @@ import { Order } from '../interfaces/orderInterface';
 })
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
+  orderDetails: {
+    fullName: string;
+    address: string;
+    city: string;
+    government: string;
+    extraPhone: string;
+    payment: string;
+  } = {
+    fullName: '',
+    address: '',
+    city: '',
+    government: '',
+    extraPhone: '',
+    payment: '',
+  };
   shippingCost: number = 5;
   userId: string = '';
   totalPrice: number = 0;
-  // cartCount: number = 0;
 
-  imageURL = 'http://localhost:3000/images/';
+  readonly imageURL = 'http://localhost:3000/images/';
+
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
     this.userId = this.cartService.getUserId();
     this.loadCartItems();
-    // this.updateCartCount();
   }
 
   private loadCartItems(): void {
     this.cartService.getCartItems(this.userId).subscribe({
       next: (response) => {
-        if (response?.products) {
-          this.cartItems = response.products;
-          this.cartItems.forEach((item) => this.loadProductDetails(item));
-        }
+        this.cartItems = response?.products || [];
+        this.cartItems.forEach((item) => this.loadProductDetails(item));
       },
-      error: (err) => console.error('Error loading cart:', err),
+      error: () => Swal.fire('Failed to load cart items.', '', 'error'),
     });
   }
 
@@ -43,20 +55,16 @@ export class CartComponent implements OnInit {
         item.productDetails = productDetails;
         this.calculateTotal();
       },
-      error: (err) => console.error('Error loading product details:', err),
+      error: () => Swal.fire('Failed to load product details.', '', 'error'),
     });
   }
 
-  // private updateCartCount(): void {
-  //   this.cartService.getCartCount(this.userId).subscribe({
-  //     next: (count) => (this.cartCount = count),
-  //     error: (err) => console.error('Error fetching cart count:', err),
-  //   });
-  // }
-
   updateQuantity(item: any, change: number): void {
     const newQuantity = item.quantity + change;
-    if (newQuantity < 1) return;
+    if (newQuantity < 1) {
+      Swal.fire('Quantity cannot be less than 1.', '', 'warning');
+      return;
+    }
 
     item.quantity = newQuantity;
     this.cartService
@@ -66,7 +74,7 @@ export class CartComponent implements OnInit {
       })
       .subscribe({
         next: () => this.calculateTotal(),
-        error: (err) => console.error('Error updating cart item:', err),
+        error: () => Swal.fire('Failed to update cart item.', '', 'error'),
       });
   }
 
@@ -77,9 +85,8 @@ export class CartComponent implements OnInit {
           (item) => item.product !== productId
         );
         this.calculateTotal();
-        // this.updateCartCount();
       },
-      error: (err) => console.error('Error removing item:', err),
+      error: () => Swal.fire('Failed to remove item from cart.', '', 'error'),
     });
   }
 
@@ -88,21 +95,9 @@ export class CartComponent implements OnInit {
       next: () => {
         this.cartItems = [];
         this.totalPrice = 0;
-        // this.cartCount = 0;
-        Swal.fire('Cart cleared successfully', '', 'success');
+        Swal.fire('Cart cleared successfully.', '', 'success');
       },
-      error: (err) => console.error('Error clearing cart:', err),
-    });
-  }
-
-  clearCartAfterOrder(): void {
-    this.cartService.clearCart(this.userId).subscribe({
-      next: () => {
-        this.cartItems = [];
-        this.totalPrice = 0;
-        // this.cartCount = 0;
-      },
-      error: (err) => console.error('Error clearing cart:', err),
+      error: () => Swal.fire('Failed to clear cart.', '', 'error'),
     });
   }
 
@@ -119,40 +114,39 @@ export class CartComponent implements OnInit {
       return;
     }
 
-    const orders: Order[] = [
-      {
-        _id: '',
-        // order_id: this.generateUniqueId(),
-        customer_id: this.userId,
-        items: this.cartItems.map((item) => ({
-          product_id: item.product,
-          quantity: item.quantity,
-        })),
-        total_price: this.sumTotal(),
-        // order_date: new Date(),
-        status: 'Pending',
-      },
-    ];
+/*     if (!this.isOrderDetailsValid()) {
+      Swal.fire('Please fill in all required fields.', '', 'warning');
+      return;
+    } */
 
-    orders.forEach((order) => {
-      this.cartService.createOrder(order).subscribe({
-        next: () => {
-          Swal.fire('Order placed successfully.', '', 'success');
-          // this.updateCartCount();
-          this.loadCartItems();
-           this.clearCartAfterOrder();
-        },
-        error: (error) => {
-          console.error('Order creation failed:', error);
-          console.log('order failed from cart: ', order);
-          console.log('cartItems: ', this.cartItems);
-          Swal.fire('Failed to place order.', '', 'error');
-        },
-      });
+    const order: Order = {
+      _id: '',
+      customer_id: this.userId,
+      items: this.cartItems.map((item) => ({
+        product_id: item.product,
+        quantity: item.quantity,
+      })),
+      total_price: this.sumTotal(),
+      status: 'Pending',
+      orderDetails: { ...this.orderDetails },
+    };
+
+    this.cartService.createOrder(order).subscribe({
+      next: () => {
+        Swal.fire('Order placed successfully.', '', 'success');
+        this.clearCart();
+      },
+      error: () => Swal.fire('Failed to place order.', '', 'error'),
     });
   }
 
-sumTotal(): number {
-  return Number(this.totalPrice) + Number(this.shippingCost);
-}
+/*   private isOrderDetailsValid(): boolean {
+    return ['fullName', 'address', 'payment'].every(
+      (field) => this.orderDetails[field]
+    );
+  }
+ */
+  sumTotal(): number {
+    return this.totalPrice + this.shippingCost;
+  }
 }
