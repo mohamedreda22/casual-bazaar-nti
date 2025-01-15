@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../services/cart.service';
 import Swal from 'sweetalert2';
 import { Order } from '../interfaces/orderInterface';
@@ -11,28 +12,26 @@ import { Order } from '../interfaces/orderInterface';
 })
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
-  orderDetails: {
-    fullName: string;
-    address: string;
-    city: string;
-    government: string;
-    extraPhone: string;
-    payment: string;
-  } = {
-    fullName: '',
-    address: '',
-    city: '',
-    government: '',
-    extraPhone: '',
-    payment: '',
-  };
   shippingCost: number = 5;
   userId: string = '';
   totalPrice: number = 0;
+  isLoading = false;
+
+  orderForm: FormGroup;
 
   readonly imageURL = 'http://localhost:3000/images/';
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private fb: FormBuilder) {
+    // Initialize the reactive form
+    this.orderForm = this.fb.group({
+      fullName: ['', [Validators.required, Validators.minLength(3)]],
+      address: ['', [Validators.required, Validators.minLength(5)]],
+      city: ['', Validators.required],
+      government: ['', Validators.required],
+      extraPhone: ['', [Validators.pattern(/^[0-9]{11}$/)]],
+      payment: ['', Validators.required],
+    });
+  }
 
   ngOnInit(): void {
     this.userId = this.cartService.getUserId();
@@ -47,6 +46,10 @@ export class CartComponent implements OnInit {
       },
       error: () => Swal.fire('Failed to load cart items.', '', 'error'),
     });
+  }
+
+  private handleError(message: string): void {
+    Swal.fire(message, '', 'error');
   }
 
   private loadProductDetails(item: any): void {
@@ -85,6 +88,7 @@ export class CartComponent implements OnInit {
           (item) => item.product !== productId
         );
         this.calculateTotal();
+        Swal.fire('Item removed from cart successfully.', '', 'success');
       },
       error: () => Swal.fire('Failed to remove item from cart.', '', 'error'),
     });
@@ -114,11 +118,12 @@ export class CartComponent implements OnInit {
       return;
     }
 
-    /*     if (!this.isOrderDetailsValid()) {
-      Swal.fire('Please fill in all required fields.', '', 'warning');
+    if (this.orderForm.invalid) {
+      Swal.fire('Please fill in all required fields correctly.', '', 'warning');
       return;
-    } */
+    }
 
+    this.isLoading = true;
     const order: Order = {
       _id: '',
       customer_id: this.userId,
@@ -128,29 +133,21 @@ export class CartComponent implements OnInit {
       })),
       total_price: this.sumTotal(),
       status: 'Pending',
-      orderDetails: { ...this.orderDetails },
+      orderDetails: this.orderForm.value,
     };
 
     this.cartService.createOrder(order).subscribe({
       next: () => {
         Swal.fire('Order placed successfully.', '', 'success');
-        this.clearCart();
+        this.cartItems = [];
+
       },
       error: () => Swal.fire('Failed to place order.', '', 'error'),
+      complete: () => this.isLoading = false,
     });
   }
 
-  /*   private isOrderDetailsValid(): boolean {
-    return ['fullName', 'address', 'payment'].every(
-      (field) => this.orderDetails[field]
-    );
-  }
- */
   sumTotal(): number {
     return this.totalPrice + this.shippingCost;
-  }
-
-  validatePhoneNumber(phone: string): boolean {
-    return /^[0-9]{11}$/.test(phone);
   }
 }

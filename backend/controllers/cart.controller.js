@@ -142,24 +142,32 @@ exports.updateCart = async (req, res) => {
   }
 };
 
+exports.removeItem = async (req, res) => {
+  try {
+    const { userId, productId } = req.params;
+    const cart = await CartModel.findOneAndUpdate(
+      { user: userId },
+      { $pull: { products: { product: productId } } },
+      { new: true }
+    );
+    if (!cart) return res.status(404).json({ message: "Cart not found" });
+    res.status(200).json(cart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-// Clear all items in the cart for a user
 exports.clearCart = async (req, res) => {
   try {
-    const cart = await CartModel.findOne({ user: req.params.userId });
-    if (!cart) {
-      return res
-        .status(404)
-        .json({ message: `Cart not found for userId: ${req.params.userId}` });
-    }
-
-    cart.products = [];
-    await cart.save();
-    res.status(200).json({ message: "Cart cleared successfully" });
+    const { userId } = req.params;
+    const cart = await CartModel.findOneAndUpdate(
+      { user: userId },
+      { $set: { products: [] } },
+      { new: true }
+    );
+    if (!cart) return res.status(404).json({ message: "Cart not found" });
+    res.status(200).json({ message: "Cart cleared", cart });
   } catch (error) {
-    console.error("Error clearing cart:", error);
-    res
-      .status(500)
-      .json({ message: "Failed to clear cart", error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };

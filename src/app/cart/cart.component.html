@@ -1,68 +1,148 @@
 <div class="shopping-cart-container">
   <div class="cart">
     <h2>Shopping Cart</h2>
-    <span class="cart-items">{{ cartItems.length }} item{{ cartItems.length !== 1 ? 's' : '' }}</span>
-
+    <span class="cart-items"
+      >{{ cartItems.length }} item{{ cartItems.length !== 1 ? "s" : "" }}</span
+    >
 
     <div *ngFor="let item of cartItems; let i = index" class="cart-item">
-  <ng-container *ngIf="item.productDetails">
-    <img [src]="imageURL + item.productDetails.productImage" [alt]="item.productDetails.name" />
-    <div class="item-details">
-      <p>{{ item.productDetails.name }}</p>
-      <span class="item-desc">{{ item.productDetails.description }}</span>
+      <ng-container *ngIf="item.productDetails">
+        <img
+          [src]="imageURL + item.productDetails.productImage"
+          [alt]="item.productDetails.name"
+          loading="lazy"
+        />
+        <div class="item-details">
+          <p>{{ item.productDetails.name }}</p>
+          <span class="item-desc">{{ item.productDetails.description }}</span>
+        </div>
+        <div class="item-quantity">
+          <button
+            (click)="updateQuantity(item, -1)"
+            [disabled]="item.quantity <= 1"
+          >
+            -
+          </button>
+          <span>{{ item.quantity }}</span>
+          <button (click)="updateQuantity(item, 1)">+</button>
+        </div>
+        <span class="item-price">
+          € {{ item.productDetails.price * item.quantity | number : "1.2-2" }}
+        </span>
+        <button class="remove-item" (click)="removeItem(item.product)">
+          ×
+        </button>
+      </ng-container>
     </div>
-    <div class="item-quantity">
-      <button (click)="updateQuantity(item, -1)" [disabled]="item.quantity <= 1">-</button>
-      <span>{{ item.quantity }}</span>
-      <button (click)="updateQuantity(item, 1)">+</button>
-    </div>
-    <span class="item-price">
-      € {{ item.productDetails.price * item.quantity | number: '1.2-2' }}
-    </span>
-    <button class="remove-item" (click)="removeItem(item.product)">×</button>
-  </ng-container>
-</div>
 
     <button class="clear-cart" (click)="clearCart()">Clear Cart</button>
-    <a href="#" class="back-to-shop">← Back to shop</a>
+    <a routerLink="/shop" class="back-to-shop">← Back to shop</a>
   </div>
 
   <div class="summary">
     <h2>Summary</h2>
     <div class="summary-item">
       <span>ITEMS {{ cartItems.length }}</span>
-      <span>€ {{ totalPrice | number: '1.2-2' }}</span>
+      <span>€ {{ totalPrice | number : "1.2-2" }}</span>
     </div>
     <div class="summary-item">
       <span>SHIPPING</span>
       <select [(ngModel)]="shippingCost">
-        <option [value]=5>Standard Delivery - €5.00</option>
-        <option [value]=10>Express Delivery - €10.00</option>
+        <option [value]="5">Standard Delivery - €5.00</option>
+        <option [value]="10">Express Delivery - €10.00</option>
       </select>
     </div>
     <div class="summary-item total">
       <span>TOTAL PRICE</span>
-      <span>€ {{ (sumTotal())}}</span>
+      <span>€ {{ sumTotal() | number : "1.2-2" }}</span>
     </div>
     <div class="order-address">
-      <h3>Shipping Address</h3>
-      <input type="text" placeholder="Full Name" [(ngModel)]="orderDetails.fullName" />
-      <input type="text" placeholder="Address" [(ngModel)]="orderDetails.address" />
-      <input type="text" placeholder="City" [(ngModel)]="orderDetails.city" />
-      <select [(ngModel)]="orderDetails.government">
-        <option value="" disabled selected>Select Governorate</option>
-        <option value="cairo">Cairo</option>
-        <option value="giza">Giza</option>
-        <option value="alexandria">Alexandria</option>
-      </select>
-      <input type="text" placeholder="Extra Phone" [(ngModel)]="orderDetails.extraPhone" (ngModelChange)="validatePhoneNumber(orderDetails.extraPhone)" />
-      <select [(ngModel)]="orderDetails.payment">
-        <option value="" disabled selected>Select Payment Method</option>
-        <option value="creditCard">Credit Card</option>
-        <option value="vodafoneCash">Vodafone Cash</option>
-        <option value="instapay">Instapay</option>
-        <option value="onDelively">On Delively</option>
-      </select>
+      <form [formGroup]="orderForm" (ngSubmit)="checkout()">
+        <div>
+          <input
+            type="text"
+            placeholder="Full Name"
+            formControlName="fullName"
+            [ngClass]="{
+              invalid:
+                orderForm.get('fullName')?.invalid &&
+                orderForm.get('fullName')?.touched
+            }"
+          />
+        </div>
+        <div>
+          <input type="text" placeholder="Address" formControlName="address" />
+          <small
+            *ngIf="
+              orderForm.get('address')?.invalid &&
+              orderForm.get('address')?.touched
+            "
+          >
+            Address is required (min 5 characters).
+          </small>
+        </div>
+        <div>
+          <input type="text" placeholder="City" formControlName="city" />
+          <small
+            *ngIf="
+              orderForm.get('city')?.invalid && orderForm.get('city')?.touched
+            "
+          >
+            City is required.
+          </small>
+        </div>
+        <div>
+          <select formControlName="government">
+            <option value="" disabled>Select Governorate</option>
+            <option value="cairo">Cairo</option>
+            <option value="giza">Giza</option>
+            <option value="alexandria">Alexandria</option>
+          </select>
+          <small
+            *ngIf="
+              orderForm.get('government')?.invalid &&
+              orderForm.get('government')?.touched
+            "
+          >
+            Governorate is required.
+          </small>
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Extra Phone"
+            formControlName="extraPhone"
+          />
+          <small
+            *ngIf="
+              orderForm.get('extraPhone')?.invalid &&
+              orderForm.get('extraPhone')?.touched
+            "
+          >
+            Please provide a valid phone number (11 digits).
+          </small>
+        </div>
+        <div>
+          <select formControlName="payment">
+            <option value="" disabled>Select Payment Method</option>
+            <option value="creditCard">Credit Card</option>
+            <option value="vodafoneCash">Vodafone Cash</option>
+            <option value="instapay">Instapay</option>
+            <option value="onDelively">On Delivery</option>
+          </select>
+          <small
+            *ngIf="
+              orderForm.get('payment')?.invalid &&
+              orderForm.get('payment')?.touched
+            "
+          >
+            Payment method is required.
+          </small>
+        </div>
+        <!--     <button type="submit" [disabled]="orderForm.invalid">
+      ✅ Check Out
+    </button> -->
+      </form>
     </div>
     <button class="register-btn" (click)="checkout()">✅Check Out</button>
   </div>
