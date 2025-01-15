@@ -1,18 +1,17 @@
 import {
   Component,
-  ElementRef,
   OnInit,
   ViewChild,
+  ElementRef,
   AfterViewInit,
   OnDestroy,
-  HostListener,
 } from '@angular/core';
 import { ProductService } from '../services/product.service';
-import { CartService } from '../services/cart.service'; // Import CartService
+import { CartService } from '../services/cart.service';
 import Swal from 'sweetalert2';
 import { AuthServiceService } from '../services/auth.service.service';
-import { Product } from '../interfaces/productInterface';
 import { WishlistService } from '../services/wishlist.service';
+import { Product } from '../interfaces/productInterface';
 
 @Component({
   selector: 'app-shop',
@@ -22,15 +21,13 @@ import { WishlistService } from '../services/wishlist.service';
 })
 export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'Shop Now!';
-  timer: any;
   categories: any[] = [];
-  products: any[] = [];
+  products: Product[] = [];
   filteredProducts: any[] = [];
   carouselProducts: any[] = [];
   currentIndex = 0;
   selectedSubCategory: string | null = null;
   isAdmin: boolean = false;
-  cartItems: any[] = []; // Track cart items
   userId: string = '';
 
   @ViewChild('carouselTrack', { static: false })
@@ -38,9 +35,9 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private _productS: ProductService,
-    private _wishlistS: WishlistService, // Inject WishlistService
-    private _cartS: CartService, // Inject CartService
-    private _authS: AuthServiceService // Inject AuthService,
+    private _wishlistS: WishlistService,
+    private _cartS: CartService,
+    private _authS: AuthServiceService
   ) {}
 
   imageURL = '';
@@ -48,41 +45,35 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.imageURL = this._productS.uploadURL;
     this.userId = this._authS.getUserId();
+
     this._productS.getCategories().subscribe((response: any) => {
-      this.categories = Array.isArray(response) ? response.filter((category: any) => category.show === true) : [];
+      this.categories = Array.isArray(response)
+        ? response.filter((category: any) => category.show === true)
+        : [];
     });
+
     this._productS.getProducts().subscribe((response: any) => {
       this.products = response;
       this.filteredProducts = this.products;
-
-      // Filter products for the carousel
       this.carouselProducts = this.products
-        .filter((product: Product) => product.carousel) // Include only products with carousel: true
+        .filter((product) => product.carousel)
         .sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
+    });
 
-      // Also subscribe to isAdmin for admin-specific logic
-      this._authS.isAdmin().subscribe({
-        next: (isAdmin) => {
-          this.isAdmin = isAdmin;
-        },
-        error: (err) => {
-          console.error('Error checking admin status:', err);
-        },
-      });
+    this._authS.isAdmin().subscribe((isAdmin) => {
+      this.isAdmin = isAdmin;
     });
   }
 
   ngAfterViewInit(): void {
     this.updateCarousel();
-    this.startTimer();
     window.addEventListener('resize', this.updateCarousel.bind(this));
   }
 
   ngOnDestroy(): void {
-    this.stopTimer();
     window.removeEventListener('resize', this.updateCarousel.bind(this));
   }
 
@@ -107,99 +98,55 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     this.updateCarousel();
   }
 
-  startTimer(): void {
-    this.timer = setInterval(() => {
-      this.next();
-    }, 3000);
+  onApplyFilter(filters: any): void {
+    const [minPrice, maxPrice] = filters.priceRange
+      ? filters.priceRange.split('-').map(Number)
+      : [null, null];
+
+    this.filteredProducts = this.products.filter((product: Product) => {
+      const matchesName = filters.name
+        ? product.name.toLowerCase().includes(filters.name.toLowerCase())
+        : true;
+      const matchesCategory = filters.category
+        ? product.category === filters.category
+        : true;
+      const matchesPrice =
+        minPrice !== null && maxPrice !== null
+          ? product.price >= minPrice && product.price <= maxPrice
+          : true;
+      const matchesAvailability = filters.availability
+        ? product.status?.availability === filters.availability
+        : true;
+      const matchesStockStatus = filters.stockStatus
+        ? product.status?.stockStatus === filters.stockStatus
+        : true;
+
+      return (
+        matchesName &&
+        matchesCategory &&
+        matchesPrice &&
+        matchesAvailability &&
+        matchesStockStatus
+      );
+    });
   }
 
-  stopTimer(): void {
-    if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = null;
-    }
+  onResetFilter(): void {
+    this.filteredProducts = [...this.products];
   }
 
-  filterByCategory(categoryName: string, subCategory: string): void {
-    this.selectedSubCategory = subCategory;
-    this.filteredProducts = this.products.filter(
-      (product) =>
-        product.category === categoryName && product.subCategory === subCategory
-    );
-  }
-
-  showDropdown(categoryName: string): void {
-    this.categories.forEach((category) => (category.show = false));
-    const selectedCategory = this.categories.find(
-      (category) => category.name === categoryName
-    );
-    if (selectedCategory) {
-      selectedCategory.show = true;
-    }
-  }
-
-  hideDropdown(categoryName: string): void {
-    const category = this.categories.find((c) => c.name === categoryName);
-    if (category) {
-      category.show = false;
-    }
-  }
-
-  @HostListener('document:click', ['$event'])
-  @HostListener('document:mousemove', ['$event'])
-  closeAllDropdowns(event: Event): void {
-    if (!(event.target as HTMLElement).closest('.category-navbar')) {
-      this.categories.forEach((category) => (category.show = false));
-    }
-  }
-
-  // Add an item to the cart
-  addToCart(product: Product): void {
-
-    // Check if the product is already in the cart
-    const existingProduct = this.cartItems.find(
-      (item) => item.product === product._id
-    );
-
-    if (existingProduct) {
-      // If the product exists, increase the quantity
-      existingProduct.quantity += 1;
-    } else {
-      // Otherwise, add a new product to the cart
-      this.cartItems.push({
-        userId: this.userId,
-        product: product._id,
-        quantity: 1,
-      });
-    }
-
-    // Send updated cart to backend
+  addToCart(product: any): void {
     this._cartS.addToCart(this.userId, product._id).subscribe(() => {
+      Swal.fire({
+        title: 'Success!',
+        text: 'Product added to cart!',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
     });
-    Swal.fire({
-      title: 'Success!',
-      text: 'Product added to cart!',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    });
   }
 
-  fetchToken(): void {
-    const token = this._cartS.fetchTokenFromLocalStorage();
-    // Token fetching logic
-  }
-
-  decodeToken(token: string): any {
-    return JSON.parse(atob(token.split('.')[1]));
-  }
-
-  // Show only the categories that have show = true in their attributes
-  get visibleCategories(): any[] {
-    return this.categories.filter((category) => category.show);
-  }
-
-  addToWishlist(product: Product): void {
-    console.log('Adding to wishlist:', product,this.userId);
+  addToWishlist(product: any): void {
     this._wishlistS.addItemToWishlist(this.userId, product).subscribe({
       next: () => {
         Swal.fire({
@@ -210,40 +157,18 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       },
       error: (error) => {
+        let errorMsg = 'Failed to add product to wishlist.';
         if (error.status === 401) {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Please log in to add to wishlist.',
-            icon: 'error',
-            confirmButtonText: 'OK',
-          });
-          return;
+          errorMsg = 'Please log in to add to wishlist.';
         } else if (error.status === 409) {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Product already in wishlist.',
-            icon: 'error',
-            confirmButtonText: 'OK',
-          });
-          return;
+          errorMsg = 'Product already in wishlist.';
         }
-        else if (error.status === 500) {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Failed to add product to wishlist.',
-            icon: 'error',
-            confirmButtonText: 'OK',
-          });
-          return;
-        }else {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Failed to add product to wishlist.',
-            icon: 'error',
-            confirmButtonText: 'OK',
-          });
-          return;
-        }
+        Swal.fire({
+          title: 'Error!',
+          text: errorMsg,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       },
     });
   }
