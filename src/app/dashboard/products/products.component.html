@@ -491,7 +491,7 @@
   <tbody>
     <tr *ngFor="let product of products">
       <td>
-        <img [src]="imageURL + product.productImage" alt="Product Image" />
+        <img [src]="imageURL + product.productImage" alt="{{product.name}}" />
       </td>
       <td>{{ product.name }}</td>
       <td>{{ product.description }}</td>
