@@ -1,59 +1,114 @@
-# CasualBazaarNti
+ScreanShots of the website
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+# Home Page
+![homePage](./screenshots/image.png)
+![alt text](./screenshots/image-1.png)
+![alt text](./screenshots/image-2.png)
+![alt text](./screenshots/image-3.png)
 
-## Development server
+# Login & SignUp Page 
+![login](./screenshots/image-4.png)
+![SignUp](./screenshots/image-5.png)
 
-To start a local development server, run:
+# Products (🛍️Shop Now) Page
+![banner](./screenshots/image-6.png)
+![filter](./screenshots/image-7.png)
+![main content](./screenshots/image-8.png)
 
-```bash
-ng serve
-```
+# 🏅Best Sellers Page
+![women](./screenshots/image-9.png)
+![men](./screenshots/image-10.png)
+![kids](./screenshots/image-11.png)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+# 🔥New Arrivals🔥 Page
+![alt text](./screenshots/image-12.png)
 
-## Code scaffolding
+# Wishlist Page
+![alt text](./screenshots/image-13.png)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+# Cart Page
+![alt text](./screenshots/image-14.png)
 
-```bash
-ng generate component component-name
-```
+# Orders Page
+![alt text](./screenshots/image-15.png)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+# Product Details Page
+![alt text](./screenshots/image-16.png)
 
-```bash
-ng generate --help
-```
+# Admin Dashboard
+![Products](./screenshots/image-17.png)
+![Users](./screenshots/image-18.png)
+![categories](./screenshots/image-19.png)
+![orders](./screenshots/image-20.png)
 
-## Building
+# Casual Bazaar NTI
 
-To build the project run:
+This is a website project for the NTI program. It is a simple e-commerce website that allows users to browse products, add them to their cart, and place orders.
 
-```bash
-ng build
-```
+## Features
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- **Home Page**: Displays featured products and categories.
+- **Products Page**: Displays all products or products of a specific category.
+- **Product Details Page**: Displays detailed information about a product.
+- **Cart Page**: Displays the products in the user's cart.
+- **Checkout Page**: Allows the user to place an order.
+- **Order Confirmation Page**: Displays the order details after placing an order.
+- **Admin Dashboard**: Allows the admin to manage products, categories, and orders.
 
-## Running unit tests
+## Technologies
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- **Frontend**: Angular, Bootstrap.
+- **Backend**: Node.js, Express, MongoDB.
+- **Authentication**: JWT.
 
-```bash
-ng test
-```
+## Installation
 
-## Running end-to-end tests
+To run the website, you need to set up the frontend and backend.
 
-For end-to-end (e2e) testing, run:
+### Frontend
 
-```bash
-ng e2e
-```
+Here you can find my frontend project located at `casual-bazaar-nti\`.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+To get started, follow these steps:
 
-## Additional Resources
+1. Run the frontend:
+    - Open Command Prompt.
+    - Type `npm i` to install dependencies.
+    - Type `ng serve` to start the frontend.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+2. Open your browser and navigate to `http://localhost:4200/`. 
+
+3. You can now browse the website and test its features.
+
+### Backend
+
+Here you can find my database collections located at `casual-bazaar-nti\backend\database`.
+
+To get started, follow these steps:
+
+1. Run the backend:
+    - Open Command Prompt.
+    - Type `npm i` to install dependencies.
+    - Type `npm start` to start the backend.
+
+2. Open MongoDB Compass and navigate to the database.
+
+3. For each collection:
+    - Click "ADD DATA".
+    - Choose "Import JSON or CSV file".
+    - Select the corresponding collection file.
+
+4. After importing all the collection data, you can test the website.
+
+NOTE: The admin credentials are as follows:
+- Email: admin@gmail.com
+- Password: 25518385M.r
+
+<span style="color:red">NOTE: Some features are exclusive to authenticated users. To test these features, you need to create an account and log in.</span>
+
+If you encounter any errors or issues, please contact me:
+
+- Phone: 01155921429
+- Email: mohamedreda.dev@gmail.com
+
+Thanks a lot!
