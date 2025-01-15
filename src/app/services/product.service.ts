@@ -10,8 +10,8 @@ import { Wishlist } from '../interfaces/wishlistInterface';
 export class ProductService {
   constructor(private _http: HttpClient) {}
   uploadURL = 'http://localhost:3000/images/';
-  getProducts(): Observable<Product> {
-    return this._http.get<Product>('http://localhost:3000/products');
+  getProducts(): Observable<Product[]> {
+    return this._http.get<Product[]>('http://localhost:3000/products');
   }
   getCategories(): Observable<Product> {
     return this._http.get<Product>('http://localhost:3000/categories');

@@ -16,7 +16,9 @@
           <p class="card-text">{{ product.description }}</p>
           </a>
           <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>&nbsp;
+                    <div *ngIf="!isAdmin">
           <button (click)="addToCart(product)" class="btn btn-primary">Add to Cart</button>
+          </div>
         </div>
       </div>
     </div>
