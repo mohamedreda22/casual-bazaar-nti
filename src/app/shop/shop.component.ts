@@ -12,6 +12,7 @@ import { CartService } from '../services/cart.service'; // Import CartService
 import Swal from 'sweetalert2';
 import { AuthServiceService } from '../services/auth.service.service';
 import { Product } from '../interfaces/productInterface';
+import { WishlistService } from '../services/wishlist.service';
 
 @Component({
   selector: 'app-shop',
@@ -36,14 +37,17 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private _productS: ProductService,
+    private _wishlistS: WishlistService, // Inject WishlistService
     private _cartS: CartService, // Inject CartService
-    private _authS: AuthServiceService // Inject AuthService
+    private _authS: AuthServiceService // Inject AuthService,
   ) {}
 
   imageURL = '';
+  userId: string = '';
 
   ngOnInit(): void {
     this.imageURL = this._productS.uploadURL;
+    this.userId = this._cartS.getUserId();
     this._productS.getCategories().subscribe((response: any) => {
       this.categories = Array.isArray(response) ? response : [];
     });
@@ -205,12 +209,10 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.categories.filter((category) => category.show);
   }
 
-  addToWishlist(productId: any): void {
-    const userId = this.getUserId(); // Use the getUserId method here to fetch userId dynamically
-    console.log('Adding to wishlist:', productId);
-    this._productS.addToWishlist(productId, userId).subscribe({
+  addToWishlist(product: Product): void {
+    console.log('Adding to wishlist:', product,this.userId);
+    this._wishlistS.addItemToWishlist(this.userId, product).subscribe({
       next: () => {
-        
         Swal.fire({
           title: 'Success!',
           text: 'Product added to wishlist!',
@@ -219,19 +221,41 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       },
       error: (error) => {
-        console.log('Error posting to wishlist', productId);
-        console.error('Error adding to wishlist', error);
-        Swal.fire({
-          title: 'Error!',
-          text: 'Failed to add product to wishlist.',
-          icon: 'error',
-          confirmButtonText: 'OK',
-        });
+        if (error.status === 401) {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Please log in to add to wishlist.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+          return;
+        } else if (error.status === 409) {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Product already in wishlist.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+          return;
+        }
+        else if (error.status === 500) {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Failed to add product to wishlist.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+          return;
+        }else {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Failed to add product to wishlist.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+          return;
+        }
       },
     });
-  }
-
-  getUserId(): string {
-    return this._cartS.getUserId();
   }
 }

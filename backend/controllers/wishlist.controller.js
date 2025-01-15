@@ -1,18 +1,43 @@
 const Wishlist = require('../models/wishlist.model');
 
 exports.createWishlist = async (req, res) => {
-    try {
-        const wishlist = new Wishlist({
-          userId: req.body.userId,
-          items: req.body.productId ? [{ productId: req.body.productId }] : []
-        });
-        const newWishlist = await wishlist.save();
-        res.status(201).json(newWishlist);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+  try {
+    let wishlist = await Wishlist.findOne({ userId: req.body.userId });
+    if (!wishlist) {
+      wishlist = new Wishlist({
+        userId: req.body.userId,
+        items: req.body.productId ? [{ productId: req.body.productId }] : [],
+      });
+      await wishlist.save();
     }
-
+    res.status(201).json(wishlist);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
+
+exports.addItemToWishlist = async (req, res) => {
+  console.log(req.body);
+  try {
+    const wishlist = await Wishlist.findOne({ userId: req.params.userId });
+    if (!wishlist) {
+      return res.status(404).json({ message: "Wishlist not found" });
+    }
+    const productExists = wishlist.items.some(
+      (item) => item.productId.toString() === req.body._id
+    );
+    if (productExists) {
+      return res.status(409).json({ message: "Product already in wishlist" });
+    }
+    wishlist.items.push({ productId: req.body._id });
+    const updatedWishlist = await wishlist.save();
+    res.status(200).json(updatedWishlist);
+    console.log("updatedWishlist", updatedWishlist);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
 exports.getWishlist = async (req, res) => {
     try {
@@ -21,20 +46,6 @@ exports.getWishlist = async (req, res) => {
             return res.status(404).json({ message: 'Wishlist not found' });
         }
         res.status(200).json(wishlist);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-exports.addItemToWishlist = async (req, res) => {
-    try {
-        const wishlist = await Wishlist.findOne({ userId: req.params.userId });
-        if (!wishlist) {
-            return res.status(404).json({ message: 'Wishlist not found' });
-        }
-        wishlist.items.push({ productId: req.body.productId });
-        const updatedWishlist = await wishlist.save();
-        res.status(200).json(updatedWishlist);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
