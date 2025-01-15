@@ -130,28 +130,28 @@
 
     <div class="form-group">
       <label for="editCity">City:</label>
-      <select
+      <input
+      type="text"
       id="editCity"
       class="form-control"
       formControlName="city"
       required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="editGovernment">Government:</label>
+      <select
+        id="editGovernment"
+        class="form-control"
+        formControlName="government"
+        required
       >
         <option value="" disabled selected>Select Governorate</option>
         <option value="cairo">Cairo</option>
         <option value="giza">Giza</option>
         <option value="alexandria">Alexandria</option>
       </select>
-    </div>
-
-    <div class="form-group">
-      <label for="editGovernment">Government:</label>
-      <input
-        type="text"
-        id="editGovernment"
-        class="form-control"
-        formControlName="government"
-        required
-      />
     </div>
 
     <div class="form-group">

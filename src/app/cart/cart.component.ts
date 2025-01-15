@@ -114,7 +114,7 @@ export class CartComponent implements OnInit {
       return;
     }
 
-/*     if (!this.isOrderDetailsValid()) {
+    /*     if (!this.isOrderDetailsValid()) {
       Swal.fire('Please fill in all required fields.', '', 'warning');
       return;
     } */
@@ -140,7 +140,7 @@ export class CartComponent implements OnInit {
     });
   }
 
-/*   private isOrderDetailsValid(): boolean {
+  /*   private isOrderDetailsValid(): boolean {
     return ['fullName', 'address', 'payment'].every(
       (field) => this.orderDetails[field]
     );
@@ -148,5 +148,9 @@ export class CartComponent implements OnInit {
  */
   sumTotal(): number {
     return this.totalPrice + this.shippingCost;
+  }
+
+  validatePhoneNumber(phone: string): boolean {
+    return /^[0-9]{11}$/.test(phone);
   }
 }

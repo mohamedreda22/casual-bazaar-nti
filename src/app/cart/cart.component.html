@@ -55,7 +55,7 @@
         <option value="giza">Giza</option>
         <option value="alexandria">Alexandria</option>
       </select>
-      <input type="text" placeholder="Extra Phone" [(ngModel)]="orderDetails.extraPhone" />    
+      <input type="text" placeholder="Extra Phone" [(ngModel)]="orderDetails.extraPhone" (ngModelChange)="validatePhoneNumber(orderDetails.extraPhone)" />
       <select [(ngModel)]="orderDetails.payment">
         <option value="" disabled selected>Select Payment Method</option>
         <option value="creditCard">Credit Card</option>
