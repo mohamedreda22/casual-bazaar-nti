@@ -7,7 +7,8 @@
         <div *ngFor="let chunk of category.chunks" class="carousel-item">
           <div class="row">
             <div class="col-lg-3" *ngFor="let product of chunk">
-              <div class="card">
+              <div class="card">                    
+                <a routerLink="/product/{{ product._id }}" class="card-title">
                 <div class="card-body">
                   <img
                     class="card-img-top"
@@ -21,10 +22,10 @@
                   <p class="card-text">
                     <strong>Price:</strong> ${{ product.price }}
                   </p>&nbsp;
-                  <a href="#" class="btn btn-primary">
+<!--                   <a href="#" class="btn btn-primary">
                     Add to Cart <i class="fas fa-shopping-cart"></i>
-                  </a>
-                </div>
+                  </a> -->
+                </div></a>
               </div>
             </div>
           </div>
