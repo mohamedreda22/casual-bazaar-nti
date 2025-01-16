@@ -12,9 +12,7 @@ export class CartService {
   private productUrl = 'http://localhost:3000/products';
   private orderUrl = 'http://localhost:3000/orders';
 
-  constructor(
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   // Fetch cart items
   getCartItems(userId: string): Observable<any> {
@@ -69,7 +67,7 @@ export class CartService {
   // Clear cart
   clearCart(userId: string): Observable<any> {
     return this.http
-      .delete(`${this.apiUrl}/user/${userId}/clear`)
+      .delete(`${this.apiUrl}/user/${userId}`)
       .pipe(catchError((err) => this.handleError(err, 'Failed to clear cart')));
   }
 

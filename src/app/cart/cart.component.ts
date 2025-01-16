@@ -22,7 +22,11 @@ export class CartComponent implements OnInit {
 
   readonly imageURL = 'http://localhost:3000/images/';
 
-  constructor(private cartService: CartService, private fb: FormBuilder,private _authS:AuthServiceService) {
+  constructor(
+    private cartService: CartService,
+    private fb: FormBuilder,
+    private _authS: AuthServiceService
+  ) {
     // Initialize the reactive form
     this.orderForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
@@ -98,7 +102,10 @@ export class CartComponent implements OnInit {
         this.totalPrice = 0;
         Swal.fire('Cart cleared successfully.', '', 'success');
       },
-      error: () => Swal.fire('Failed to clear cart.', '', 'error'),
+      error: (err) => {
+        console.error('Error clearing cart:', err);
+        Swal.fire('Failed to clear cart.', '', 'error');
+      },
     });
   }
 
@@ -137,10 +144,9 @@ export class CartComponent implements OnInit {
       next: () => {
         Swal.fire('Order placed successfully.', '', 'success');
         this.cartItems = [];
-
       },
       error: () => Swal.fire('Failed to place order.', '', 'error'),
-      complete: () => this.isLoading = false,
+      complete: () => (this.isLoading = false),
     });
   }
 

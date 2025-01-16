@@ -10,6 +10,6 @@ router.get("/user/:userId", cartController.getCartByUser); // Get cart by user I
 router.post("/user/:userId", /* findCart, */ cartController.createOrAddToCart); // Add product to cart
 router.put("/user/:userId", /* findCart,  */cartController.updateCart); // Add product to cart
 router.delete("/user/:userId/:productId", cartController.removeItem); // Delete a product from cart
-router.delete("/user/:userId/clear", cartController.clearCart); // Delete a cart by ID
+router.delete("/user/:userId", cartController.clearCart); // Delete a cart by ID
 
 module.exports = router;
