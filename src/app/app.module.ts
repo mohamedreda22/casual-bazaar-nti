@@ -29,6 +29,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { Order1Component } from './dashboard/orders/orders.component';
 import { SinglepageComponent } from './singlepage/singlepage.component';
 import { FilterComponent } from './filter/filter.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { FilterComponent } from './filter/filter.component';
     Order1Component,
     SinglepageComponent,
     FilterComponent,
+    PaginationComponent
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

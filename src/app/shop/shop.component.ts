@@ -30,6 +30,8 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   isAdmin: boolean = false;
   userId: string = '';
   timer: any; // Timer property to store the interval ID
+  productsPerPage: number = 16;
+  currentPage: number = 1;
 
   @ViewChild('carouselTrack', { static: false })
   carouselTrack!: ElementRef<HTMLDivElement>;
@@ -55,6 +57,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this._productS.getProducts().subscribe((response: any) => {
       this.products = response;
+      this.updateFilteredProducts();
       this.filteredProducts = this.products;
       this.carouselProducts = this.products
         .filter((product) => product.carousel)
@@ -67,6 +70,17 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     this._authS.isAdmin().subscribe((isAdmin) => {
       this.isAdmin = isAdmin;
     });
+  }
+
+  updateFilteredProducts(): void {
+    const startIndex = (this.currentPage - 1) * this.productsPerPage;
+    const endIndex = startIndex + this.productsPerPage;
+    this.filteredProducts = this.products.slice(startIndex, endIndex);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.updateFilteredProducts();
   }
 
   ngAfterViewInit(): void {

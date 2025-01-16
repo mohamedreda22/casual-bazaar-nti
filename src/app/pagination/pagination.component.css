@@ -1,0 +1,32 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.pagination-btn:hover {
+  background-color: #0056b3;
+}
+
+.page-number {
+  margin: 0 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.page-number.active {
+  background-color: #007bff;
+  color: white;
+}

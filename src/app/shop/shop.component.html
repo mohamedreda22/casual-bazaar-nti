@@ -36,5 +36,12 @@
         </div>
       </div>
     </div>
+    <!-- Pagination Component -->
+<app-pagination
+  [totalItems]="products.length"
+  [itemsPerPage]="productsPerPage"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)"
+></app-pagination>
   </div>
 </body>

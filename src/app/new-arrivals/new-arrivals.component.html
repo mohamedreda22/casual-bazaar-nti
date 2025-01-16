@@ -5,22 +5,34 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4" *ngFor="let product of filterProducts(products)">
-      <div class="card">        
+    <div class="col-md-4" *ngFor="let product of filteredProducts">
+      <div class="card">
         <div class="card-body">
           <a [routerLink]="['/product', product._id]">
-          <img class="card-img-top"         
-          [src]="imageURL + product.productImage"
-          alt="{{ product.name }}">
-          <h5 class="card-title">{{ product.name }}</h5>
-          <p class="card-text">{{ product.description }}</p>
+            <img
+              class="card-img-top"
+              [src]="imageURL + product.productImage"
+              alt="{{ product.name }}"
+            />
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description }}</p>
           </a>
-          <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>&nbsp;
-                    <div *ngIf="!isAdmin">
-          <button (click)="addToCart(product)" class="btn btn-primary">Add to Cart</button>
+          <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+          <div *ngIf="!isAdmin">
+            <button (click)="addToCart(product)" class="btn btn-primary">
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Pagination Component -->
+  <app-pagination
+    [totalItems]="products.length"
+    [itemsPerPage]="productsPerPage"
+    [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
 </div>
