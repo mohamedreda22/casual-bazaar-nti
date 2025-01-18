@@ -6,10 +6,7 @@ exports.createProduct = async (req, res) => {
     const productData = {
       ...req.body,
       productImage: req.file?.filename || "", // Add file name to imgURL if the file exists
-/*       category: {
-        main: req.body.category?.main || "",
-        subCategory: req.body.category?.subCategory || "",
-      }, */
+
       category: req.body.category || "",
       subCategory: req.body.subCategory || "",
       status: {
@@ -18,14 +15,6 @@ exports.createProduct = async (req, res) => {
       },
     };
 
-    // Validate imgURL and required nested fields
-/*     if (!productData.imgURL) {
-      return res.status(400).json({ message: "Image file is required." });
-    } */
-  /*   if (!productData.category.main || !productData.category.subCategory) {
-      console.log(productData);
-      return res.status(400).json({ message: "Category fields are required." });
-    } */
 
     const product = await productModel.create(productData);
     res.status(201).send(product);
@@ -76,22 +65,11 @@ exports.updateProduct = async (req, res) => {
     }
 
     res.status(200).json({ message: "Product updated successfully", product: updatedProduct });
-    // console.log("updateData", updateData);
-    // console.log("updatedProduct" ,updatedProduct);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// don't delete the product but archive it instead by setting the status to "inactive"
-/* exports.deleteProduct = async (req, res) => {
-  try {
-    const product = await productModel.findByIdAndUpdate(req.params.id, { userStatus: "inactive" }, { new: true });
-    res.status(200).json(product);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}; */
 
 
 exports.getProductDetails = async (productId) => {

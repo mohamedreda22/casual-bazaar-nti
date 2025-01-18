@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const cartController = require("../controllers/cart.controller");
-const auth = require("../utilis/auth");
 
 // Routes for Cart operations
-router.get("/:id", auth.authMW("User"), cartController.getCart); // Get a cart by ID
+router.get("/:id", cartController.getCart); // Get a cart by ID
 router.get("/user/:userId", cartController.getCartByUser); // Get cart by user ID
 router.post("/user/:userId", cartController.createOrAddToCart); // Add product to cart
 router.put("/user/:userId", cartController.updateCart); // update product from the cart

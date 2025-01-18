@@ -1,16 +1,6 @@
 const userTypeModel = require("../models/userType.model");
 const auth = require("../utilis/auth");
 
-/* exports.createUserType = async (req, res) => {
-    try {
-        const userType = await userTypeModel.create(req.body);
-        const token = auth.generateToken(userType.toObject());
-        res.status(201).json({ userType, token });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}; */
-
 exports.getUserType = async (req, res) => {
   try {
     const userType = await userTypeModel.findById(req.params.id);

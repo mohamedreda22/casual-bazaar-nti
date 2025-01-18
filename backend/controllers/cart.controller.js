@@ -111,9 +111,6 @@ exports.createOrAddToCart = async (req, res) => {
 exports.updateCart = async (req, res) => {
   const { userId } = req.params;
   const { productId, quantity } = req.body; // Fix destructuring issue
-  // console.log("userId:", userId, "productId:", productId, "quantity", quantity); // Debug userId, productId, quantity
-  // console.log("Request received: params", req.params);
-  // console.log("Request received:: body", req.body);
   try {
     if (!productId) {
       return res.status(400).json({ message: "Product ID is required" });
