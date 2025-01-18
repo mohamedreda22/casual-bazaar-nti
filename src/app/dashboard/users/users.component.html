@@ -25,7 +25,7 @@
               'btn-success': user.userStatus === 'active',
               'btn-danger': user.userStatus !== 'active'
             }"
-            (click)="toggleUserStatus(user)"
+            (click)="deleteUser(user._id)"
             >
             {{ user.userStatus === 'active' ? 'Active' : 'Inactive' }}
             </button>

@@ -71,17 +71,6 @@ export class UserComponent implements OnInit {
     );
   }
 
-  /*   loadUsers(): void {
-    this.adminDashboardService.getAllUsers().subscribe(
-      (users) => {
-        this.users = users;
-      },
-      (error) => {
-        console.error('Error loading users:', error);
-      }
-    );
-  } */
-
   startEditUser(user: User): void {
     this.isEditingUser = true;
     this.currentUser = user;
@@ -103,13 +92,12 @@ export class UserComponent implements OnInit {
         userType: this.editUserForm.value.userType, // Pass the ObjectId of userType
         ...this.editUserForm.value, // Spread the remaining form data
       };
-      // console.log('updatedUser:', updatedUser);
-      // console.log('editUserForm:', this.editUserForm.value);
-      this.adminDashboardService.updateUser(updatedUser).subscribe(
-        (updatedUser) => {
-          // console.log('User updated:', updatedUser);
+      this.adminDashboardService.updateUser(this.currentUser._id,updatedUser).subscribe(
+        () => {
           this.loadUsers();
           Swal.fire('Success', 'User updated successfully', 'success');
+          // console.log('User updated:', updatedUser);
+          this.cancelEditUser();
         },
         (error) => {
           console.error('Error updating user:', error);
@@ -127,16 +115,33 @@ export class UserComponent implements OnInit {
     this.editUserForm.reset();
   }
 
-  deleteUser(id: string): void {
-    this.adminDashboardService.deleteUser(id).subscribe(
+  toggleUserStatus(user: User): void {
+    const updatedStatus = user.userStatus === 'active' ? 'inactive' : 'active';
+    const updatedUser = { ...user, userStatus: updatedStatus };
+    // console.log('Updated status:', updatedStatus);
+    console.log('Updated user:', updatedUser);
+
+    this.adminDashboardService.updateUser(user._id, updatedUser).subscribe(
       () => {
-        // console.log('User deleted');
         this.loadUsers();
-        Swal.fire('Success', 'User deleted successfully', 'success');
+        Swal.fire('Success', `User ${updatedStatus} successfully`, 'success');
+      },
+      (error) => {
+        console.error('Error updating user status:', error);
+        Swal.fire('Error', `Failed to update user status`, 'error');
+      }
+    );
+  }
+
+  deleteUser(userId: string): void {
+    this.adminDashboardService.deleteUser(userId).subscribe(
+      () => {
+        this.loadUsers();
+        Swal.fire('Success', 'User Archived successfully', 'success');
       },
       (error) => {
         console.error('Error deleting user:', error);
-        Swal.fire('Error', 'Failed to delete user', 'error');
+        Swal.fire('Error', 'Failed to Archived user', 'error');
       }
     );
   }

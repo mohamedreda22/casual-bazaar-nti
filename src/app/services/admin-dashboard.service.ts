@@ -146,4 +146,10 @@ export class AdminDashboardService {
       headers: this.getHeaders(),
     });
   }
+
+  deleteUser(userId: string): Observable<void> {
+    return this._http.delete<void>(`${this.apiUrl}/users/${userId}`, {
+      headers: this.getHeaders(),
+    });
+  }
 }
