@@ -48,14 +48,15 @@ exports.updateUser = async (req, res) => {
 
 };
 
+// don't delete the user but archive it instead by setting the status to "inactive"
 exports.deleteUser = async (req, res) => {
   try {
-    await userModel.findByIdAndDelete(req.params.id, { new: true });
-    res.status(200).json({ message: "User deleted successfully" });
+    const user = await userModel.findByIdAndUpdate(req.params.id, { userStatus: "inactive" }, { new: true });
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+}
 
 exports.deleteAllUsers = async (req, res) => {
   try {

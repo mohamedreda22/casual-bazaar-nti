@@ -10,10 +10,6 @@ export class WishlistService {
 
   constructor(private http: HttpClient) { }
 
-  createWishlist(wishlist: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/`, wishlist);
-  }
-
   getWishlist(userId: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/${userId}`);
   }

@@ -490,8 +490,9 @@
       <th>Best Seller</th>
       <th>Rank</th>
       <th>Carousel</th>
+      <th>Active</th>
       <th>Edit</th>
-      <th>Delete</th>
+      <!-- <th>Delete</th> -->
     </tr>
   </thead>
   <tbody>
@@ -512,14 +513,22 @@
       <td>{{ product.rank }}</td>
       <td>{{ product.carousel }}</td>
       <td>
+        <button
+          class="btn"
+          [ngClass]="{
+            'btn-success': product.productStatus === 'active',
+            'btn-danger': product.productStatus !== 'active'
+          }"
+          (click)="toggleProductStatus(product)"
+        >
+            {{ product.productStatus === 'active' ? 'Active' : 'Inactive' }}
+        </button>
+      <td>
         <button class="btn btn-warning" (click)="startEditProduct(product)">
           Edit
         </button>
       </td>
       <td>
-        <button class="btn btn-danger" (click)="deleteProduct(product._id)">
-          Delete
-        </button>
       </td>
     </tr>
   </tbody>

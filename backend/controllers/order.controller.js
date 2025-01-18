@@ -113,7 +113,7 @@ exports.updateOrder = async (req, res) => {
 };
 
 // Delete an order
-exports.deleteOrder = async (req, res) => {
+/* exports.deleteOrder = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -133,5 +133,23 @@ exports.deleteOrder = async (req, res) => {
       .status(500)
       .json({ message: "Error deleting order.", error: error.message });
   }
-};
+}; */
 
+// don't delete the order but archive it instead by setting the status to "inactive"
+exports.deleteOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedOrder = await Order.findByIdAndUpdate(id, { status: "inactive" }, { new: true });
+
+    if (!deletedOrder) {
+      return res.status(404).json({ message: "Order not found." });
+    }
+
+    res.status(200).json({ message: "Order archived successfully.", order: deletedOrder });
+  } catch (error) {
+    console.error("Error archiving order:", error);
+    res
+      .status(500)
+      .json({ message: "Error archiving order.", error: error.message });
+  }
+};

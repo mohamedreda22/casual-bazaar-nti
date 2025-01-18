@@ -14,17 +14,17 @@ exports.getCart = async (req, res) => {
 
 // Get Cart by User ID
 exports.getCartByUser = async (req, res) => {
-  // console.log("Request received:", req.params); // Log request details
+  if (!req.params.userId) {
+    return res.status(401).json({ message: "Unauthorized: User ID is required" });
+  }
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
       return res.status(400).json({ message: "Invalid User ID" });
     }
-    const msg = req.params.userId;
     const cart = await CartModel.findOne({ user: req.params.userId });
-    if (!cart)
-      return res
-        .status(404)
-        .json({ message: "Cart not found for the specified user.", msg });
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found for the specified user." });
+    }
     res.status(200).json(cart);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -35,9 +35,13 @@ exports.createOrAddToCart = async (req, res) => {
   const { userId } = req.params;
   const { productId, products } = req.body;
 
-  if (!userId || (!productId && !products)) {
+  if (!userId) {
+    return res.status(401).json({ message: "Unauthorized: User ID is required" });
+  }
+
+  if (!productId && !products) {
     return res.status(400).json({
-      message: "User ID and either Product ID or products are required",
+      message: "Either Product ID or products are required",
     });
   }
 

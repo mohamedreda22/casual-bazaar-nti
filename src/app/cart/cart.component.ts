@@ -49,7 +49,20 @@ export class CartComponent implements OnInit {
         this.cartItems = response?.products || [];
         this.cartItems.forEach((item) => this.loadProductDetails(item));
       },
-      error: () => Swal.fire('Failed to load cart items.', '', 'error'),
+      error: (error) => {
+        let errorMsg =
+          'Failed to load cart items. Please log in to view your cart.';
+        console.error("Error", error?.status);
+        if (error?.status === 401) {
+          errorMsg = 'Please log in to view your cart.';
+        }
+        Swal.fire({
+          title: 'Error!',
+          text: errorMsg,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      },
     });
   }
 

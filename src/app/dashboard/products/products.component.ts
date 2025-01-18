@@ -150,16 +150,19 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-  deleteProduct(id: string): void {
-    this.adminDashboardService.deleteProduct(id).subscribe(
+  toggleProductStatus(product: Product): void {
+    const updatedStatus =
+      product.productStatus === 'active' ? 'inactive' : 'active';
+    const updatedProduct = { ...product, productStatus: updatedStatus };
+
+    this.adminDashboardService.updateProduct(product._id, updatedProduct).subscribe(
       () => {
-        // console.log('Product deleted');
         this.loadProducts();
-        Swal.fire('Success', 'Product deleted successfully', 'success');
+        Swal.fire('Success', `Product ${updatedStatus} successfully`, 'success');
       },
       (error) => {
-        console.error('Error deleting product:', error);
-        Swal.fire('Error', 'Failed to delete product', 'error');
+        console.error('Error updating product status:', error);
+        Swal.fire('Error', `Failed to update product status`, 'error');
       }
     );
   }
@@ -200,6 +203,7 @@ export class ProductsComponent implements OnInit {
       carousel: false,
       rank: 0,
       status: { availability: 'available', stockStatus: 'inStock' },
+      productStatus: 'active',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

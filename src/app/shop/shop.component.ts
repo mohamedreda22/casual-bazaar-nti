@@ -159,13 +159,27 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addToCart(product: any): void {
-    this._cartS.addToCart(this.userId, product._id).subscribe(() => {
-      Swal.fire({
-        title: 'Success!',
-        text: 'Product added to cart!',
-        icon: 'success',
-        confirmButtonText: 'OK',
-      });
+    this._cartS.addToCart(this.userId, product._id).subscribe({
+      next: () => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Product added to cart!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+      },
+      error: (error) => {
+        let errorMsg = 'Failed to add product to cart. Please Log in.';
+        if (error.status === 401) {
+          errorMsg = 'Please log in to add to cart.';
+        }
+        Swal.fire({
+          title: 'Error!',
+          text: errorMsg,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      },
     });
   }
 
@@ -180,7 +194,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       },
       error: (error) => {
-        let errorMsg = 'Failed to add product to wishlist.';
+        let errorMsg = 'Failed to add product to wishlist. Please Log in.';
         if (error.status === 401) {
           errorMsg = 'Please log in to add to wishlist.';
         } else if (error.status === 409) {

@@ -19,7 +19,14 @@ export class CartService {
     return this.http
       .get(`${this.apiUrl}/user/${userId}`)
       .pipe(
-        catchError((err) => this.handleError(err, 'Failed to fetch cart items'))
+        catchError((err) => {
+          if (err.status === 401) {
+            // Handle unauthorized error
+            // console.error('Unauthorized access - possibly invalid token');
+            // Optionally, you can redirect to login or refresh token
+          }
+          return this.handleError(err, 'Failed to fetch cart items');
+        })
       );
   }
 
@@ -39,7 +46,14 @@ export class CartService {
     return this.http
       .post(`${this.apiUrl}/user/${userId}`, { productId })
       .pipe(
-        catchError((err) => this.handleError(err, 'Failed to add item to cart'))
+        catchError((err) => {
+          if (err.status === 401) {
+            // Handle unauthorized error
+            console.error('Unauthorized access - possibly invalid token');
+            // Optionally, you can redirect to login or refresh token
+          }
+          return this.handleError(err, 'Failed to add item to cart');
+        })
       );
   }
 
@@ -99,7 +113,7 @@ export class CartService {
 
   // Handle errors
   private handleError(error: any, message: string): Observable<never> {
-    console.error(message, error);
+    // console.error(message, error);
     return throwError(() => new Error(message));
   }
 

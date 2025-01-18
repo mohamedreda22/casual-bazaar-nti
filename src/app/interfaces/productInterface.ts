@@ -13,6 +13,8 @@ export interface Product {
     stockStatus: 'inStock' | 'outOfStock';
   };
   carousel: boolean;
+  // userStatus: 'active' | 'inactive';
+  productStatus: string;
   createdAt: string;
   updatedAt: string;
 }
