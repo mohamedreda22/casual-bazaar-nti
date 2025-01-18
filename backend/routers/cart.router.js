@@ -4,12 +4,12 @@ const cartController = require("../controllers/cart.controller");
 const auth = require("../utilis/auth");
 
 // Routes for Cart operations
-router.get("/:id", auth.authMW("User"), cartController.getCart); // Get a cart by ID
-router.get("/user/:userId", cartController.getCartByUser); // Get cart by user ID
+router.get("/:id", /* auth.authMW("User"), */ cartController.getCart); // Get a cart by ID
+router.get("/user/:userId",/*  auth.authMW(null),  */cartController.getCartByUser); // Get cart by user ID
 router.post(
   "/user/:userId",
-/*    auth.authMW("User"),
- */  cartController.createOrAddToCart
+   /* auth.authMW("User"), */
+  cartController.createOrAddToCart
 ); // Add product to cart
 router.put(
   "/user/:userId",
