@@ -20,6 +20,4 @@ router.put(
   auth.authMW("Admin"),
   productController.updateProduct
 );
-router.delete("/:id", auth.authMW("Admin"), productController.deleteProduct);
-
 module.exports = router;

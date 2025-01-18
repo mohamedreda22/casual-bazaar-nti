@@ -8,6 +8,6 @@ router.post("/", auth.authMW("Admin"), categoryController.createCategory);
 router.get('/', categoryController.getCategories);
 router.get('/:id', categoryController.getCategory);
 router.put("/:id", auth.authMW("Admin"), categoryController.updateCategory);
-router.delete("/:id", auth.authMW("Admin"), categoryController.archiveCategory);
+// router.delete("/:id", auth.authMW("Admin"), categoryController.archiveCategory);
 
 module.exports = router;

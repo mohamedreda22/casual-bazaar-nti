@@ -319,35 +319,6 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  handleDeleteProduct(productId: string): void {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'Do you want to delete this product?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.adminDashboardService.deleteProduct(productId).subscribe(
-          () => {
-            this.products = this.products.filter(
-              (product) => product._id !== productId
-            );
-            Swal.fire('Deleted!', 'Product has been deleted.', 'success');
-          },
-          (error) => {
-            console.error('Error deleting product:', error);
-            Swal.fire(
-              'Error',
-              'Failed to delete product. Please try again.',
-              'error'
-            );
-          }
-        );
-      }
-    });
-  }
-
   cancelAddProduct(): void {
     this.isAddingProduct = false;
     this.newProduct = this.initializeNewProduct();

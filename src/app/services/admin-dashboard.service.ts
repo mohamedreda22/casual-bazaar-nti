@@ -55,23 +55,9 @@ export class AdminDashboardService {
     );
   }
 
-  // Delete a product from the database
-  deleteProduct(id: string): Observable<void> {
-    return this._http.delete<void>(`${this.apiUrl}/products/${id}`, {
-      headers: this.getHeaders(),
-    });
-  }
-
   // Update a user in the database
-  updateUser(user: User): Observable<User> {
-    return this._http.put<User>(`${this.apiUrl}/users/${user._id}`, user, {
-      headers: this.getHeaders(),
-    });
-  }
-
-  // Delete a user from the database
-  deleteUser(id: string): Observable<void> {
-    return this._http.delete<void>(`${this.apiUrl}/users/${id}`, {
+  updateUser(userId:string,updatedUser: User): Observable<User> {
+    return this._http.put<User>(`${this.apiUrl}/users/${userId}`, updatedUser, {
       headers: this.getHeaders(),
     });
   }

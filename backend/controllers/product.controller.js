@@ -84,14 +84,14 @@ exports.updateProduct = async (req, res) => {
 };
 
 // don't delete the product but archive it instead by setting the status to "inactive"
-exports.deleteProduct = async (req, res) => {
+/* exports.deleteProduct = async (req, res) => {
   try {
     const product = await productModel.findByIdAndUpdate(req.params.id, { userStatus: "inactive" }, { new: true });
     res.status(200).json(product);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+}; */
 
 
 exports.getProductDetails = async (productId) => {

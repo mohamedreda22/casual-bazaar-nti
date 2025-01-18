@@ -19,9 +19,16 @@
           <button (click)="startEditUser(user)" class="btn btn-warning">
             Edit
           </button>
-          <button (click)="deleteUser(user._id)" class="btn btn-danger">
-            Delete
-          </button>
+            <button
+            class="btn"
+            [ngClass]="{
+              'btn-success': user.userStatus === 'active',
+              'btn-danger': user.userStatus !== 'active'
+            }"
+            (click)="toggleUserStatus(user)"
+            >
+            {{ user.userStatus === 'active' ? 'Active' : 'Inactive' }}
+            </button>
         </td>
       </tr>
     </tbody>
