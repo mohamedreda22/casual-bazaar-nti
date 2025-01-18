@@ -8,5 +8,6 @@ router.get("/user/:userId", cartController.getCartByUser); // Get cart by user I
 router.post("/user/:userId", cartController.createOrAddToCart); // Add product to cart
 router.put("/user/:userId", cartController.updateCart); // update product from the cart
 router.delete("/user/:userId/:productId", cartController.removeItem); // Delete a product from cart
+router.delete("/user/:userId", cartController.clearCart); // Clear cart
 
 module.exports = router;
