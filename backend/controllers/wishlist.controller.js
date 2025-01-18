@@ -1,9 +1,12 @@
 const Wishlist = require('../models/wishlist.model');
 
 exports.addItemToWishlist = async (req, res) => {
+  console.log('req.body', req.body);
+  console.log('req.params', req.params);
+  console.log("req.params.userId", req.params.userId);
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: 'Unauthorized' });
+    if (!req.params.userId) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
     let wishlist = await Wishlist.findOne({ userId: req.params.userId });
     if (!wishlist) {

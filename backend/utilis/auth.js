@@ -4,7 +4,7 @@ const secretKey =
 
 exports.generateToken = (user) => {
   console.log("Generating token for user:", user);
-  return jwt.sign(user, secretKey, { expiresIn: "1h" });
+  return jwt.sign(user, secretKey, { expiresIn: "2h" });
 };
 
 exports.authMW = (requiredRole) => {
@@ -26,7 +26,7 @@ exports.authMW = (requiredRole) => {
 
       const verified = jwt.verify(token, secretKey);
       req.userData = verified;
-      console.log("Token verified, user data:", req.userData);
+      // console.log("Token verified, user data:", req.userData);
 
       if (requiredRole && !requiredRole.includes(req.userData.userType)) {
         return res

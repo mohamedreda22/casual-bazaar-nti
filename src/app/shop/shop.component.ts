@@ -186,6 +186,18 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addToWishlist(product: any): void {
+    console.log("product: ",product)
+    console.log("User Id: ", this.userId)
+    if (!this.userId) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please log in to add to wishlist.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+      return;
+    }
+
     this._wishlistS.addItemToWishlist(this.userId, product).subscribe({
       next: () => {
         Swal.fire({
@@ -196,7 +208,7 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       },
       error: (error) => {
-        let errorMsg = 'Failed to add product to wishlist. Please Log in.';
+        let errorMsg = 'Failed to add product to wishlist.';
         if (error.status === 401) {
           errorMsg = 'Please log in to add to wishlist.';
         } else if (error.status === 409) {

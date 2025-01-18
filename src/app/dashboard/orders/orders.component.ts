@@ -134,7 +134,7 @@ export class Order1Component implements OnInit {
     this.adminDashboardService.deleteOrder(id).subscribe(
       () => {
         this.loadOrders();
-        Swal.fire('Success', 'Order deleted successfully', 'success');
+        Swal.fire('Success', 'Order Archived successfully', 'success');
       },
       (error) => {
         console.error('Error deleting order:', error);
