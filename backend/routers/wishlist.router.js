@@ -10,7 +10,7 @@ router.get("/:userId", auth.authMW("User"), wishlistController.getWishlist);
 // Add an item to a user's wishlist
 router.post(
   "/:userId/items",
-  auth.authMW("User"),
+  /* auth.authMW("User"), */
   wishlistController.addItemToWishlist
 );
 

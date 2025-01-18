@@ -5,7 +5,7 @@ const auth = require("../utilis/auth");
 
 // Define routes
 router.post("/", /* auth.authMW("User"), */ OrderController.createOrder); // Create an order
-router.get("/", /* auth.authMW("Admin"), */ OrderController.getAllOrders); // Get all orders
+router.get("/", auth.authMW("Admin"), OrderController.getAllOrders); // Get all orders
 router.get("/:id", OrderController.getOrderById); // Get an order by ID
 router.get(
   "/user/:userId",

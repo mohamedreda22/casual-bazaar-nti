@@ -26,7 +26,7 @@ exports.authMW = (requiredRole) => {
 
       const verified = jwt.verify(token, secretKey);
       req.userData = verified;
-      // console.log("Token verified, user data:", req.userData);
+      console.log("Token verified, user data:", req.userData);
 
       if (requiredRole && !requiredRole.includes(req.userData.userType)) {
         return res
