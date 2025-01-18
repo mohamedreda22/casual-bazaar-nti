@@ -139,7 +139,7 @@ exports.updateOrder = async (req, res) => {
 exports.deleteOrder = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedOrder = await Order.findByIdAndUpdate(id, { status: "inactive" }, { new: true });
+    const deletedOrder = await Order.findByIdAndUpdate(id, { orderStatus: "inactive" }, { new: true });
 
     if (!deletedOrder) {
       return res.status(404).json({ message: "Order not found." });

@@ -9,7 +9,7 @@ router.get("/", auth.authMW("Admin"), OrderController.getAllOrders); // Get all 
 router.get("/:id", OrderController.getOrderById); // Get an order by ID
 router.get(
   "/user/:userId",
-  auth.authMW("User"),
+ /*  auth.authMW("User"), */
   OrderController.getOrdersByCustomer
 ); // Get all orders by user ID
 router.put("/:id", auth.authMW("Admin"), OrderController.updateOrder); // Update an order

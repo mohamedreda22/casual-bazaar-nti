@@ -19,7 +19,7 @@ export interface Order {
     extraPhone: string; // Extra phone number for contact
     payment: string; // Payment method
   };
+  orderStatus: String;
   createdAt?: Date; // Timestamp of when the order was created (optional)
   updatedAt?: Date; // Timestamp of when the order was last updated (optional)
-
 }

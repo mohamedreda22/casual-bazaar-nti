@@ -20,19 +20,25 @@
             <tr *ngFor="let item of order.items">
               <td>
                 <img
-                  [src]="imageURL + getProductById(item.product_id)?.productImage"
+                  [src]="
+                    imageURL + getProductById(item.product_id)?.productImage
+                  "
                   alt="Product Image"
                 />
               </td>
               <td>
-                {{ getProductById(item.product_id)?.name || item.product_id }} ({{ item.quantity }})
+                {{
+                  getProductById(item.product_id)?.name || item.product_id
+                }}
+                ({{ item.quantity }})
               </td>
             </tr>
           </table>
         </td>
         <td>{{ order.status }}</td>
         <td>
-          {{ order.orderDetails.address }}, {{ order.orderDetails.city }}, {{ order.orderDetails.government }}
+          {{ order.orderDetails.address }}, {{ order.orderDetails.city }},
+          {{ order.orderDetails.government }}
           <br />
           {{ order.orderDetails.extraPhone }}
           <br />
@@ -42,8 +48,15 @@
           <button (click)="startEditOrder(order)" class="btn btn-warning">
             Edit
           </button>
-          <button (click)="deleteOrder(order._id)" class="btn btn-danger">
-            Delete
+          <button
+            (click)="deleteOrder(order._id)"
+            class="btn"
+            [ngClass]="{
+              'btn-success': order.orderStatus === 'active',
+              'btn-danger': order.orderStatus !== 'active'
+            }"
+          >
+            {{ order.orderStatus === "active" ? "Active" : "Inactive" }}
           </button>
         </td>
       </tr>
@@ -131,11 +144,11 @@
     <div class="form-group">
       <label for="editCity">City:</label>
       <input
-      type="text"
-      id="editCity"
-      class="form-control"
-      formControlName="city"
-      required
+        type="text"
+        id="editCity"
+        class="form-control"
+        formControlName="city"
+        required
       />
     </div>
 
@@ -178,7 +191,6 @@
         <option value="instapay">Instapay</option>
         <option value="onDelively">On Delively</option>
       </select>
-      
     </div>
 
     <div class="form-buttons">

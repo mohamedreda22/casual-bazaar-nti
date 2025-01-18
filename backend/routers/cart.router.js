@@ -8,8 +8,8 @@ router.get("/:id", auth.authMW("User"), cartController.getCart); // Get a cart b
 router.get("/user/:userId", cartController.getCartByUser); // Get cart by user ID
 router.post(
   "/user/:userId",
-   auth.authMW("User"),
-  cartController.createOrAddToCart
+/*    auth.authMW("User"),
+ */  cartController.createOrAddToCart
 ); // Add product to cart
 router.put(
   "/user/:userId",

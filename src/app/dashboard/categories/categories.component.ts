@@ -190,8 +190,6 @@ export class CategoriesComponent implements OnInit {
   }
 
   updateCategory(category: Category): void {
-    // console.log('Category:', category);
-    // console.log('Category ID:', category._id);
     this.adminDashboardService.updateCategory(category._id, category).subscribe(
       (updatedCategory) => {
         // console.log('Category updated:', updatedCategory);
@@ -206,6 +204,22 @@ export class CategoriesComponent implements OnInit {
       }
     );
   }
+
+toggleCategoryStatus(category: Category): void {
+  const updatedStatus = category.show ? false : true;
+  const updatedCategory = { ...category, show: updatedStatus };
+
+  this.adminDashboardService.updateCategory(category._id, updatedCategory).subscribe(
+    () => {
+      this.loadCategories();
+      Swal.fire('Success', `Category ${updatedStatus ? 'shown' : 'hidden'} successfully`, 'success');
+    },
+    (error) => {
+      console.error('Error updating category status:', error);
+      Swal.fire('Error', `Failed to update category status`, 'error');
+    }
+  );
+}
 
   deleteCategory(id: string): void {
     // console.log('Category ID:', id);

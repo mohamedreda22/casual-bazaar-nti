@@ -37,7 +37,9 @@ export class NewArrivalsComponent implements OnInit {
     if (this.userId) {
       this._productS.getProducts().subscribe({
         next: (response: Product[]) => {
-          this.products = response;
+          this.products = response.filter(
+            (product: Product) => product.productStatus === 'active'
+          );
           this.applyFiltersAndPagination(); // Apply initial filters and pagination
         },
         error: (err) => {
@@ -122,4 +124,3 @@ export class NewArrivalsComponent implements OnInit {
     });
   }
 }
-

@@ -33,6 +33,10 @@ const orderSchema = new mongoose.Schema(
       },
       required: true,
     },
+    orderStatus:{
+      type: String,
+      default: "active",
+    }
   },
   {
     timestamps: true,

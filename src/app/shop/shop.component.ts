@@ -56,7 +56,9 @@ export class ShopComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this._productS.getProducts().subscribe((response: any) => {
-      this.products = response;
+      this.products = response.filter(
+        (product: Product) => product.productStatus === 'active'
+      );
       this.updateFilteredProducts();
       this.filteredProducts = this.products;
       this.carouselProducts = this.products

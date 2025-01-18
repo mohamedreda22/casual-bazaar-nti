@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
+import { Product } from '../interfaces/productInterface';
 
 @Component({
   selector: 'app-best-sellers',
@@ -12,20 +13,21 @@ export class BestSellersComponent implements OnInit {
   products: any[] = [];
   timer: any;
   imageURL: string = '';
-  categories: any[] = []; 
+  categories: any[] = [];
 
   constructor(private _productS: ProductService) {}
-
 
   ngOnInit(): void {
     this.imageURL = this._productS.uploadURL;
     this._productS.getProducts().subscribe((response: any) => {
-    this.products = response;
-    this.bestSellersByCategory = this.groupBestSellersByCategory();
-    this.startTimer(); 
+      this.products = response.filter(
+        (product: Product) => product.productStatus === 'active'
+      );
+      this.bestSellersByCategory = this.groupBestSellersByCategory();
+      this.startTimer();
     });
 
-    this._productS.getCategories().subscribe((response:any) => {
+    this._productS.getCategories().subscribe((response: any) => {
       this.categories = response;
     });
   }
@@ -45,7 +47,7 @@ export class BestSellersComponent implements OnInit {
     return Object.keys(grouped).map((category) => ({
       name: category,
       chunks: this.chunkArray(grouped[category], 3),
-      activeIndex: 0, 
+      activeIndex: 0,
     }));
   }
 
@@ -56,7 +58,7 @@ export class BestSellersComponent implements OnInit {
         if (category.activeIndex < maxIndex) {
           this.next(category);
         } else {
-          category.activeIndex = 0; 
+          category.activeIndex = 0;
         }
       });
     }, 3000);

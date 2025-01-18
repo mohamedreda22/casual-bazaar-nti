@@ -151,6 +151,7 @@ export class CartComponent implements OnInit {
       total_price: this.sumTotal(),
       status: 'Pending',
       orderDetails: this.orderForm.value,
+      orderStatus: 'Pending',
     };
 
     this.cartService.createOrder(order).subscribe({
