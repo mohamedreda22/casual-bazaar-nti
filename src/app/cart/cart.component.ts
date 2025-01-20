@@ -52,7 +52,7 @@ export class CartComponent implements OnInit {
       error: (error) => {
         let errorMsg =
           'Failed to load cart items. Please log in to view your cart.';
-        console.error("Error", error?.status);
+        console.error('Error', error?.status);
         if (error?.status === 401) {
           errorMsg = 'Please log in to view your cart.';
         }
@@ -158,6 +158,7 @@ export class CartComponent implements OnInit {
       next: () => {
         Swal.fire('Order placed successfully.', '', 'success');
         this.cartItems = [];
+        this.cartService.clearCart(this.userId).subscribe();
       },
       error: () => Swal.fire('Failed to place order.', '', 'error'),
       complete: () => (this.isLoading = false),
@@ -165,6 +166,6 @@ export class CartComponent implements OnInit {
   }
 
   sumTotal(): number {
-    return this.totalPrice + this.shippingCost;
+    return Number(this.totalPrice) + Number(this.shippingCost);
   }
 }
