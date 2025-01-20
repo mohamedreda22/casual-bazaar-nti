@@ -17,6 +17,9 @@ h1 {
   color: #34495e;
 }
 
+a{
+  text-decoration: none;
+}
 .wishlist-table {
   width: 100%;
   border-collapse: collapse;
